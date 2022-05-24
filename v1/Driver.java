@@ -1,33 +1,36 @@
+import java.util.Scanner;
+
 public class Driver {
 
-    private static void delay( int n ){ // taken from knight's tour code
-        try {
-        Thread.sleep(n);
-        } catch( InterruptedException e ) {
-        System.exit(0);
-        }
-    }
-
     public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+
         Map map = new Map();
         System.out.println(map);
 
-        delay(1000);
+        while(sc.hasNextLine()){
+            String motion = sc.nextLine();
+            if(motion.equalsIgnoreCase("W")){
+                map.moveUp();
+                System.out.println(map);
+            }else if(motion.equalsIgnoreCase("A")){
+                map.moveLeft();
+                System.out.println(map);
+            }else if(motion.equalsIgnoreCase("S")){
+                map.moveDown();
+                System.out.println(map);
+            }else if(motion.equalsIgnoreCase("D")){
+                map.moveRight();
+                System.out.println(map);
+            }else{
+                System.out.println(map);
+                System.out.println("invalid input");
+            }
+        }
 
-        map.moveDown();
-        System.out.println(map);
 
-        map.moveRight();
-        System.out.println(map);
-        delay(1000);
         
-        map.moveRight();
-        System.out.println(map);
-        delay(1000);
-
-        map.moveRight();
-        System.out.println(map);
-        delay(1000);
         
     }
 }
