@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class MazeGenerator {
 
+    private final String SPACE = " ";
+
  /*
  Advised by students from Mr K's class while writing this class
  */
@@ -20,21 +22,18 @@ public class MazeGenerator {
   }
 
   public void generate(int startrow, int startcol){
-    carve(startrow, startcol);
-    
     _maze[startrow][startcol] = "#";
-
-    int eRow = Math.abs(_maze.length - 1 - startrow);
-    int eCol = Math.abs(_maze[startrow].length - 1 - startcol);
-    _maze[eRow][eCol] = "#";
+    int endRow = Math.abs(_maze.length - 1 - startrow);
+    int endCol = Math.abs(_maze[startrow].length - 1 - startcol);
+    _maze[endRow][endCol] = "#";
   }
 
 
   private void carve(int row, int col){
       //can carve: not on border, not a space, fewer than 2 neighboring spaces
     if(canCarve(row,col)){
-      //change to a space
-      _maze[row][col] = " ";
+      _maze[row][col] = SPACE;
+
       //make an arrayList of directions i made the directions: [row offset , col offset]
       ArrayList<int[]>directions = new ArrayList<int[]>();
       //fill up the arrayList Here
@@ -58,25 +57,25 @@ public class MazeGenerator {
       return false;
     }
 
-    int neighbors = 0;
-    if (_maze[row+1][col].equals(" ")){
-      neighbors++;
-    }
-    if (_maze[row-1][col].equals(" ")){
-      neighbors++;
-    }
-    if (_maze[row][col-1].equals(" ")){
-      neighbors++;
-    }
-    if (_maze[row][col+1].equals(" ")){
-      neighbors++;
-    }
+    int count = 0;
+    if (_maze[row+1][col].equals(SPACE))
+      count++;
+    
+    if (_maze[row-1][col].equals(SPACE))
+      count++;
+    
+    if (_maze[row][col-1].equals(SPACE))
+      count++;
+    
+    if (_maze[row][col+1].equals(SPACE))
+      count++;
+    
 
-    if (neighbors >= 2) {
+    if (count >= 2) {
       return false;
     }
 
-    if (_maze[row][col].equals(" ")) {
+    if (_maze[row][col].equals(SPACE)) {
       return false;
     }
 
