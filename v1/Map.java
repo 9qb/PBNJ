@@ -102,20 +102,38 @@ public class Map{
     }
 
     public String toString(){
+        System.out.println("\033[H");
+        System.out.println("\033[2J");
         return currentFrame.toString();
     }
 
     public void moveUp(){
-        heroY -= 1;
+        if(currentFrame.getPos(heroX-1, heroY).equals(" ")){
+            currentFrame.setPos(heroX, heroY," ");
+            heroX -= 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
     public void moveRight(){
-        heroX += 1;
+        if(currentFrame.getPos(heroX, heroY+1).equals(" ")){
+            currentFrame.setPos(heroX, heroY," ");
+            heroY += 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
     public void moveDown(){
-        heroY += 1;
+        if(currentFrame.getPos(heroX+1, heroY).equals(" ")){
+            currentFrame.setPos(heroX, heroY," ");
+            heroX += 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
     public void moveLeft(){
-        heroX -= 1;
+        if(currentFrame.getPos(heroX, heroY-1).equals(" ")){
+            currentFrame.setPos(heroX, heroY," ");
+            heroY -= 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
 
     public static void main(String[] args) {
