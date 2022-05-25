@@ -1,76 +1,25 @@
 public class Map{
 
-    /*
-
-    Map Layout (Subject to change):
-
-               maze4
-                 ^
-                 |
-                 |
-                 V
-    maze1 <--> maze2 <---> maze3
-                 ^
-                 |
-                 |
-                 V
-               maze5
-
-    */
     String hero = "X";
     int heroX = 1;
     int heroY = 0;
 
+    private static void clear()
+    {
+      System.out.println("\033[2J");
+      System.out.println("\033[" + 1 + ";" + 1 + "H");
+    }
 
-    String[][] arr1 = {{"#","#", "#"},
-                       {hero, " ", "#"},
-                       {" ", "#", "#"}
-                      };
-    
-    String[][] arr2 = {{"#","#", "#"},
-                      {" ", "#", " "},
-                      {" ", "#", " "}
-                     }; 
-    
-    String[][] arr3 = {{"#","#", "#"},
-                      {"#", " ", " "},
-                      {"#", "#", " "}
-                    };
-    
-    String[][] arr4 = {{" ","#", "#"},
-                       {" ", "#", " "},
-                       {" ", "#", " "}
-                     };
-
-    String[][] arr5 = {{" ","#", "#"},
-                        {" ", "#", " "},
-                        {" ", "#", " "}
-                      };
-
-    Maze maze1 = new Maze(arr1);
-    Maze maze2 = new Maze(arr2);
-    Maze maze3 = new Maze(arr3);
-    Maze maze4 = new Maze(arr4);
-    Maze maze5 = new Maze(arr5);
+    private Maze maze;
 
     // will determine which frame (aka Maze) will be shown on screen
-    private Maze currentFrame =  maze1; 
+    private Maze currentFrame;
 
     public Map(){
-        // Link the Maps
-
-        maze1.setEast(maze2);
-
-        maze2.setWest(maze1);
-        maze2.setNorth(maze4);
-        maze2.setEast(maze3);
-        maze2.setSouth(maze5);
-
-        maze3.setWest(maze2);
-
-        maze4.setSouth(maze2);
-
-        maze5.setNorth(maze2);
+        MazeGenerator troll = new MazeGenerator(18, 32);
+        maze = new Maze(troll.getGeneratedMaze());
+        currentFrame = maze;
+        currentFrame.setPos(heroX, heroY, hero);
     }
 
     /*
@@ -102,27 +51,44 @@ public class Map{
     }
 
     public String toString(){
+        clear();
         return currentFrame.toString();
     }
 
     public void moveUp(){
-        heroY -= 1;
+        if(currentFrame.getPos(heroX-1, heroY).equals(" ")){
+            currentFrame.setPos(heroX, heroY,".");
+            heroX -= 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
     public void moveRight(){
-        heroX += 1;
+        if(currentFrame.getPos(heroX, heroY+1).equals(" ")){
+            currentFrame.setPos(heroX, heroY,".");
+            heroY += 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
     public void moveDown(){
-        heroY += 1;
+        if(currentFrame.getPos(heroX+1, heroY).equals(" ")){
+            currentFrame.setPos(heroX, heroY,".");
+            heroX += 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
     public void moveLeft(){
-        heroX -= 1;
+        if(currentFrame.getPos(heroX, heroY-1).equals(" ")){
+            currentFrame.setPos(heroX, heroY,".");
+            heroY -= 1;
+            currentFrame.setPos(heroX, heroY, hero);
+        }
     }
 
     public static void main(String[] args) {
         Map test = new Map();
         System.out.println(test);
         System.out.println("______________");
-        
+
         test.changeEast();
         System.out.println(test);
         System.out.println("______________");
@@ -151,5 +117,5 @@ public class Map{
         System.out.println(test);
         System.out.println("______________");
     }
-    
+
 }

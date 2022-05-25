@@ -13,12 +13,8 @@ public class Maze{
 
 
 
-    public Maze(String[][] arr /*, Maze north, Maze east, Maze south, Maze west*/){
+    public Maze(String[][] arr){
         this._maze = arr;
-        // this.northMaze = north;
-        // this.eastMaze = east;
-        // this.southMaze = south;
-        // this.westMaze = west;
     }
 
     public void setNorth(Maze north){
@@ -49,6 +45,15 @@ public class Maze{
     public Maze getWest(){
         return westMaze;
     }
+
+    public void setPos(int x, int y, String cargo){
+        _maze[x][y] = cargo;
+    }
+
+    public String getPos(int x, int y){
+        return _maze[x][y];
+    }
+
 
     public String toString(){
         // Stringifies the maze

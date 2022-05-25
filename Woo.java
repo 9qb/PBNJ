@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-public class Driver {
+public class Woo {
 
     public static void main(String[] args) {
-        
+
         Scanner sc = new Scanner(System.in);
 
         Map map = new Map();
@@ -30,7 +30,7 @@ public class Driver {
         }
 
 
-        
-        
+
+
     }
 }

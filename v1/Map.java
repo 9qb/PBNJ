@@ -16,7 +16,7 @@ public class Map{
     private Maze currentFrame;
 
     public Map(){
-        MazeGenerator troll = new MazeGenerator(9,16);
+        MazeGenerator troll = new MazeGenerator(18, 32);
         maze = new Maze(troll.getGeneratedMaze());
         currentFrame = maze;
         currentFrame.setPos(heroX, heroY, hero);
@@ -88,7 +88,7 @@ public class Map{
         Map test = new Map();
         System.out.println(test);
         System.out.println("______________");
-        
+
         test.changeEast();
         System.out.println(test);
         System.out.println("______________");
@@ -117,5 +117,5 @@ public class Map{
         System.out.println(test);
         System.out.println("______________");
     }
-    
+
 }
