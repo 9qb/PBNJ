@@ -56,21 +56,6 @@ public class MazeGenerator {
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
   }
 
-  /*
-  While the map hasn’t been filled to the desired amount yet:
-    Randomly choose a room size and type.
-    Find a random location.
-    Check if the room will fit.
-    If it fits:
-      Draw the room and add it to the list of rooms.
-      Add connections from the new room to one or more other rooms.
-  Run some a function to add doors.Choose a room to be the start point and add an up staircase there.Find the room furthest from the start point and add a down staircase there.For every room in the list of rooms:
-    Add items/monsters/other content as desired!
-  */
-
-
-
-
   public void generate(int startrow, int startcol){
     _maze[startrow][startcol] = "S";
     int endRow = Math.abs(_maze.length - 1 - startrow);
