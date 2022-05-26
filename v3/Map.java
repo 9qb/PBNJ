@@ -1,7 +1,7 @@
 public class Map{
 
     String hero = "X";
-    int heroX = 1;
+    int heroX = (int)(Math.random());
     int heroY = 0;
 
     private static void clear()
@@ -16,7 +16,7 @@ public class Map{
     private Maze currentFrame;
 
     public Map(){
-        MazeGenerator troll = new MazeGenerator(18, 32);
+        MazeGenerator troll = new MazeGenerator(27, 48);
         maze = new Maze(troll.getGeneratedMaze());
         currentFrame = maze;
         currentFrame.setPos(heroX, heroY, hero);
@@ -25,30 +25,30 @@ public class Map{
     /*
     Methods to change Frames
     */
-    public void changeNorth(){
-        if(currentFrame.getNorth() != null){
-            currentFrame = currentFrame.getNorth();
-        }
-    }
-    public void changeEast(){
-        if(currentFrame.getEast() != null){
-            currentFrame = currentFrame.getEast();
-        }
-    }
-    public void changeSouth(){
-        if(currentFrame.getSouth() != null){
-            currentFrame = currentFrame.getSouth();
-        }
-    }
-    public void changeWest(){
-        if(currentFrame.getWest() != null){
-            currentFrame = currentFrame.getWest();
-        }
-    }
-
-    public void setCurrentFrame(Maze currentMaze){
-        this.currentFrame = currentMaze;
-    }
+    // public void changeNorth(){
+    //     if(currentFrame.getNorth() != null){
+    //         currentFrame = currentFrame.getNorth();
+    //     }
+    // }
+    // public void changeEast(){
+    //     if(currentFrame.getEast() != null){
+    //         currentFrame = currentFrame.getEast();
+    //     }
+    // }
+    // public void changeSouth(){
+    //     if(currentFrame.getSouth() != null){
+    //         currentFrame = currentFrame.getSouth();
+    //     }
+    // }
+    // public void changeWest(){
+    //     if(currentFrame.getWest() != null){
+    //         currentFrame = currentFrame.getWest();
+    //     }
+    // }
+    //
+    // public void setCurrentFrame(Maze currentMaze){
+    //     this.currentFrame = currentMaze;
+    // }
 
     public String toString(){
         clear();
@@ -89,33 +89,33 @@ public class Map{
         System.out.println(test);
         System.out.println("______________");
 
-        test.changeEast();
-        System.out.println(test);
-        System.out.println("______________");
-
-        test.changeNorth();
-        System.out.println(test);
-        System.out.println("______________");
-
-        test.changeSouth();
-        System.out.println(test);
-        System.out.println("______________");
-
-        test.changeEast();
-        System.out.println(test);
-        System.out.println("______________");
-
-        test.changeWest();
-        System.out.println(test);
-        System.out.println("______________");
-
-        test.changeSouth();
-        System.out.println(test);
-        System.out.println("______________");
-
-        test.changeNorth();
-        System.out.println(test);
-        System.out.println("______________");
+        // test.changeEast();
+        // System.out.println(test);
+        // System.out.println("______________");
+        //
+        // test.changeNorth();
+        // System.out.println(test);
+        // System.out.println("______________");
+        //
+        // test.changeSouth();
+        // System.out.println(test);
+        // System.out.println("______________");
+        //
+        // test.changeEast();
+        // System.out.println(test);
+        // System.out.println("______________");
+        //
+        // test.changeWest();
+        // System.out.println(test);
+        // System.out.println("______________");
+        //
+        // test.changeSouth();
+        // System.out.println(test);
+        // System.out.println("______________");
+        //
+        // test.changeNorth();
+        // System.out.println(test);
+        // System.out.println("______________");
     }
 
 }

@@ -20,31 +20,41 @@ public class MazeGenerator {
     }
     _rows = x;
     _cols = y;
+
+    buildRooms(8);
   }
 
-  public void buildMaze(int numRooms){
+  public void buildRooms(int numRooms){
     for (int i = 0; i < numRooms; i++){
       // choose random dimensions of room
-      randBase = randNum(3, 8);
-      randHeight = randNum(3, 8)
+      int randBase = randNum(5, 8);
+      int randHeight = randNum(5, 8);
 
       // choose random tile
-      randRow = randNum(0, _rows);
-      randCol = randNum(0, _cols);
+      int randRow = randNum(0, _rows - 1);
+      int randCol = randNum(0, _cols - 1);
+
+      // System.out.println("randRow: " + randRow); // diag
+      // System.out.println("randHeight:" + randHeight); // diag
+      // System.out.println("randCol: " + randCol); // diag
+      // System.out.println("randBase: " + randBase); // diag
 
       // check if bottom right corner still fits within map
       // if not, resize
-      while (randRow + randHeight >= _rows && randCols + randBase >= _cols){
-        randBase = randNum(3, 8);
-        randHeight = randNum(3, 8)
+      while (randRow + randHeight >= _rows && randCol + randBase >= _cols){
+        randBase = randNum(5, 8);
+        randHeight = randNum(5, 8);
         randRow = randNum(0, _rows);
         randCol = randNum(0, _cols);
       }
 
-      // passes check, so cleave out the space
-      for (int n = 0; n < randBase; n++){
-        for (int m = 0; m < randHeight; m++){
-          _maze[randRow + m][randCol + n] = SPACE;
+      // passes check, so build out the space
+      for (int b = 0; b < randBase; b++){
+        for (int h = 0; h < randHeight; h++){
+          // System.out.println("randRow: " + randRow + " ~~ b: " + b); // diag
+          // System.out.println("randCol: " + randCol + " ~~ h: " + h); // diag
+          if (randRow + b < _rows && randCol + h < _cols)
+            _maze[randRow + b][randCol + h] = SPACE;
         }
       }
 
@@ -123,7 +133,7 @@ public class MazeGenerator {
       return _maze;
   }
 
-  /*
+
   // For testing purposes
   public String toString(){
       String retVal = "";
@@ -136,12 +146,12 @@ public class MazeGenerator {
       return retVal;
   }
   public static void main(String[] args) {
-      MazeGenerator test = new MazeGenerator(17,30);
+      MazeGenerator test = new MazeGenerator(27,48);
       System.out.println(test);
       System.out.println("");
-      test.carve(1,1);
-      System.out.println(test);
+      // test.carve(1,1);
+      // System.out.println(test);
   }
-  */
+
 
 }
