@@ -60,7 +60,11 @@ public class Maze{
         String retVal = "";
         for(int i = 0; i < _maze.length; i++){
             for(int e = 0; e < _maze[0].length; e++){
-                retVal += _maze[i][e];
+                if(_maze[i][e].equals("#"))
+                   retVal = retVal + "\u001b[42m" + "\u001b[32m" + " " + "\u001b[30m" + "\u001b[40m" ;
+               else{
+                   retVal += _maze[i][e];
+            }
             }
             retVal += "\n";
         }
