@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class MazeGenerator {
 
   private final String SPACE = " ";
+  private final String WALL = "#";
 
  /*
  Advised by students from Mr K's class while writing this class
@@ -15,20 +16,22 @@ public class MazeGenerator {
     _maze = new String[x][y];
     for(int i = 0; i <_maze.length; i++){
       for(int e = 0; e <_maze[0].length; e++){
-        _maze[i][e] = "#";
+        _maze[i][e] = WALL;
       }
     }
     _rows = x;
     _cols = y;
 
-    buildRooms(8);
+    buildRooms(randNum(8, 10));
+    buildBorders();
+    carveMaze();
   }
 
   public void buildRooms(int numRooms){
     for (int i = 0; i < numRooms; i++){
       // choose random dimensions of room
-      int randBase = randNum(5, 8);
-      int randHeight = randNum(5, 8);
+      int randBase = randNum(7, 12);
+      int randHeight = randNum(5, 12);
 
       // choose random tile
       int randRow = randNum(0, _rows - 1);
@@ -42,8 +45,8 @@ public class MazeGenerator {
       // check if bottom right corner still fits within map
       // if not, resize
       while (randRow + randHeight >= _rows && randCol + randBase >= _cols){
-        randBase = randNum(5, 8);
-        randHeight = randNum(5, 8);
+        randBase = randNum(7, 12);
+        randHeight = randNum(5, 12);
         randRow = randNum(0, _rows);
         randCol = randNum(0, _cols);
       }
@@ -53,8 +56,9 @@ public class MazeGenerator {
         for (int h = 0; h < randHeight; h++){
           // System.out.println("randRow: " + randRow + " ~~ b: " + b); // diag
           // System.out.println("randCol: " + randCol + " ~~ h: " + h); // diag
-          if (randRow + b < _rows && randCol + h < _cols)
+          if (randRow + b < _rows && randCol + h < _cols && _maze[randRow+b][randCol+h].equals(WALL)){
             _maze[randRow + b][randCol + h] = SPACE;
+          }
         }
       }
 
@@ -66,13 +70,34 @@ public class MazeGenerator {
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
   }
 
+  public void buildBorders(){
+    for (int i = 0; i < _cols - 1; i++){
+      _maze[0][i] = WALL;
+      _maze[_rows - 1][i] = WALL;
+    }
+    for (int j = 0; j < _rows - 1; j++){
+      _maze[j][0] = WALL;
+      _maze[j][_cols - 1] = WALL;
+    }
+    _maze[_rows-1][_cols - 1] = WALL;
+  }
+
+  public void carveMaze(){
+    for (int i = 0; i < _rows - 1; i ++){
+      for (int j = 0; j < _cols - 1; j++){
+        if (_maze[i][j].equals(WALL)){
+          carve(i,j);
+        }
+      }
+    }
+  }
+
   public void generate(int startrow, int startcol){
     _maze[startrow][startcol] = "S";
     int endRow = Math.abs(_maze.length - 1 - startrow);
     int endCol = Math.abs(_maze[startrow].length - 1 - startcol);
     _maze[endRow][endCol] = "E";
   }
-
 
   private void carve(int row, int col){
       //can carve: not on border, not a space, fewer than 2 neighboring spaces
@@ -115,7 +140,6 @@ public class MazeGenerator {
     if (_maze[row][col+1].equals(SPACE))
       count++;
 
-
     if (count >= 2) {
       return false;
     }
@@ -131,6 +155,24 @@ public class MazeGenerator {
       generate(0,0);
       carve(1,1);
       return _maze;
+  }
+
+  // inner class
+  class RoomBorders{
+    int _tlr, _tlc, _brr, _brc, _maze;
+    RoomBorders(int TLr, int TLc, int BRr, int BRc, String[][] parentMaze){
+      _tlr = TLr;
+      _tlc = TLc;
+      _brr = BRr;
+      _brc = BRc;
+      _maze = parentMaze;
+    }
+
+    markGates(){
+      for (int i = _tlr; i <= _brr; i++){
+        
+      }
+    }
   }
 
 
