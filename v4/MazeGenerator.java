@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class MazeGenerator {
 
@@ -151,6 +152,35 @@ public class MazeGenerator {
     return true;
   }
 
+  private boolean canBeGate(int row, int col) {
+    if (row <= 0 || col <= 0 || row >= _maze.length - 1 || col >= _maze[row].length - 1) {
+      return false;
+    }
+
+    int count = 0;
+    if (_maze[row+1][col].equals(SPACE))
+      count++;
+
+    if (_maze[row-1][col].equals(SPACE))
+      count++;
+
+    if (_maze[row][col-1].equals(SPACE))
+      count++;
+
+    if (_maze[row][col+1].equals(SPACE))
+      count++;
+
+    if (count == 2) {
+      return true;
+    }
+
+    if (_maze[row][col].equals(SPACE)) {
+      return false;
+    }
+
+    return false;
+  }
+
   public String[][] getGeneratedMaze(){
       generate(0,0);
       carve(1,1);
@@ -158,8 +188,9 @@ public class MazeGenerator {
   }
 
   // inner class
-  class RoomBorders{
+  class Room{
     int _tlr, _tlc, _brr, _brc, _maze;
+    ArrayList<Tile> gates = new ArrayList();
     RoomBorders(int TLr, int TLc, int BRr, int BRc, String[][] parentMaze){
       _tlr = TLr;
       _tlc = TLc;
@@ -168,25 +199,70 @@ public class MazeGenerator {
       _maze = parentMaze;
     }
 
-    markGates(){
+    void removeGate(){ // choose random gate to the maze, remove it.
+      int choices = 0;
+      int randR, randC;
+      // iterate thru all borders of the room, if they can be a gate, add to arraylist
       for (int i = _tlr; i <= _brr; i++){
-        
+        if (canBeGate(i, _tlc-1)){ gates.add(new Tile(i, _tlc-1)); }
+        if (canBeGate(i, _brc+1)){ gates.add(new Tile(i, _brc+1)); }
       }
+      for (int j = _tlc; j <= _brc; j++){
+        if (canBeGate(_tlr-1, j)){ gates.add(new Tile(_tlr-1, j)); }
+        if (canBeGate(_blr+1, j)){ gates.add(new Tile(_blr+1, j)); }
+      }
+
+      // choose random tile from gates, turn that tile into a space
+
+
     }
+
+    class Tile{
+      int r, c;
+      Tile(int row, int col){
+        r = row; c = col;
+      }
+      int getRow(){ return r; }
+      int getCol(){ return c; }
+    }
+    // if (_tlc - 1 >= 0){
+      //   // [_tlr, _brr + 1)
+      //   while (int attempts = 0; attempts < 100; attempts++){ // cap number of attempts
+        //     randR = randNum(_tlr, _brr+1);
+        //     if (canBeGate(randR, _tlc - 1)){
+          //       _maze[randR][_tlc - 1] = SPACE;
+          //       return;
+          //     }
+
+      // for (int i = _tlr; i <= _brr; i++){
+      //   if (i + 1 <= _rows){
+      //     for (int j = _tlc; j <= _brc; j++){
+      //       if (canBeGate(i+1, j)){
+      //
+      //       }
+      //     }
+      //   }
+      // }
+    // }
+
   }
 
 
-  // For testing purposes
   public String toString(){
       String retVal = "";
       for(int i = 0; i<_maze.length; i++){
           for(int e=0; e<_maze[0].length; e++){
-            retVal += _maze[i][e];
+            if(_maze[i][e].equals("#"))
+              retVal = retVal + "\u001b[42m" + "\u001b[32m" + " " + "\u001b[30m" + "\u001b[40m" ;
+            else{
+              retVal += _maze[i][e];
+            }
           }
           retVal += "\n";
       }
       return retVal;
   }
+
   public static void main(String[] args) {
       MazeGenerator test = new MazeGenerator(27,48);
       System.out.println(test);
