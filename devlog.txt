@@ -42,10 +42,16 @@ tales of wisdom gained...
 ==============================================================
 
 
+2022-05-26
+--------------------------------------------------------------
+Brian Li :: Worked on v3, implemented the maze generation algorithm
+Nakib Abedin :: Worked on proposal
+Jefford Shau :: Further developed maze generation algorithm, helped with the proposal.
+
 2022-05-25
 --------------------------------------------------------------
 Brian Li :: General setup of repo, made sure everything is where it's supposed to be.
-Nakib Abedin :: Worked on v0, attempt to move to Processing.
-Jefford Shau :: Worked on v0, attempt to move to Processing. 
+Nakib Abedin :: Worked on v0, set up the movement feature and the carving algorithm
+Jefford Shau :: Worked on v0, came up with strucutre of maze generation
 ==============================================================
 
