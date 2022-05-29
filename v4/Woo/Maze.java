@@ -4,47 +4,47 @@ public class Maze{
     Contains links to adjacent Mazes
     */
     
-    String[][] _maze;
+    private String[][] _maze;
 
-    private Maze northMaze;
-    private Maze eastMaze;
-    private Maze southMaze;
-    private Maze westMaze;
+    // private Maze northMaze;
+    // private Maze eastMaze;
+    // private Maze southMaze;
+    // private Maze westMaze;
 
 
 
-    public Maze(String[][] arr){
-        this._maze = arr;
-    }
+    // public Maze(String[][] arr){
+    //     this._maze = arr;
+    // }
 
-    public void setNorth(Maze north){
-        this.northMaze = north;
-    }
+    // public void setNorth(Maze north){
+    //     this.northMaze = north;
+    // }
 
-    public void setEast(Maze east){
-        this.eastMaze = east;
-    }
+    // public void setEast(Maze east){
+    //     this.eastMaze = east;
+    // }
 
-    public void setSouth(Maze south){
-        this.southMaze = south;
-    }
+    // public void setSouth(Maze south){
+    //     this.southMaze = south;
+    // }
 
-    public void setWest(Maze west){
-        this.westMaze = west;
-    }
+    // public void setWest(Maze west){
+    //     this.westMaze = west;
+    // }
 
-    public Maze getNorth(){
-        return northMaze;
-    }
-    public Maze getEast(){
-        return eastMaze;
-    }
-    public Maze getSouth(){
-        return southMaze;
-    }
-    public Maze getWest(){
-        return westMaze;
-    }
+    // public Maze getNorth(){
+    //     return northMaze;
+    // }
+    // public Maze getEast(){
+    //     return eastMaze;
+    // }
+    // public Maze getSouth(){
+    //     return southMaze;
+    // }
+    // public Maze getWest(){
+    //     return westMaze;
+    // }
 
     public void setPos(int x, int y, String cargo){
         _maze[x][y] = cargo;

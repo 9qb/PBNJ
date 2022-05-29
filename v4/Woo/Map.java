@@ -1,8 +1,8 @@
 public class Map{
 
-    String hero = "X";
-    int heroX = (int)(Math.random());
-    int heroY = 0;
+    private String hero = "X";
+    private int heroX = (int)(Math.random());
+    private int heroY = 0;
 
     private static void clear()
     {

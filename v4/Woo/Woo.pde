@@ -1,11 +1,11 @@
-MazeGenerator gen = new MazeGenerator( 15, 15 );
+MazeGenerator gen = new MazeGenerator( 27,48 );
 String[][] maze = gen.getGeneratedMaze();
 PImage[] mapTiles;
 
 int SIZE = 32;
 
 void setup(){
- size(700, 700);
+ size(900, 900);
  background(0);
  mapTiles = new PImage[3];
  mapTiles[0] = loadImage("ground.png");
