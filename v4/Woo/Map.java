@@ -1,8 +1,8 @@
 public class Map{
 
     private String hero = "X";
-    private int heroX = (int)(Math.random());
-    private int heroY = 0;
+    private int heroX = 1;
+    private int heroY = 1;
 
     private static void clear()
     {
@@ -57,7 +57,7 @@ public class Map{
 
     public void moveUp(){
         if(currentFrame.getPos(heroX-1, heroY).equals(" ")){
-            currentFrame.setPos(heroX, heroY,".");
+            currentFrame.setPos(heroX, heroY," ");
             heroX -= 1;
             currentFrame.setPos(heroX, heroY, hero);
         }
@@ -82,6 +82,10 @@ public class Map{
             heroY -= 1;
             currentFrame.setPos(heroX, heroY, hero);
         }
+    }
+    
+    public String[][] getMaze(){
+      return maze.getMaze();
     }
 
     public static void main(String[] args) {

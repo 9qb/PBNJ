@@ -13,9 +13,13 @@ public class Maze{
 
 
 
-    // public Maze(String[][] arr){
-    //     this._maze = arr;
-    // }
+     public Maze(String[][] arr){
+         this._maze = arr;
+     }
+     
+     public String[][] getMaze(){
+       return this._maze;
+     }
 
     // public void setNorth(Maze north){
     //     this.northMaze = north;
