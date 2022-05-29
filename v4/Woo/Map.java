@@ -1,8 +1,8 @@
 public class Map{
 
     private String hero = "X";
-    private int heroX = 1;
-    private int heroY = 1;
+    private int heroX;
+    private int heroY;
 
     private static void clear()
     {
@@ -16,8 +16,21 @@ public class Map{
     private Maze currentFrame;
 
     public Map(){
-        MazeGenerator troll = new MazeGenerator(27, 48);
+        MazeGenerator troll = new MazeGenerator(9, 16);
         maze = new Maze(troll.getGeneratedMaze());
+        String[][] heroPosFinder = maze.getMaze();
+        boolean isTrue = false;
+        for(int i =0; i < heroPosFinder.length-1;i++){
+          for(int e =0; e < heroPosFinder[0].length-1; e++){
+            if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
+                isTrue = true;
+                heroX = i;
+                heroY = e;
+              break;
+            }
+            if(isTrue){break;}
+          } 
+        }
         currentFrame = maze;
         currentFrame.setPos(heroX, heroY, hero);
     }
@@ -56,29 +69,29 @@ public class Map{
     }
 
     public void moveUp(){
-        if(currentFrame.getPos(heroX-1, heroY).equals(" ")){
+        if(currentFrame.getPos(heroX-1, heroY).equals(" ") || currentFrame.getPos(heroX-1, heroY).equals("!")){
             currentFrame.setPos(heroX, heroY," ");
             heroX -= 1;
             currentFrame.setPos(heroX, heroY, hero);
         }
     }
     public void moveRight(){
-        if(currentFrame.getPos(heroX, heroY+1).equals(" ")){
-            currentFrame.setPos(heroX, heroY,".");
+        if(currentFrame.getPos(heroX, heroY+1).equals(" ") || currentFrame.getPos(heroX, heroY+1).equals("!")){
+            currentFrame.setPos(heroX, heroY," ");
             heroY += 1;
             currentFrame.setPos(heroX, heroY, hero);
         }
     }
     public void moveDown(){
-        if(currentFrame.getPos(heroX+1, heroY).equals(" ")){
-            currentFrame.setPos(heroX, heroY,".");
+        if(currentFrame.getPos(heroX+1, heroY).equals(" ") || currentFrame.getPos(heroX+1, heroY).equals("!")){
+            currentFrame.setPos(heroX, heroY," ");
             heroX += 1;
             currentFrame.setPos(heroX, heroY, hero);
         }
     }
     public void moveLeft(){
-        if(currentFrame.getPos(heroX, heroY-1).equals(" ")){
-            currentFrame.setPos(heroX, heroY,".");
+        if(currentFrame.getPos(heroX, heroY-1).equals(" ") || currentFrame.getPos(heroX, heroY-1).equals("!")){
+            currentFrame.setPos(heroX, heroY," ");
             heroY -= 1;
             currentFrame.setPos(heroX, heroY, hero);
         }
