@@ -279,8 +279,6 @@ public class MazeGenerator {
   }
 
   public String[][] getGeneratedMaze(){
-      generate(0,0);
-      carve(1,1);
       return _maze;
   }
 
