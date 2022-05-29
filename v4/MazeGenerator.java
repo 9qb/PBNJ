@@ -266,7 +266,7 @@ public class MazeGenerator {
 
   public void uncarve(int row, int col){
     if(canUncarve(row, col) && _maze[row][col].equals(SPACE)){
-      System.out.println("(" + row + ", " + col + ")" + " has been uncarved");
+      // System.out.println("(" + row + ", " + col + ")" + " has been uncarved");
       _maze[row][col] = WALL;
 
       uncarve(row+1, col);
