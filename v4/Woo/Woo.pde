@@ -8,7 +8,7 @@ void setup(){
  background(0);
  mapTiles = new PImage[3];
  mapTiles[0] = loadImage("ground.png");
- mapTiles[1] = loadImage("hero.png");
+ mapTiles[1] = loadImage("knight.png");
  mapTiles[2] = loadImage("lava.png");
 
 }
@@ -18,9 +18,11 @@ void draw(){
   int currentX = 0;
   int currentY = 0;
   
-  for( String[] row : map.getMaze() ){
+  
+  for( String[] row : map.displayZone() ){
     
     for( String col : row ){
+      print(col);
       if( col.equals("#") ) image(mapTiles[2],currentX,currentY);
       else if (col.equals("@") ) {image(mapTiles[2],currentX,currentY);}
       else if (col.equals("X")){
@@ -29,10 +31,11 @@ void draw(){
       }
       else{image(mapTiles[0],currentX,currentY);}
       currentX += SIZE;
+      
     }
-
     currentX = 0;
     currentY += SIZE;
+    println("");
   }
   
 }
