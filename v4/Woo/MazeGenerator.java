@@ -1,3 +1,8 @@
+// (P)BNJ – Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// FP – Dungeon Crawler
+// 2022-05-28
+
 import java.util.ArrayList;
 import java.util.Stack;
 

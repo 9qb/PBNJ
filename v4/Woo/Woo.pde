@@ -1,3 +1,8 @@
+// (P)BNJ – Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// FP – Dungeon Crawler
+// 2022-05-28
+
 Map map = new Map();
 PImage[] mapTiles;
 
@@ -17,10 +22,10 @@ void setup(){
 void draw(){
   int currentX = 0;
   int currentY = 0;
-  
-  
+
+
   for( String[] row : map.displayZone() ){
-    
+
     for( String col : row ){
       print(col);
       if( col.equals("#") ) image(mapTiles[2],currentX,currentY);
@@ -31,19 +36,19 @@ void draw(){
       }
       else{image(mapTiles[0],currentX,currentY);}
       currentX += SIZE;
-      
+
     }
     currentX = 0;
     currentY += SIZE;
     println("");
   }
-  
+
 }
 
 void keyPressed(){
   if(key == 'W' || key == 'w'){
     map.moveUp();
-    System.out.println(map);  
+    System.out.println(map);
 }
   else if(key == 'A' || key == 'a'){
     map.moveLeft();
@@ -55,6 +60,6 @@ void keyPressed(){
 }
   else if(key == 'D' || key == 'd'){
     map.moveRight();
-    System.out.println(map);  
+    System.out.println(map);
 }
 }
