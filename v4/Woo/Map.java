@@ -1,3 +1,8 @@
+// (P)BNJ – Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// FP – Dungeon Crawler
+// 2022-05-28
+
 public class Map{
 
     private String hero = "X";
@@ -27,7 +32,7 @@ public class Map{
               break;
             }
             if(isTrue){break;}
-          } 
+          }
         }
         currentFrame = maze;
         currentFrame.setPos(heroX, heroY, hero);
@@ -94,26 +99,26 @@ public class Map{
             currentFrame.setPos(heroX, heroY, hero);
         }
     }
-    
+
     public String[][] getMaze(){
       return maze.getMaze();
     }
-    
+
     //public String[][] displayZone(){
     //  int left = heroX - 10;
     //  int right = heroX + 10;
     //  int up = heroY - 10;
     //  int down = heroY + 10;
-     
+
     //  String[][] output = new String[21][21];
 
     //  int counterL = 0;
     //  int counterR = 0;
     //  int counterU = 0;
     //  int counterD = 0;
-      
+
     //  if(left < 0){
-    //      counterL = Math.abs(left); 
+    //      counterL = Math.abs(left);
     //      for(int i = 0; i < output.length; i++){
     //        for(int h = 0; h < counterL; h++){
     //          output[i][h] = "#";
@@ -121,7 +126,7 @@ public class Map{
     //      }
     //    }
     //    else if(right > output.length){
-    //      counterR = right-output.length-1; 
+    //      counterR = right-output.length-1;
     //      for(int i = 0; i < output.length; i++){
     //        for(int h = output.length; h > output[0].length-counterR; h--){
     //          output[i][h] = "#";
