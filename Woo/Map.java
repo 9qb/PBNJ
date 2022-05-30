@@ -1,13 +1,10 @@
-// (P)BNJ – Brian Li, Nakib Abedin, Jefford Shau
-// APCS pd07
-// FP – Dungeon Crawler
-// 2022-05-28
-
 public class Map{
 
     private String hero = "X";
     private int heroX;
     private int heroY;
+    private int width;
+    private int length;
 
     private static void clear()
     {
@@ -19,7 +16,9 @@ public class Map{
     private Maze currentFrame;
 
     public Map(){
-        MazeGenerator troll = new MazeGenerator(21, 21);
+        width = 81;
+        length = 144;
+        MazeGenerator troll = new MazeGenerator(width, length);
         maze = new Maze(troll.getGeneratedMaze());
         String[][] heroPosFinder = maze.getMaze();
         boolean isTrue = false;
@@ -32,39 +31,11 @@ public class Map{
               break;
             }
             if(isTrue){break;}
-          }
+          } 
         }
         currentFrame = maze;
         currentFrame.setPos(heroX, heroY, hero);
     }
-
-    /*
-    Methods to change Frames
-    */
-    // public void changeNorth(){
-    //     if(currentFrame.getNorth() != null){
-    //         currentFrame = currentFrame.getNorth();
-    //     }
-    // }
-    // public void changeEast(){
-    //     if(currentFrame.getEast() != null){
-    //         currentFrame = currentFrame.getEast();
-    //     }
-    // }
-    // public void changeSouth(){
-    //     if(currentFrame.getSouth() != null){
-    //         currentFrame = currentFrame.getSouth();
-    //     }
-    // }
-    // public void changeWest(){
-    //     if(currentFrame.getWest() != null){
-    //         currentFrame = currentFrame.getWest();
-    //     }
-    // }
-    //
-    // public void setCurrentFrame(Maze currentMaze){
-    //     this.currentFrame = currentMaze;
-    // }
 
     public String toString(){
         clear();
@@ -99,26 +70,26 @@ public class Map{
             currentFrame.setPos(heroX, heroY, hero);
         }
     }
-
+    
     public String[][] getMaze(){
       return maze.getMaze();
     }
-
+    
     //public String[][] displayZone(){
     //  int left = heroX - 10;
     //  int right = heroX + 10;
     //  int up = heroY - 10;
     //  int down = heroY + 10;
-
+     
     //  String[][] output = new String[21][21];
 
     //  int counterL = 0;
     //  int counterR = 0;
     //  int counterU = 0;
     //  int counterD = 0;
-
+      
     //  if(left < 0){
-    //      counterL = Math.abs(left);
+    //      counterL = Math.abs(left); 
     //      for(int i = 0; i < output.length; i++){
     //        for(int h = 0; h < counterL; h++){
     //          output[i][h] = "#";
@@ -126,7 +97,7 @@ public class Map{
     //      }
     //    }
     //    else if(right > output.length){
-    //      counterR = right-output.length-1;
+    //      counterR = right-output.length-1; 
     //      for(int i = 0; i < output.length; i++){
     //        for(int h = output.length; h > output[0].length-counterR; h--){
     //          output[i][h] = "#";
@@ -158,10 +129,41 @@ public class Map{
     //  return output;
     //}
 
+    public String[][] displayZone(){
+        int topLeftX = heroX - 10;
+        int topLeftY = heroY - 10;
+
+        int currX = 0;
+        int currY = 0;
+
+        topLeftX = Math.max(0, topLeftX);
+        topLeftY = Math.max(0, topLeftY);
+
+        topLeftX = Math.min(topLeftX, width-21);
+        topLeftY = Math.min(topLeftY, length-21);
+
+        String[][] output = new String[21][21];
+        for(int i = topLeftX; i < topLeftX + 21; i++){
+            for(int e = topLeftY; e < topLeftY + 21; e++){
+                output[currX][currY] = currentFrame.getPos(i,e);
+                //System.out.print(output[currX][currY]);
+                currY++;
+            }
+            //System.out.println("");
+            currY = 0;
+            currX++;
+        }
+  
+      return output;
+
+    }
+    
+
     public static void main(String[] args) {
         Map test = new Map();
         System.out.println(test);
-        System.out.println("______________");
+
+        test.displayZone();
 
         // test.changeEast();
         // System.out.println(test);

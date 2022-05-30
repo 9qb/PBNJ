@@ -1,14 +1,9 @@
-// (P)BNJ – Brian Li, Nakib Abedin, Jefford Shau
-// APCS pd07
-// FP – Dungeon Crawler
-// 2022-05-28
-
 public class Maze{
     /*
     Contains Maze
     Contains links to adjacent Mazes
     */
-
+    
     private String[][] _maze;
 
     // private Maze northMaze;
@@ -21,7 +16,7 @@ public class Maze{
      public Maze(String[][] arr){
          this._maze = arr;
      }
-
+     
      public String[][] getMaze(){
        return this._maze;
      }
