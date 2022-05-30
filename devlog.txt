@@ -61,10 +61,16 @@ Brian Li :: Worked on v3, started implementing the maze generation algorithm
 Nakib Abedin :: Worked on proposal
 Jefford Shau :: Further developed maze generation algorithm, helped with the proposal.
 
-2022-05-25
+2022-05-27
 --------------------------------------------------------------
 Brian Li :: General setup of repo, made sure everything is where it's supposed to be.
 Nakib Abedin :: Worked on v0, set up the movement feature and the carving algorithm
 Jefford Shau :: Worked on v0, came up with strucutre of maze generation
 ==============================================================
 
+2022-05-28 - 2022-05-30
+--------------------------------------------------------------
+Brian Li :: Completed development of working dungeon generator
+Nakib Abedin :: Bugfixing of dungeon generator, began work on processing
+Jefford Shau :: Bugfixing, worked on RPG classes.
+==============================================================
