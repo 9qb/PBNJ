@@ -10,12 +10,12 @@ Dungeon Explorer
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wow we so BOSS bc...
+We struggled with transferring our code into processing but then we realized we can call instances of our classes from Java and then we could manipulate those items in processing like we would in a standard driver file.
+The algorithm for Mr. K's class for maze generation didn't generate rooms. We had to go through a long, ardous process in order to get a maze that has rooms and less dead ends.
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-blah blah pesky bug...
-maybe some of these will move into the Obs.Ovrcm section...
+We need to figure out how to spawn monsters and how to let the user select between different heros.
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -40,6 +40,13 @@ tales of wisdom gained...
    \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
     \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
 ==============================================================
+
+
+2022-05-30
+--------------------------------------------------------------
+Brian Li :: Completed UML Diagram
+Nakib Abedin :: Assisted with UML Diagram; Added Movement and displayZone that is centered around the hero
+Jefford Shau :: Added RPG elements
 
 
 2022-05-28
