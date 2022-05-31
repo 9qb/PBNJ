@@ -8,6 +8,7 @@ public class MazeGenerator {
   private final String WORLD_BORDER = "@";
   private final String GATE = "!";
   private final String MAZEPATH = "$";
+  private final String END_TILE = "*";
 
  /*
  Advised by students from Mr K's class while writing this class
