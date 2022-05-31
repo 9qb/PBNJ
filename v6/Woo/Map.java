@@ -22,18 +22,43 @@ public class Map{
         maze = new Maze(troll.getGeneratedMaze());
         String[][] heroPosFinder = maze.getMaze();
         boolean isTrue = false;
-        for(int i =0; i < heroPosFinder.length-1;i++){
-          for(int e =0; e < heroPosFinder[0].length-1; e++){
-            if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
-                isTrue = true;
-                heroX = i;
-                heroY = e;
-              break;
-            }
-            if(isTrue){break;}
-          } 
-        }
+        // for(int i =0; i < heroPosFinder.length-1;i++){
+        //   for(int e =0; e < heroPosFinder[0].length-1; e++){
+        //     if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
+        //         isTrue = true;
+        //         heroX = i;
+        //         heroY = e;
+        //       break;
+        //     }
+        //     if(isTrue){break;}
+        //   } 
+        // }
         currentFrame = maze;
+        
+        int b = 0;
+        while (true){
+            heroX = troll.randNum(1,width);
+            heroY = troll.randNum(1,length);
+            if(isRoom(heroX, heroY)){
+                isTrue = true;
+                break;
+            }
+            b++;
+        }
+
+        //for(int i =0; i < heroPosFinder.length-1;i++){
+        //  for(int e =0; e < heroPosFinder[0].length-1; e++){
+        //    if((heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!") && !isTrue)){
+        //        isTrue = true;
+        //        heroX = i;
+        //        heroY = e;
+        //      break;
+        //    }
+        //    if(isTrue){break;}
+        //  } 
+        //}
+
+        
         currentFrame.setPos(heroX, heroY, hero);
     }
 
@@ -156,6 +181,21 @@ public class Map{
   
       return output;
 
+    }
+
+    public boolean isRoom(int x, int y)
+    {
+        // returns true if coordinate is in a room
+        return currentFrame.getMaze()[x-1][y-1].equals(" ") && 
+               currentFrame.getMaze()[x][y-1].equals(" ") &&
+               currentFrame.getMaze()[x+1][y-1].equals(" ") && 
+               currentFrame.getMaze()[x-1][y].equals(" ") &&
+               currentFrame.getMaze()[x][y].equals(" ") &&
+               currentFrame.getMaze()[x+1][y].equals(" ") && 
+               currentFrame.getMaze()[x-1][y+1].equals(" ") &&
+               currentFrame.getMaze()[x][y+1].equals(" ") && 
+               currentFrame.getMaze()[x+1][y+1].equals(" ");
+               
     }
     
 
