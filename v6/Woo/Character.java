@@ -1,7 +1,10 @@
 public class Character {
   protected int health;
-  protected int baseDamage;
-  protected int defense;
+  protected int attack;
+  protected int speed;
+  protected int currentR;
+  protected int currentC;
+  protected String lastTile
 
   public Character() {
     health = 4;
@@ -9,26 +12,41 @@ public class Character {
     defense = 0;
   }
 
-  public Character(int newHealth, int newBaseDamage, int newDefense) {
+  public Character(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
     health = newHealth;
-    baseDamage =  newBaseDamage;
-    defense = newDefense;
+    attack =  newAttack;
+    speed = newSpeed;
+    currentC = newC;
+    currentR = newR;
+    lastTile = null;
   }
 
   public int getHealth() {
     return health;
   }
 
-  public int getDefense() {
-    return defense;
+  public int getAtk() {
+    return attack;
   }
 
-  public int getAttack() {
-    return baseDamage;
+  public int getSpeed() {
+    return speed;
   }
 
-  public boolean isAlive() {
+  public boolean canAttack() { // player is alive
     return health > 0;
+  }
+
+  public void attack() {
+
+  }
+
+  public void attack(int r, int c) {
+
+  }
+
+  public void playTurn() {
+
   }
 
   public void addHealth(int value) {
@@ -37,5 +55,9 @@ public class Character {
 
   public void subtractHealth(int value) {
     health -= value;
+  }
+
+  private void processTile() {
+
   }
 }

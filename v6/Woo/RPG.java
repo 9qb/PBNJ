@@ -1,3 +1,8 @@
+// ______________________________________________
+
+// move this to Map.java? We need a place for all the instance variables
+
+// _____________________________________________
 public class RPG {
   private Hero mc;
   private Monster monster;
@@ -20,7 +25,7 @@ public class RPG {
   }
 
   public boolean playerTurn() { // returns true if player alive
-    
+
   }
 
 

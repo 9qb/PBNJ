@@ -1,15 +1,31 @@
 public class Hero extends Character {
-  public int gems;
+  private String input;
 
   public Hero() {
     super();
   }
 
-  public Hero(int newHealth, int newBaseDamage, int newDefense) {
-    super(newHealth, newBaseDamage, newDefense);
+  public Hero(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
+    super(int newHealth, int newAttack, int newSpeed, int newC, int newR);
   }
 
-  public void setHealth(int fullHealth) {
-    health = fullHealth;
+  public void moveUp() {
+
+  }
+
+  public void moveRight() {
+
+  }
+
+  public void moveDown() {
+
+  }
+
+  public void moveLeft() {
+
+  }
+
+  public void playTurn() { //override
+
   }
 }
