@@ -47,6 +47,7 @@ tales of wisdom gained...
 Brian Li :: Completed UML Diagram
 Nakib Abedin :: Assisted with UML Diagram; Added Movement and displayZone that is centered around the hero
 Jefford Shau :: Added RPG elements
+==============================================================
 
 
 2022-05-28
@@ -54,6 +55,7 @@ Jefford Shau :: Added RPG elements
 Brian Li :: Finalized maze generation algorithm
 Nakib Abedin :: Helped Jefford with transferring the maze into processing; figured out how to use custom tiles
 Jefford Shau :: Transferred maze into processing
+==============================================================
 
 
 2022-05-27
@@ -61,12 +63,14 @@ Jefford Shau :: Transferred maze into processing
 Brian Li :: Worked on bugs with the Maze generation algorithm
 Nakib Abedin :: Applied ANSI escape codes to terminal maze
 Jefford Shau :: was absent in class
+==============================================================
 
 2022-05-26
 --------------------------------------------------------------
 Brian Li :: Worked on v3, started implementing the maze generation algorithm
 Nakib Abedin :: Worked on proposal
 Jefford Shau :: Further developed maze generation algorithm, helped with the proposal.
+==============================================================
 
 2022-05-27
 --------------------------------------------------------------
@@ -80,4 +84,11 @@ Jefford Shau :: Worked on v0, came up with strucutre of maze generation
 Brian Li :: Completed development of working dungeon generator
 Nakib Abedin :: Bugfixing of dungeon generator, began work on processing
 Jefford Shau :: Bugfixing, worked on RPG classes.
+==============================================================
+
+2022-05-31
+--------------------------------------------------------------
+Brian Li :: Created Flowchart of State Transitions, aided in movement to Processing, bugfixes.
+Nakib Abedin :: Developed Processing controls, textures, etc. Developed a view range. Added buttons.
+Jefford Shau :: Worked on RPG classes. Helped with flowchart.
 ==============================================================
