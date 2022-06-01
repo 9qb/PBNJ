@@ -80,20 +80,31 @@ public class Map{
         //    if(isTrue){break;}
         //  }
         //}
-
-
         currentFrame.setPos(heroX, heroY, hero);
     }
 
-    
-    public boolean roundTurns() {
-      while(mc.isAlive() ) { // add if mc not on end tile
-        playerTurn();
-        if (playerTurn()) {
+
+    public boolean round() {
+      playerTurn();
+      if (mc.isAlive()) {
           monsterTurn();
         }
+      if mc.isAlive() { // generate another floor
+        return true;
+      } else {
+        return false;
       }
-      if (roundTurns()) {
+    }
+
+    public boolean ifEnd() {
+      return maze.getPos(mc.getX(), mc.getY()).equals("*");
+    }
+
+    public void play() {
+      while(mc.isAlive() && !ifEnd() {
+        round(); // 1 round consists of player turn and monster turn
+      }
+      if (mc.isAlive()) {
         System.out.println("You cleared the floor!");
         System.out.println("Current score: " + score);
         System.out.println("Generating next stage ...");

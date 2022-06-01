@@ -23,6 +23,14 @@ public class Character {
    lastTile = null;
   }
 
+  public int getY() {
+    return currentC;
+  }
+
+  public int getX() {
+    return currentR;
+  }
+
   public int getHealth() {
    return health;
   }
