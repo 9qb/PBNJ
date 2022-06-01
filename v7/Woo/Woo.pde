@@ -71,4 +71,13 @@ void keyPressed(){
  //   else if(key == 'D' || key == 'd'){
  //     map.round("D");
  // }
+ //   else if(key == "1"){
+ //     map.battleChoice(1);
+ // }
+ //   else if(key == "2"){
+ //     map.battleChoice(2);
+ // }
+ //   else if(key == "3"){
+ //     map.battleChoice(3);
+ // }
  // }

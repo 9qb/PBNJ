@@ -12,19 +12,4 @@ public class Monster extends Character {
  //
  // }
  //
- // public void move() { // monster moves randomly
- //   int choice = (int) Math.random() * 4;
- //   if (choice = 0) {
- //
- //   }
- //   else if (choice = 1) {
- //
- //   }
- //   else if (choice = 2) {
- //
- //   }
- //   else if (choice = 3) {
- //
- //   }
- // }
 }

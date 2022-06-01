@@ -24,11 +24,11 @@ public class Character {
   }
 
   public int getR() { // Y cord
-    return currentC;
+    return currentR;
   }
 
   public int getC() { // X cord
-    return currentR;
+    return currentC;
   }
 
   public void changeX(int value) {
@@ -80,19 +80,19 @@ public class Character {
   }
 
   public void moveUp() {
-    currentR -= 1;
+    currentC -= 1;
   }
 
   public void moveRight() {
-    currentC += 1;
-  }
-
-  public void moveDown() {
     currentR += 1;
   }
 
+  public void moveDown() {
+    currentC += 1;
+  }
+
   public void moveLeft() {
-    currentC -= 1;
+    currentR -= 1;
   }
 
   // private void processTile() {

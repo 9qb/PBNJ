@@ -23,6 +23,7 @@ public class Map{
     private ArrayList<Character> currentMonster = new ArrayList<Character>(); // monsters in the frame
     private ArrayList<Character> monsters = new ArrayList<Character>();
     private int monsterCount = 8; // total amount of monsters per floor
+    private boolean battlePhase = false;
 
     // system instance variables
     private int score; // accumulates after each floor
@@ -85,6 +86,7 @@ public class Map{
     public void playerTurn(String key) {
       int mcC = mc.getC(); // stores current C tile
       int mcR = mc.getR(); // stores current R tile
+      // player movement
       if (key == "W") {
         if (moveUp()) {
           mc.updLastTile(mcC, mcR);
@@ -109,40 +111,148 @@ public class Map{
           mc.moveRight();
         }
       }
-      for (Character mon : monsters) { // if the hero and any monster share the same tile, battle occurs
+      // hero trigger monster combat
+      currentMonster.clear();
+      for (Character mon : monsters) {
         if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
-          battle(mc, mon);
-          break;
+          currentMonster.add(mon);
         }
       }
+      battlePhase = true;
+      for (Character current : currentMonster) {
+        Character temp = current;
+        battleChoice(mc, temp);
+        if (!mc.isAlive()) { // hero died
+          battlePhase = false;
+          return;
+        }
+        else { // monster died
+          monsters.remove(current);
+        }
+      }
+      battlePhase = false;
     }
 
     // monster move
     public void monsterTurn() {
-
+      for (Character mon : monsters) {
+        int monC = mon.getC(); // stores current C tile
+        int monR = mon.getR(); // stores current R tile
+        // monster movement
+        int choice = (int) Math.random() * 4;
+        boolean moved = false;
+        while (!moved) {
+          if (choice = 0 && maze.getPos(monC-1, monR)) {
+            mon.updLastTile(monC, monR);
+            mc.moveUp();
+            moved = true;
+          }
+          else if (choice = 1 && maze.getPos(monC, monR-1)) {
+            mmon.updLastTile(monC, monR);
+            mc.moveLeft();
+            moved = true;
+          }
+          else if (choice = 2 && maze.getPos(monC+1, monR)) {
+            mmon.updLastTile(monC, monR);
+            mc.moveDown();
+            moved = true;
+          }
+          else if (choice = 3 && maze.getPos(monC, monR+1)) {
+            mmon.updLastTile(monC, monR);
+            mc.moveRight();
+            moved = true;
+          }
+        }
+      }
+      // monster trigger hero combat
+      currentMonster.clear();
+      for (Character mon : monsters) {
+        if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
+          currentMonster.add(mon);
+        }
+      }
+      battlePhase = true;
+      for (Character current : currentMonster) {
+        Character temp = current;
+        battleChoice(mc, temp);
+        if (!mc.isAlive()) { // hero died
+          battlePhase = false;
+          return;
+        }
+        else { // monster died
+          monsters.remove(current);
+        }
+      }
+      battlePhase = false;
     }
 
-    public boolean battle(Character hero, Character mon) { // returns true if hero is alive after battle
-      int firstAttack = troll.randNum(0, 2);
-      if (firstAttack == 0) { // player attacks first
-        hero.attacks(mon)
+    public void battleChoice(int key) {
+      if (battlePhase == true) {
+        while( mc.isAlive() && mon.isAlive() ) {
+          System.out.println( "\nWhat is your choice?" );
+          System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
+          if ( key == 1 ) {
+            weaponChoice();
+          }
+          else if ( key == 2 ) {
+            if (!(useItem())) {
+              battleChoice();
+            }
+            else {
+            characterAttack(mon, hero); // no attack weapon
+            }
+          }
+          else if ( key == 3 ) {
+            int fleeChance = (int) (Math.random() * 10);
+            if (fleeChance < 3) {
+              System.out.println("\nThe " + mon.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + mon.getName() + "can land another hit.");
+              return;
+            }
+            else {
+              System.out.println("\nYou begin to escape, but the " + mon.getName() + " slashes down at you one time and lands a hit before you escape.");
+              characterAttack(mon, hero, 1, 0, useShield());
+              return;
+            }
+          }
+        }
+        if (hero.isAlive()) {
+          return true;
+        }
       }
-      else if (firstAttack == 1) { // monster attacks first
+    }
 
+    public boolean attackOrder(Character hero, Character mon) { // manages attack order
+      int order = troll.randNum(0, 2);
+      if (order == 0) { // player attacks first
+          characterAttack(hero, mon);
+          if (mon.isAlive()) {
+            characterAttack(mon, hero);
+          }
       }
-      return true;
+      else if (order == 1) { // monster attacks first
+          characterAttack(mon, hero);
+          if (mon.isAlive()) {
+            characterAttack(hero, mon);
+          }
+      }
+      if (hero.isAlive()) {
+        return true;
+      }
+      return false;
     }
 
     public void round(String key) {
-      playerTurn(key);
-      if (mc.isAlive()) {
+      if (battlePhase == false) {
+        playerTurn(key);
+        if (mc.isAlive()) {
           monsterTurn();
         }
-      if (mc.isAlive() && !ifEnd()) { // generate another floor
-        nextFloor();
-      }
-      else if (!mc.isAlive()) {
-        dead();
+        if (mc.isAlive() && !ifEnd()) { // generate another floor
+          nextFloor();
+        }
+        else if (!mc.isAlive()) {
+          dead();
+        }
       }
     }
 
@@ -163,13 +273,13 @@ public class Map{
       System.out.println("Final Score: " + score);
     }
 
-    public String toString(){
+    public String toString() {
         clear();
         return currentFrame.toString();
     }
 
     // player movement
-    public boolean moveUp(){
+    public boolean moveUp() {
         if(currentFrame.getPos(mc.getC()-1, mc.getR()).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()).equals("!")){
             currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeX(1);
@@ -179,7 +289,7 @@ public class Map{
           return false;
         }
     }
-    public boolean moveRight(){
+    public boolean moveRight() {
         if(currentFrame.getPos(mc.getC(), mc.getR()+1).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()+1).equals("!")){
             currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeY(1);
@@ -189,7 +299,7 @@ public class Map{
           return false;
         }
     }
-    public boolean moveDown(){
+    public boolean moveDown() {
         if(currentFrame.getPos(mc.getC()+1, mc.getR()).equals(" ") || currentFrame.getPos(mc.getC()+1, mc.getR()).equals("!")){
             currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeX(1);
@@ -199,7 +309,7 @@ public class Map{
           return false;
         }
     }
-    public boolean moveLeft(){
+    public boolean moveLeft() {
         if(currentFrame.getPos(mc.getC(), mc.getR()-1).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()-1).equals("!")){
             currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeY(1);
@@ -210,7 +320,7 @@ public class Map{
         }
     }
 
-    public String[][] getMaze(){
+    public String[][] getMaze() {
       return maze.getMaze();
     }
 
@@ -268,7 +378,7 @@ public class Map{
     //  return output;
     //}
 
-    public String[][] displayZone(){
+    public String[][] displayZone() {
         int topLeftX = mc.getC() - 10;
         int topLeftY = mc.getR() - 10;
 
@@ -297,8 +407,7 @@ public class Map{
 
     }
 
-    public boolean isRoom(int x, int y)
-    {
+    public boolean isRoom(int x, int y) {
         // returns true if coordinate is in a room
         return currentFrame.getMaze()[x-1][y-1].equals(" ") &&
                currentFrame.getMaze()[x][y-1].equals(" ") &&
