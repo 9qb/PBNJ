@@ -16,7 +16,7 @@ void keyPressed(){
   currentPage.keyPressed();
 }
 
- /Map map = new Map();
+ //Map map = new Map();
  // PImage[] mapTiles;
 
  // int SIZE = 32;
