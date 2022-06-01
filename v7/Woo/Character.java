@@ -22,7 +22,7 @@ public class Character {
    currentC = newC;
    currentR = newR;
    map = maze;
-   lastTile = map[currentC][currentR];
+   lastTile = map[currentR][currentC];
   }
 
   public int getR() { // Y cord
@@ -60,7 +60,7 @@ public class Character {
   public void updLastTile() {
     map[currentR][currentC] = lastTile;
   }
-  
+
   public String lastTile(){
     return lastTile;
   }
@@ -88,28 +88,28 @@ public class Character {
   public void moveUp() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentR -= 1;
+      currentC -= 1;
     }
   }
 
   public void moveRight() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentC += 1;
+      currentR += 1;
     }
   }
 
   public void moveDown() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentR += 1;
+      currentC += 1;
     }
   }
 
   public void moveLeft() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentC -= 1;
+      currentR -= 1;
     }
   }
 

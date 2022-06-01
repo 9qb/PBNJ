@@ -298,15 +298,15 @@ public class Map{
       System.out.println("Final Score: " + score);
     }
 
-    public String toString() {
-        clear();
-        return currentFrame.toString();
-    }
+    // public String toString() {
+    //     clear();
+    //     return currentFrame.toString();
+    // }
 
     // player movement
     public boolean moveUp() {
-        if( (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("@"))) ){
+            // currentFrame.setPos(mc.getC(), mc.getR()-1, mc.lastTile());
             mc.moveUp();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -315,8 +315,8 @@ public class Map{
         }
     }
     public boolean moveRight() {
-        if( (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("@"))) ){
+            // currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveRight();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -325,8 +325,8 @@ public class Map{
         }
     }
     public boolean moveDown() {
-        if( (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("@"))) ){
+            // currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveDown();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -335,8 +335,8 @@ public class Map{
         }
     }
     public boolean moveLeft() {
-        if( (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("@"))) ){
+            // currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveLeft();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -448,7 +448,7 @@ public class Map{
 
     public static void main(String[] args) {
         Map test = new Map();
-        System.out.println(test);
+        System.out.println();
 
         test.displayZone();
 
