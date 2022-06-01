@@ -88,12 +88,23 @@ public class MazeGenerator {
   }
 
   private void cleanup(){
+    openGates(); openGates();
     for (int i = 1; i < _rows - 2; i ++){
       for (int j = 1; j < _cols - 2; j++){
         cleanup(i, j);
       }
     }
-    openGates(); openGates();
+    returnGates();
+  }
+  
+  private void returnGates(){
+    for (int i = 1; i < _rows - 2; i ++){
+      for (int j = 1; j < _cols - 2; j++){
+        if(_maze[i][j].equals(GATE)){
+          _maze[i][j] = SPACE;
+        }
+      }
+    }
   }
 
   private void cleanup(int row, int col){
@@ -312,7 +323,7 @@ public class MazeGenerator {
   private void openGates(){
     markGates();
     for (int i = 0; i < _rooms.size(); i++){
-      _rooms.get(0).removeGates(randNum(1,6));
+      _rooms.get(0).removeGates(randNum(3,6));
     }
   }
 

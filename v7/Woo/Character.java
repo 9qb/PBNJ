@@ -86,23 +86,31 @@ public class Character {
   }
 
   public void moveUp() {
-    updLastTile();
-    currentR -= 1;
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentR -= 1;
+    }
   }
 
   public void moveRight() {
-    updLastTile();
-    currentC += 1;
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentC += 1;
+    }
   }
 
   public void moveDown() {
-    updLastTile();
-    currentR += 1;
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentR += 1;
+    }
   }
 
   public void moveLeft() {
-    updLastTile();
-    currentC -= 1;
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentC -= 1;
+    }
   }
 
   public String getName() {
