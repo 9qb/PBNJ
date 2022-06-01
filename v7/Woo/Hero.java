@@ -5,27 +5,27 @@ public class Hero extends Character {
     super();
   }
 
-  //public Hero(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
-  //  super(int newHealth, int newAttack, int newSpeed, int newC, int newR);
-  //}
+  public Hero(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
+   super(newHealth, newAttack, newSpeed, newC, newR);
+  }
 
-  //public void moveUp() {
-
-  //}
-
-  //public void moveRight() {
-
-  //}
-
-  //public void moveDown() {
-
-  //}
-
-  //public void moveLeft() {
-
-  //}
-
-  //public void playTurn() { //override
-
-  //}
+  // public void moveUp() {
+  //
+  // }
+  //
+  // public void moveRight() {
+  //
+  // }
+  //
+  // public void moveDown() {
+  //
+  // }
+  //
+  // public void moveLeft() {
+  //
+  // }
+  //
+  // public void playTurn() { //override
+  //
+  // }
 }

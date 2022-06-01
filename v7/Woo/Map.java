@@ -19,9 +19,11 @@ public class Map{
     private int length;
 
     // RPG instance variables
-    private Hero mc;
-    private Monster monster;
-    private ArrayList<Monster> monsters = new ArrayList<Monster>();
+    private Character mc;
+    private Character monster;
+    private ArrayList<Character> currentMonster = new ArrayList<Character>(); // monsters in the frame
+    private ArrayList<Character> monsters = new ArrayList<Character>();
+    private int monsterCount = 8; // total amount of monsters per floor
 
     // system instance variables
     private int score; // accumulates after each floor
@@ -45,20 +47,25 @@ public class Map{
         // }
         currentFrame = maze;
 
-        // while ()
+        // creates the hero
+        while (mc == null) {
+          heroX = troll.randNum(1, width);
+          heroY = troll.randNum(1, length);
+          if(isRoom(heroX, heroY)) {
+            isTrue = true;
+            mc = new Hero(100, 10, 1, heroX, heroY);
+            break;
+          }
+        }
 
-        // mc = new Character();
-        // monster = new Character(100, randNum(10, 15), 2, );
-
-        int b = 0;
-        while (true){
-            heroX = troll.randNum(1,width);
-            heroY = troll.randNum(1,length);
-            if(isRoom(heroX, heroY)){
-                isTrue = true;
-                break;
-            }
-            b++;
+        // creates the monsters
+        while (monsters.size() != monsterCount) {
+          int monsterX = troll.randNum(1, width);
+          int monsterY = troll.randNum(1, length);
+          if(isRoom(monsterX, monsterY)) {
+            monster = new Monster(100, 10, 1, heroX, heroY);
+            monsters.add(monster);
+          }
         }
 
         //for(int i =0; i < heroPosFinder.length-1;i++){
@@ -75,11 +82,6 @@ public class Map{
 
 
         currentFrame.setPos(heroX, heroY, hero);
-    }
-
-    // returns [lowerLimit, upperLimit)
-    public int randNum(int lowerLimit, int upperLimit){
-      return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
     }
 
     public String toString(){
