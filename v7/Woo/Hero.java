@@ -9,22 +9,6 @@ public class Hero extends Character {
    super(newHealth, newAttack, newSpeed, newC, newR);
   }
 
-  // public void moveUp() {
-  //
-  // }
-  //
-  // public void moveRight() {
-  //
-  // }
-  //
-  // public void moveDown() {
-  //
-  // }
-  //
-  // public void moveLeft() {
-  //
-  // }
-  //
   // public void playTurn() { //override
   //
   // }

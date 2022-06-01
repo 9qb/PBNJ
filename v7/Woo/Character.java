@@ -23,11 +23,11 @@ public class Character {
    lastTile = null;
   }
 
-  public int getY() {
+  public int getR() { // Y cord
     return currentC;
   }
 
-  public int getX() {
+  public int getC() { // X cord
     return currentR;
   }
 
@@ -77,6 +77,22 @@ public class Character {
 
   public void subtractHealth(int value) {
    health -= value;
+  }
+
+  public void moveUp() {
+    currentR -= 1;
+  }
+
+  public void moveRight() {
+    currentC += 1;
+  }
+
+  public void moveDown() {
+    currentR += 1;
+  }
+
+  public void moveLeft() {
+    currentC -= 1;
   }
 
   // private void processTile() {

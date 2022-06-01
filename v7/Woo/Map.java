@@ -37,8 +37,8 @@ public class Map{
         //   for(int e =0; e < heroPosFinder[0].length-1; e++){
         //     if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
         //         isTrue = true;
-        //         mc.getX() = i;
-        //         mc.getY() = e;
+        //         mc.getC() = i;
+        //         mc.getR() = e;
         //       break;
         //     }
         //     if(isTrue){break;}
@@ -48,21 +48,21 @@ public class Map{
 
         // creates the hero in a room
         while (mc == null) {
-          int heroX = troll.randNum(1, width);
-          int heroY = troll.randNum(1, length);
-          if(isRoom(mc.getX(), mc.getY())) {
+          int heroC = troll.randNum(1, width);
+          int heroR = troll.randNum(1, length);
+          if(isRoom(mc.getC(), mc.getR())) {
             // isTrue = true;
-            mc = new Hero(100, 10, 1, mc.getX(), mc.getY());
+            mc = new Hero(100, 10, 1, mc.getC(), mc.getR());
             break;
           }
         }
 
         // creates the monsters in a room
         while (monsters.size() != monsterCount) {
-          int monsterX = troll.randNum(1, width);
-          int monsterY = troll.randNum(1, length);
+          int monsterC = troll.randNum(1, width);
+          int monsterR = troll.randNum(1, length);
           if(isRoom(monsterX, monsterY)) {
-            monster = new Monster(100, 10, 1, mc.getX(), mc.getY());
+            monster = new Monster(100, 10, 1, mc.getC(), mc.getR());
             monsters.add(monster);
           }
         }
@@ -71,36 +71,46 @@ public class Map{
         //  for(int e =0; e < heroPosFinder[0].length-1; e++){
         //    if((heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!") && !isTrue)){
         //        isTrue = true;
-        //        mc.getX() = i;
-        //        mc.getY() = e;
+        //        mc.getC() = i;
+        //        mc.getR() = e;
         //      break;
         //    }
         //    if(isTrue){break;}
         //  }
         //}
-        currentFrame.setPos(mc.getX(), mc.getY(), hero);
+        currentFrame.setPos(mc.getC(), mc.getR(), hero);
     }
 
     // player move
     public void playerTurn(String key) {
+      int mcC = mc.getC(); // stores current C tile
+      int mcR = mc.getR(); // stores current R tile
       if (key == "W") {
-        mc.updLastTile(mc.getX(), mc.getY());
-        moveUp();
+        if (moveUp()) {
+          mc.updLastTile(mcC, mcR);
+          mc.moveUp();
+        }
       }
       else if (key == "A") {
-        mc.updLastTile(mc.getX(), mc.getY());
-        moveLeft();
+        if (moveLeft()) {
+          mc.updLastTile(mcC, mcR);
+          mc.moveLeft();
+        }
       }
       else if (key == "S") {
-        mc.updLastTile(mc.getX(), mc.getY());
-        moveDown();
+        if (moveDown()) {
+          mc.updLastTile(mcC, mcR);
+          mc.moveDown();
+        }
       }
       else if (key == "D") {
-        mc.updLastTile(mc.getX(), mc.getY());
-        moveRight();
+        if (moveRight()) {
+          mc.updLastTile(mcC, mcR);
+          mc.moveRight();
+        }
       }
       for (Character mon : monsters) { // if the hero and any monster share the same tile, battle occurs
-        if (mc.getX() == mon.getX() && mc.getY() == mon.getY()) {
+        if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
           battle(mc, mon);
           break;
         }
@@ -113,7 +123,14 @@ public class Map{
     }
 
     public boolean battle(Character hero, Character mon) { // returns true if hero is alive after battle
-      return true; 
+      int firstAttack = troll.randNum(0, 2);
+      if (firstAttack == 0) { // player attacks first
+        hero.attacks(mon)
+      }
+      else if (firstAttack == 1) { // monster attacks first
+
+      }
+      return true;
     }
 
     public void round(String key) {
@@ -131,7 +148,7 @@ public class Map{
 
     // helper method for play()
     public boolean ifEnd() { // if hero is on end tile
-      return maze.getPos(mc.getX(), mc.getY()).equals("*");
+      return maze.getPos(mc.getC(), mc.getR()).equals("*");
     }
 
     public void nextFloor() { // how to generate next floor
@@ -152,32 +169,44 @@ public class Map{
     }
 
     // player movement
-    public void moveUp(){
-        if(currentFrame.getPos(mc.getX()-1, mc.getY()).equals(" ") || currentFrame.getPos(mc.getX(), mc.getY()).equals("!")){
-            currentFrame.setPos(mc.getX(), mc.getY()," ");
+    public boolean moveUp(){
+        if(currentFrame.getPos(mc.getC()-1, mc.getR()).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()).equals("!")){
+            currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeX(1);
-            currentFrame.setPos(mc.getX(), mc.getY(), hero);
+            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    public void moveRight(){
-        if(currentFrame.getPos(mc.getX(), mc.getY()+1).equals(" ") || currentFrame.getPos(mc.getX(), mc.getY()+1).equals("!")){
-            currentFrame.setPos(mc.getX(), mc.getY()," ");
+    public boolean moveRight(){
+        if(currentFrame.getPos(mc.getC(), mc.getR()+1).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()+1).equals("!")){
+            currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeY(1);
-            currentFrame.setPos(mc.getX(), mc.getY(), hero);
+            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    public void moveDown(){
-        if(currentFrame.getPos(mc.getX()+1, mc.getY()).equals(" ") || currentFrame.getPos(mc.getX()+1, mc.getY()).equals("!")){
-            currentFrame.setPos(mc.getX(), mc.getY()," ");
+    public boolean moveDown(){
+        if(currentFrame.getPos(mc.getC()+1, mc.getR()).equals(" ") || currentFrame.getPos(mc.getC()+1, mc.getR()).equals("!")){
+            currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeX(1);
-            currentFrame.setPos(mc.getX(), mc.getY(), hero);
+            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    public void moveLeft(){
-        if(currentFrame.getPos(mc.getX(), mc.getY()-1).equals(" ") || currentFrame.getPos(mc.getX(), mc.getY()-1).equals("!")){
-            currentFrame.setPos(mc.getX(), mc.getY()," ");
+    public boolean moveLeft(){
+        if(currentFrame.getPos(mc.getC(), mc.getR()-1).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()-1).equals("!")){
+            currentFrame.setPos(mc.getC(), mc.getR()," ");
             mc.changeY(1);
-            currentFrame.setPos(mc.getX(), mc.getY(), hero);
+            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
 
@@ -186,10 +215,10 @@ public class Map{
     }
 
     //public String[][] displayZone(){
-    //  int left = mc.getX() - 10;
-    //  int right = mc.getX() + 10;
-    //  int up = mc.getY() - 10;
-    //  int down = mc.getY() + 10;
+    //  int left = mc.getC() - 10;
+    //  int right = mc.getC() + 10;
+    //  int up = mc.getR() - 10;
+    //  int down = mc.getR() + 10;
 
     //  String[][] output = new String[21][21];
 
@@ -240,8 +269,8 @@ public class Map{
     //}
 
     public String[][] displayZone(){
-        int topLeftX = mc.getX() - 10;
-        int topLeftY = mc.getY() - 10;
+        int topLeftX = mc.getC() - 10;
+        int topLeftY = mc.getR() - 10;
 
         int currX = 0;
         int currY = 0;
