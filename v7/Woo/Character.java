@@ -22,7 +22,7 @@ public class Character {
    currentC = newC;
    currentR = newR;
    map = maze;
-   lastTile = map[currentR][currentC];
+   lastTile = " ";
   }
 
   public int getR() { // Y cord

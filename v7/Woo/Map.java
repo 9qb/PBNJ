@@ -298,10 +298,10 @@ public class Map{
       System.out.println("Final Score: " + score);
     }
 
-    // public String toString() {
-    //     clear();
-    //     return currentFrame.toString();
-    // }
+     public String toString() {
+         clear();
+         return currentFrame.toString();
+     }
 
     // player movement
     public boolean moveUp() {
@@ -448,7 +448,7 @@ public class Map{
 
     public static void main(String[] args) {
         Map test = new Map();
-        System.out.println();
+        System.out.println(test);
 
         test.displayZone();
 
