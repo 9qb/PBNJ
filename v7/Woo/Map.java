@@ -20,6 +20,7 @@ public class Map{
 
     // RPG instance variables
     private Character mc;
+    private ArrayList<Item> inventory = new ArrayList<Item>(); // hero inventory
     private Character monster;
     private ArrayList<Character> currentMonster = new ArrayList<Character>(); // monsters in the frame
     private ArrayList<Character> monsters = new ArrayList<Character>();
@@ -33,7 +34,7 @@ public class Map{
         length = 144;
         MazeGenerator troll = new MazeGenerator(width, length);
         maze = new Maze(troll.getGeneratedMaze());
-        boolean isTrue = false;
+        // boolean isTrue = false;
         // for(int i =0; i < heroPosFinder.length-1;i++){
         //   for(int e =0; e < heroPosFinder[0].length-1; e++){
         //     if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
@@ -47,18 +48,18 @@ public class Map{
         // }
         currentFrame = maze;
 
-        // creates the hero
+        // creates the hero in a room
         while (mc == null) {
           heroX = troll.randNum(1, width);
           heroY = troll.randNum(1, length);
           if(isRoom(heroX, heroY)) {
-            isTrue = true;
+            // isTrue = true;
             mc = new Hero(100, 10, 1, heroX, heroY);
             break;
           }
         }
 
-        // creates the monsters
+        // creates the monsters in a room
         while (monsters.size() != monsterCount) {
           int monsterX = troll.randNum(1, width);
           int monsterY = troll.randNum(1, length);
@@ -89,6 +90,7 @@ public class Map{
         return currentFrame.toString();
     }
 
+    // player movement
     public void moveUp(){
         if(currentFrame.getPos(heroX-1, heroY).equals(" ") || currentFrame.getPos(heroX-1, heroY).equals("!")){
             currentFrame.setPos(heroX, heroY," ");
@@ -218,6 +220,17 @@ public class Map{
                currentFrame.getMaze()[x][y+1].equals(" ") &&
                currentFrame.getMaze()[x+1][y+1].equals(" ");
 
+    }
+
+    public boolean roundTurns() {
+     mc = new Hero(100, 10, 0);
+     monster = new Monster(100, ((int) Math.random() * 5) + 10 , 0);
+     while(mc.isAlive() ) { // add if mc not on end tile
+       playerTurn();
+       if (playerTurn()) {
+         monsterTurn();
+       }
+     // set victory to true if on end tile, false otherwise
     }
 
 

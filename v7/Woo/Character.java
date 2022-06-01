@@ -35,9 +35,13 @@ public class Character {
    return speed;
   }
 
-  public boolean canAttack() { // player is alive
+  public boolean canAttack() { // character is alive
    return health > 0;
   }
+
+  // public void updLastTile() {
+  //   lastTile =
+  // }
 
   // public void attack() {
   //
