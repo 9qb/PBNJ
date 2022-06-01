@@ -84,25 +84,37 @@ public class Map{
     // player move
     public void playerTurn(String key) {
       if (key == "W") {
+        mc.updLastTile(mc.getX(), mc.getY());
         moveUp();
       }
       else if (key == "A") {
+        mc.updLastTile(mc.getX(), mc.getY());
         moveLeft();
       }
       else if (key == "S") {
+        mc.updLastTile(mc.getX(), mc.getY());
         moveDown();
       }
       else if (key == "D") {
+        mc.updLastTile(mc.getX(), mc.getY());
         moveRight();
       }
-
+      for (Character mon : monsters) { // if the hero and any monster share the same tile, battle occurs
+        if (mc.getX() == mon.getX() && mc.getY() == mon.getY()) {
+          battle(mc, mon);
+          break;
+        }
+      }
     }
 
     // monster move
-    // public void monsterTurn() {
-    //
-    // }
+    public void monsterTurn() {
 
+    }
+
+    public boolean battle(Character hero, Character mon) { // returns true if hero is alive after battle
+      return true; 
+    }
 
     public void round(String key) {
       playerTurn(key);
@@ -130,7 +142,7 @@ public class Map{
     }
 
     public void dead() {
-      System.out.println("You Died!");
+      System.out.println("You have died. Better luck next time.");
       System.out.println("Final Score: " + score);
     }
 

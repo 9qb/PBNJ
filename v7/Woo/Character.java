@@ -6,7 +6,7 @@ public class Character {
   protected int currentC;
   protected int baseDamage;
   protected int defense;
-  protected String lastTile;
+  protected int[][] lastTile;
 
   public Character() {
    health = 4;
@@ -55,9 +55,9 @@ public class Character {
    return health > 0;
   }
 
-  // public void updLastTile() {
-  //   lastTile =
-  // }
+  public void updLastTile(int x, int y) {
+    lastTile = new int[x][y];
+  }
 
   // public void attack() {
   //
