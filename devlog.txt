@@ -92,3 +92,10 @@ Brian Li :: Created Flowchart of State Transitions, aided in movement to Process
 Nakib Abedin :: Developed Processing controls, textures, etc. Developed a view range. Added buttons.
 Jefford Shau :: Worked on RPG classes. Helped with flowchart.
 ==============================================================
+
+2022-06-01
+--------------------------------------------------------------
+Brian Li :: Debugging attempts, created Debugger.java as a temporary class to view errors in Terminal.
+Nakib Abedin :: Added new textures, backgrounds. Debugging.
+Jefford Shau :: Worked on RPG classes. Debugging.
+==============================================================
