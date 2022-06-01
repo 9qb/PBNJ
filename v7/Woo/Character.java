@@ -6,7 +6,8 @@ public class Character {
   protected int currentC;
   protected int baseDamage;
   protected int defense;
-  protected int[][] lastTile;
+  protected String lastTile;
+  protected String[][] map;
 
   public Character() {
    health = 4;
@@ -14,13 +15,14 @@ public class Character {
    defense = 0;
   }
 
-  public Character(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
+  public Character(int newHealth, int newAttack, int newSpeed, int newC, int newR, String[][] maze) {
    health = newHealth;
-   attack =  newAttack;
+   attack = newAttack;
    speed = newSpeed;
    currentC = newC;
    currentR = newR;
-   lastTile = null;
+   map = maze;
+   lastTile = map[currentC][currentR];
   }
 
   public int getR() { // Y cord
@@ -32,11 +34,11 @@ public class Character {
   }
 
   public void changeX(int value) {
-    currentR -= value;
+    currentR += value;
   }
 
   public void changeY(int value) {
-    currentC -= value;
+    currentC += value;
   }
 
   public int getHealth() {
@@ -55,8 +57,12 @@ public class Character {
    return health > 0;
   }
 
-  public void updLastTile(int x, int y) {
-    lastTile = new int[x][y];
+  public void updLastTile() {
+    map[currentR][currentC] = lastTile;
+  }
+  
+  public String lastTile(){
+    return lastTile;
   }
 
   // public void attack() {
@@ -80,19 +86,23 @@ public class Character {
   }
 
   public void moveUp() {
-    currentC -= 1;
+    updLastTile();
+    currentR -= 1;
   }
 
   public void moveRight() {
-    currentR += 1;
-  }
-
-  public void moveDown() {
+    updLastTile();
     currentC += 1;
   }
 
+  public void moveDown() {
+    updLastTile();
+    currentR += 1;
+  }
+
   public void moveLeft() {
-    currentR -= 1;
+    updLastTile();
+    currentC -= 1;
   }
 
   public String getName() {

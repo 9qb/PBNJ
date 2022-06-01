@@ -5,8 +5,8 @@ public class Hero extends Character {
     super();
   }
 
-  public Hero(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
-   super(newHealth, newAttack, newSpeed, newC, newR);
+  public Hero(int newHealth, int newAttack, int newSpeed, int newC, int newR, String[][] maze) {
+   super(newHealth, newAttack, newSpeed, newC, newR, maze);
   }
 
   public String getName() {

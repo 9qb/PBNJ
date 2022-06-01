@@ -51,9 +51,9 @@ public class Map{
         while (mc == null) {
           int heroC = troll.randNum(1, width);
           int heroR = troll.randNum(1, length);
-          if(isRoom(mc.getC(), mc.getR())) {
+          if(isRoom(heroC, heroR)) {
             // isTrue = true;
-            mc = new Hero(100, 10, 1, mc.getC(), mc.getR());
+            mc = new Hero(100, 10, 1, heroC, heroR, maze.getMaze());
             break;
           }
         }
@@ -63,7 +63,7 @@ public class Map{
           int monsterC = troll.randNum(1, width);
           int monsterR = troll.randNum(1, length);
           if(isRoom(monsterC, monsterR)) {
-            monster = new Monster(100, 10, 1, mc.getC(), mc.getR());
+            monster = new Monster(100, 10, 1, mc.getC(), mc.getR(), maze.getMaze());
             monsters.add(monster);
           }
         }
@@ -88,28 +88,16 @@ public class Map{
       int mcR = mc.getR(); // stores current R tile
       // player movement
       if (key == "W") {
-        if (moveUp()) {
-          mc.updLastTile(mcC, mcR);
-          mc.moveUp();
-        }
+        moveUp();
       }
       else if (key == "A") {
-        if (moveLeft()) {
-          mc.updLastTile(mcC, mcR);
-          mc.moveLeft();
-        }
+        moveLeft();
       }
       else if (key == "S") {
-        if (moveDown()) {
-          mc.updLastTile(mcC, mcR);
-          mc.moveDown();
-        }
+        moveDown();
       }
       else if (key == "D") {
-        if (moveRight()) {
-          mc.updLastTile(mcC, mcR);
-          mc.moveRight();
-        }
+        moveRight();
       }
       // hero trigger monster combat
       currentMonster.clear();
@@ -121,7 +109,7 @@ public class Map{
       battlePhase = true;
       for (Character current : currentMonster) {
         monster = current;
-        battleChoice(0);
+        //battleChoice(0);
         if (!mc.isAlive()) { // hero died
           battlePhase = false;
           return;
@@ -139,27 +127,23 @@ public class Map{
         int monC = mon.getC(); // stores current C tile
         int monR = mon.getR(); // stores current R tile
         // monster movement
-        int choice = (int) Math.random() * 4;
+        int choice = (int)(Math.random() * 4);
         boolean moved = false;
         while (!moved) {
           if (choice == 0 && maze.getPos(monC-1, monR) != "#") {
-            mon.updLastTile(monC, monR);
-            mc.moveUp();
+            mon.moveUp();
             moved = true;
           }
           else if (choice == 1 && maze.getPos(monC, monR-1) != "#") {
-            mon.updLastTile(monC, monR);
-            mc.moveLeft();
+            mon.moveLeft();
             moved = true;
           }
           else if (choice == 2 && maze.getPos(monC+1, monR) != "#") {
-            mon.updLastTile(monC, monR);
-            mc.moveDown();
+            mon.moveDown();
             moved = true;
           }
           else if (choice == 3 && maze.getPos(monC, monR+1) != "#") {
-            mon.updLastTile(monC, monR);
-            mc.moveRight();
+            mon.moveRight();
             moved = true;
           }
         }
@@ -174,7 +158,7 @@ public class Map{
       battlePhase = true;
       for (Character current : currentMonster) {
         monster = current;
-        battleChoice(0);
+        //battleChoice(0);
         if (!mc.isAlive()) { // hero died
           battlePhase = false;
           return;
@@ -186,46 +170,46 @@ public class Map{
       battlePhase = false;
     }
 
-    public void battleChoice(int key) {
-      if (battlePhase == true) {
-        while( mc.isAlive() && monster.isAlive() ) {
-          System.out.println( "\nWhat is your choice?" );
-          System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
-          // use weapon
-          if ( key == 1 ) {
-            weaponChoice();
-          }
-          // use item
-          else if ( key == 2 ) {
-            if (!(useItem())) {
-              battleChoice();
-            }
-            else {
-              characterAttack(mon, hero); // no attack weapon or item
-            }
-          }
-          // escape
-          else if ( key == 3 ) {
-            int fleeChance = (int) (Math.random() * 10);
-            if (fleeChance < 2) {
-              System.out.println("\nThe " + mon.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + mon.getName() + "can land another hit.");
-              return;
-            }
-            else if (fleeChance < 5) {
-              System.out.println("\nYou begin to escape, but the " + mon.getName() + " slashes down at you one time and lands a hit before you escape.");
-              characterAttack(mon, hero, 1, 0, useShield());
-              return;
-            }
-            else {
-              System.out.println("You failed to escape!");
-            }
-          }
-        }
-        if (mc.isAlive()) {
-          return true;
-        }
-      }
-    }
+    //public void battleChoice(int key) {
+    //  if (battlePhase == true) {
+    //    while( mc.isAlive() && monster.isAlive() ) {
+    //      System.out.println( "\nWhat is your choice?" );
+    //      System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
+    //      // use weapon
+    //      if ( key == 1 ) {
+    //        weaponChoice();
+    //      }
+    //      // use item
+    //      else if ( key == 2 ) {
+    //        if (!(useItem())) {
+    //          battleChoice();
+    //        }
+    //        else {
+    //          characterAttack(mon, hero); // no attack weapon or item
+    //        }
+    //      }
+    //      // escape
+    //      else if ( key == 3 ) {
+    //        int fleeChance = (int) (Math.random() * 10);
+    //        if (fleeChance < 2) {
+    //          System.out.println("\nThe " + mon.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + mon.getName() + "can land another hit.");
+    //          return;
+    //        }
+    //        else if (fleeChance < 5) {
+    //          System.out.println("\nYou begin to escape, but the " + mon.getName() + " slashes down at you one time and lands a hit before you escape.");
+    //          characterAttack(mon, hero, 1, 0, useShield());
+    //          return;
+    //        }
+    //        else {
+    //          System.out.println("You failed to escape!");
+    //        }
+    //      }
+    //    }
+    //    if (mc.isAlive()) {
+    //      return true;
+    //    }
+    //  }
+    //}
 
     // public void weaponChoice(int key) {
     //   int weaponCount = 3;
@@ -255,15 +239,15 @@ public class Map{
     public boolean attackOrder(Character hero, Character mon) { // manages attack order
       int order = (int) (Math.random() * 2);
       if (order == 0) { // player attacks first
-          characterAttack(hero, mon);
+          //characterAttack(hero, mon);
           if (mon.isAlive()) {
-            characterAttack(mon, hero);
+            //characterAttack(mon, hero);
           }
       }
       else if (order == 1) { // monster attacks first
-          characterAttack(mon, hero);
+          //characterAttack(mon, hero);
           if (mon.isAlive()) {
-            characterAttack(hero, mon);
+            //characterAttack(hero, mon);
           }
       }
       if (hero.isAlive()) {
@@ -321,9 +305,9 @@ public class Map{
 
     // player movement
     public boolean moveUp() {
-        if(currentFrame.getPos(mc.getC()-1, mc.getR()).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()).equals("!")){
-            currentFrame.setPos(mc.getC(), mc.getR()," ");
-            mc.changeX(1);
+        if( (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("@"))) ){
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            mc.moveUp();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
         } else {
@@ -331,9 +315,9 @@ public class Map{
         }
     }
     public boolean moveRight() {
-        if(currentFrame.getPos(mc.getC(), mc.getR()+1).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()+1).equals("!")){
-            currentFrame.setPos(mc.getC(), mc.getR()," ");
-            mc.changeY(1);
+        if( (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("@"))) ){
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            mc.moveRight();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
         } else {
@@ -341,9 +325,9 @@ public class Map{
         }
     }
     public boolean moveDown() {
-        if(currentFrame.getPos(mc.getC()+1, mc.getR()).equals(" ") || currentFrame.getPos(mc.getC()+1, mc.getR()).equals("!")){
-            currentFrame.setPos(mc.getC(), mc.getR()," ");
-            mc.changeX(1);
+        if( (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("@"))) ){
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            mc.moveDown();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
         } else {
@@ -351,9 +335,9 @@ public class Map{
         }
     }
     public boolean moveLeft() {
-        if(currentFrame.getPos(mc.getC(), mc.getR()-1).equals(" ") || currentFrame.getPos(mc.getC(), mc.getR()-1).equals("!")){
-            currentFrame.setPos(mc.getC(), mc.getR()," ");
-            mc.changeY(1);
+        if( (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("@"))) ){
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            mc.moveLeft();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
         } else {
