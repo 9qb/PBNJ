@@ -31,6 +31,14 @@ public class Character {
     return currentR;
   }
 
+  public void changeX(int value) {
+    currentR -= value;
+  }
+
+  public void changeY(int value) {
+    currentC -= value;
+  }
+
   public int getHealth() {
    return health;
   }
@@ -43,7 +51,7 @@ public class Character {
    return speed;
   }
 
-  public boolean canAttack() { // character is alive
+  public boolean isAlive() { // character is alive
    return health > 0;
   }
 
