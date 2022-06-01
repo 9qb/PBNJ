@@ -9,7 +9,7 @@ public class Hero extends Character {
    super(newHealth, newAttack, newSpeed, newC, newR);
   }
 
-  // public void playTurn() { //override
-  //
-  // }
+  public String getName() {
+    return "Hero";
+  }
 }

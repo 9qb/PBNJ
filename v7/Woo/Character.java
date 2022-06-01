@@ -95,6 +95,10 @@ public class Character {
     currentR -= 1;
   }
 
+  public String getName() {
+    return "";
+  }
+
   // private void processTile() {
   //
   // }

@@ -62,7 +62,7 @@ public class Map{
         while (monsters.size() != monsterCount) {
           int monsterC = troll.randNum(1, width);
           int monsterR = troll.randNum(1, length);
-          if(isRoom(monsterX, monsterY)) {
+          if(isRoom(monsterC, monsterR)) {
             monster = new Monster(100, 10, 1, mc.getC(), mc.getR());
             monsters.add(monster);
           }
@@ -120,8 +120,8 @@ public class Map{
       }
       battlePhase = true;
       for (Character current : currentMonster) {
-        Character temp = current;
-        battleChoice(mc, temp);
+        monster = current;
+        battleChoice(0);
         if (!mc.isAlive()) { // hero died
           battlePhase = false;
           return;
@@ -142,23 +142,23 @@ public class Map{
         int choice = (int) Math.random() * 4;
         boolean moved = false;
         while (!moved) {
-          if (choice = 0 && maze.getPos(monC-1, monR)) {
+          if (choice == 0 && maze.getPos(monC-1, monR) != "#") {
             mon.updLastTile(monC, monR);
             mc.moveUp();
             moved = true;
           }
-          else if (choice = 1 && maze.getPos(monC, monR-1)) {
-            mmon.updLastTile(monC, monR);
+          else if (choice == 1 && maze.getPos(monC, monR-1) != "#") {
+            mon.updLastTile(monC, monR);
             mc.moveLeft();
             moved = true;
           }
-          else if (choice = 2 && maze.getPos(monC+1, monR)) {
-            mmon.updLastTile(monC, monR);
+          else if (choice == 2 && maze.getPos(monC+1, monR) != "#") {
+            mon.updLastTile(monC, monR);
             mc.moveDown();
             moved = true;
           }
-          else if (choice = 3 && maze.getPos(monC, monR+1)) {
-            mmon.updLastTile(monC, monR);
+          else if (choice == 3 && maze.getPos(monC, monR+1) != "#") {
+            mon.updLastTile(monC, monR);
             mc.moveRight();
             moved = true;
           }
@@ -173,8 +173,8 @@ public class Map{
       }
       battlePhase = true;
       for (Character current : currentMonster) {
-        Character temp = current;
-        battleChoice(mc, temp);
+        monster = current;
+        battleChoice(0);
         if (!mc.isAlive()) { // hero died
           battlePhase = false;
           return;
@@ -188,41 +188,72 @@ public class Map{
 
     public void battleChoice(int key) {
       if (battlePhase == true) {
-        while( mc.isAlive() && mon.isAlive() ) {
+        while( mc.isAlive() && monster.isAlive() ) {
           System.out.println( "\nWhat is your choice?" );
           System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
+          // use weapon
           if ( key == 1 ) {
             weaponChoice();
           }
+          // use item
           else if ( key == 2 ) {
             if (!(useItem())) {
               battleChoice();
             }
             else {
-            characterAttack(mon, hero); // no attack weapon
+              characterAttack(mon, hero); // no attack weapon or item
             }
           }
+          // escape
           else if ( key == 3 ) {
             int fleeChance = (int) (Math.random() * 10);
-            if (fleeChance < 3) {
+            if (fleeChance < 2) {
               System.out.println("\nThe " + mon.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + mon.getName() + "can land another hit.");
               return;
             }
-            else {
+            else if (fleeChance < 5) {
               System.out.println("\nYou begin to escape, but the " + mon.getName() + " slashes down at you one time and lands a hit before you escape.");
               characterAttack(mon, hero, 1, 0, useShield());
               return;
             }
+            else {
+              System.out.println("You failed to escape!");
+            }
           }
         }
-        if (hero.isAlive()) {
+        if (mc.isAlive()) {
           return true;
         }
       }
     }
 
+    // public void weaponChoice(int key) {
+    //   int weaponCount = 3;
+    //   String s = "\nWhich weapon will you use?\n";
+    //   s += "\t1: Back\n";
+    //   s += "\t2: Fist\tPower: 1\n";
+    //   issaSword.clear();
+    //   for (int j = 0; j < inventory.size(); j++) {
+    //   if (inventory.get(j) instanceof Sword) {
+    //     issaSword.add(j); // adds inventory index
+    //     s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
+    //     weaponCount += 1;
+    //   }
+    // }
+    //   if (key == 1) {
+    //     return;
+    //   }
+    //   else if (key == 2) {
+    //     attackOrder(0);
+    //   }
+    //   else if (itemChoice > 2 && itemChoice < 7) {
+    //   attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
+    //   useItem(issaSword.get(itemChoice - 3)); // reduce durability
+    // }
+    // }
+
     public boolean attackOrder(Character hero, Character mon) { // manages attack order
-      int order = troll.randNum(0, 2);
+      int order = (int) (Math.random() * 2);
       if (order == 0) { // player attacks first
           characterAttack(hero, mon);
           if (mon.isAlive()) {
@@ -241,13 +272,23 @@ public class Map{
       return false;
     }
 
+    public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
+      int dmg = attacker.getAtk() + weaponPower - shieldPower;
+      if (dmg < 0) {
+        dmg = 0;
+      }
+      attacked.subtractHealth(dmg);
+      System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
+      System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
+    }
+
     public void round(String key) {
       if (battlePhase == false) {
         playerTurn(key);
         if (mc.isAlive()) {
           monsterTurn();
         }
-        if (mc.isAlive() && !ifEnd()) { // generate another floor
+        if (mc.isAlive() && ifEnd()) { // generate another floor
           nextFloor();
         }
         else if (!mc.isAlive()) {
