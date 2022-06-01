@@ -306,7 +306,7 @@ public class Map{
     // player movement
     public boolean moveUp() {
         if( (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("@"))) ){
-            // currentFrame.setPos(mc.getC(), mc.getR()-1, mc.lastTile());
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveUp();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -316,7 +316,7 @@ public class Map{
     }
     public boolean moveRight() {
         if( (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("@"))) ){
-            // currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveRight();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -326,7 +326,7 @@ public class Map{
     }
     public boolean moveDown() {
         if( (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("@"))) ){
-            // currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveDown();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
@@ -336,7 +336,7 @@ public class Map{
     }
     public boolean moveLeft() {
         if( (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("@"))) ){
-            // currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
             mc.moveLeft();
             currentFrame.setPos(mc.getC(), mc.getR(), hero);
             return true;
