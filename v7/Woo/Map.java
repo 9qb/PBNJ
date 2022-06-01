@@ -85,6 +85,34 @@ public class Map{
         currentFrame.setPos(heroX, heroY, hero);
     }
 
+    
+    public boolean roundTurns() {
+      while(mc.isAlive() ) { // add if mc not on end tile
+        playerTurn();
+        if (playerTurn()) {
+          monsterTurn();
+        }
+      }
+      if (roundTurns()) {
+        System.out.println("You cleared the floor!");
+        System.out.println("Current score: " + score);
+        System.out.println("Generating next stage ...");
+        System.out.println("...");
+      } else {
+        System.out.println("You Died!");
+        System.out.println("Final Score: " + score);
+      }
+    }
+
+    //public boolean playerTurn() { // returns true if player alive
+
+    //}
+
+
+    //public boolean monsterTurn() { //starts when player is in a room
+
+    //}
+
     public String toString(){
         clear();
         return currentFrame.toString();
@@ -221,18 +249,6 @@ public class Map{
                currentFrame.getMaze()[x+1][y+1].equals(" ");
 
     }
-
-    public boolean roundTurns() {
-     mc = new Hero(100, 10, 0);
-     monster = new Monster(100, ((int) Math.random() * 5) + 10 , 0);
-     while(mc.isAlive() ) { // add if mc not on end tile
-       playerTurn();
-       if (playerTurn()) {
-         monsterTurn();
-       }
-     // set victory to true if on end tile, false otherwise
-    }
-
 
     public static void main(String[] args) {
         Map test = new Map();
