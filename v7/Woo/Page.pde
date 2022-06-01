@@ -3,8 +3,6 @@ class Page{
   void draw(){}
   void keyPressed(){}
   
-  
-  
   void process(){}
   
 }
@@ -15,8 +13,9 @@ class HomePage extends Page
   Button howToPlay;
   void setup(){
     background(0);
+    image(loadImage("HomePage.png"),0,0);
     play = new Button(width/2, height/2, 15, "Play", 100, 30, new Game());
-    howToPlay = new Button(width/2, height/2 - 100, 15, "HowToPlay", 100, 30, new HowToPlay());
+    howToPlay = new Button(width/2, height/2 + 100, 15, "HowToPlay", 100, 30, new HowToPlay());
   }
   
   void draw(){
