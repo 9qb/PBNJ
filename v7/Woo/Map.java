@@ -99,9 +99,9 @@ public class Map{
     }
 
     // monster move
-    public void monsterTurn() {
-
-    }
+    // public void monsterTurn() {
+    //
+    // }
 
 
     public void round(String key) {
@@ -113,7 +113,7 @@ public class Map{
         nextFloor();
       }
       else if (!mc.isAlive()) {
-        ending2();
+        dead();
       }
     }
 
@@ -129,7 +129,7 @@ public class Map{
       System.out.println("...");
     }
 
-    public void ending2() {
+    public void dead() {
       System.out.println("You Died!");
       System.out.println("Final Score: " + score);
     }
