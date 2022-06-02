@@ -2,7 +2,7 @@
 color STANDARD = #ffffff;
 color HOVER = #a8a8a8;
 color OUTLINE = #000000;
-color TEXTCOLOR = #000000;
+color TEXTCOLOR = #ffffff;
 
 class Element{
   float x, y;
@@ -24,7 +24,7 @@ class Label extends Element{
     textAlign(CENTER);
     fill(TEXTCOLOR);
     textSize(size);
-    text( text, x, y);
+    text( text, x, y+4);
   }
 }
 
@@ -60,14 +60,7 @@ class Button extends Label{
     }
   }
   void draw(){
-    rectMode(CENTER);
-    //make outline first
-    fill(OUTLINE);
-    rect( x, y, w, h);
-    //then make inside
-    fill(current);
-    rect( x, y, w-4, h-4);
-    //render the label
+    image(loadImage("button.png"), x-125, y-55);
     super.draw();
   }
 }
