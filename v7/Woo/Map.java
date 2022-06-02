@@ -13,8 +13,8 @@ public class Map{
     // maze instance variables
     private Maze maze;
     private Maze currentFrame;
-    private int width;
-    private int length;
+    private int rows;
+    private int cols;
 
     // RPG instance variables
     private Character mc;
@@ -29,9 +29,9 @@ public class Map{
     private int score; // accumulates after each floor
 
     public Map(){
-        width = 81;
-        length = 144;
-        MazeGenerator troll = new MazeGenerator(width, length);
+        rows = 81;
+        cols = 144;
+        MazeGenerator troll = new MazeGenerator(rows, cols);
         maze = new Maze(troll.getGeneratedMaze());
         // boolean isTrue = false;
         // for(int i =0; i < heroPosFinder.length-1;i++){
@@ -49,21 +49,21 @@ public class Map{
 
         // creates the hero in a room
         while (mc == null) {
-          int heroC = troll.randNum(1, width);
-          int heroR = troll.randNum(1, length);
-          if(isRoom(heroC, heroR)) {
+          int heroR = troll.randNum(1, rows-1);
+          int heroC = troll.randNum(1, cols-1);
+          if(isRoom(heroR, heroC)) {
             // isTrue = true;
-            mc = new Hero(100, 10, 1, heroC, heroR, maze.getMaze());
+            mc = new Hero(100, 10, 1, heroR, heroC, maze.getMaze());
             break;
           }
         }
 
         // creates the monsters in a room
         while (monsters.size() != monsterCount) {
-          int monsterC = troll.randNum(1, width);
-          int monsterR = troll.randNum(1, length);
-          if(isRoom(monsterC, monsterR)) {
-            monster = new Monster(100, 10, 1, mc.getC(), mc.getR(), maze.getMaze());
+          int monsterR = troll.randNum(1, rows);
+          int monsterC = troll.randNum(1, cols);
+          if(isRoom(monsterR, monsterC)) {
+            monster = new Monster(100, 10, 1, monsterR, monsterC, maze.getMaze());
             monsters.add(monster);
           }
         }
@@ -79,13 +79,11 @@ public class Map{
         //    if(isTrue){break;}
         //  }
         //}
-        currentFrame.setPos(mc.getC(), mc.getR(), hero);
+        currentFrame.setPos(mc.getR(), mc.getC(), hero);
     }
 
     // player move
     public void playerTurn(String key) {
-      int mcC = mc.getC(); // stores current C tile
-      int mcR = mc.getR(); // stores current R tile
       // player movement
       if (key == "W") {
         moveUp();
@@ -130,19 +128,19 @@ public class Map{
         int choice = (int)(Math.random() * 4);
         boolean moved = false;
         while (!moved) {
-          if (choice == 0 && maze.getPos(monC-1, monR) != "#") {
+          if (choice == 0 && maze.getPos(monR-1, monC) != "#") {
             mon.moveUp();
             moved = true;
           }
-          else if (choice == 1 && maze.getPos(monC, monR-1) != "#") {
+          else if (choice == 1 && maze.getPos(monR, monC-1) != "#") {
             mon.moveLeft();
             moved = true;
           }
-          else if (choice == 2 && maze.getPos(monC+1, monR) != "#") {
+          else if (choice == 2 && maze.getPos(monR+1, monC) != "#") {
             mon.moveDown();
             moved = true;
           }
-          else if (choice == 3 && maze.getPos(monC, monR+1) != "#") {
+          else if (choice == 3 && maze.getPos(monR, monC+1) != "#") {
             mon.moveRight();
             moved = true;
           }
@@ -305,40 +303,40 @@ public class Map{
 
     // player movement
     public boolean moveUp() {
-        if( (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()-1, mc.getR()).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getR()-1, mc.getC()).equals("#"))) && (!(currentFrame.getPos(mc.getR()-1, mc.getC()).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveUp();
-            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
           return false;
         }
     }
     public boolean moveRight() {
-        if( (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()+1).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getR(), mc.getC()+1).equals("#"))) && (!(currentFrame.getPos(mc.getR(), mc.getC()+1).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveRight();
-            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
           return false;
         }
     }
     public boolean moveDown() {
-        if( (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("#"))) && (!(currentFrame.getPos(mc.getC()+1, mc.getR()).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getR()+1, mc.getC()).equals("#"))) && (!(currentFrame.getPos(mc.getR()+1, mc.getC()).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveDown();
-            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
           return false;
         }
     }
     public boolean moveLeft() {
-        if( (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("#"))) && (!(currentFrame.getPos(mc.getC(), mc.getR()-1).equals("@"))) ){
-            currentFrame.setPos(mc.getC(), mc.getR(), mc.lastTile());
+        if( (!(currentFrame.getPos(mc.getR(), mc.getC()-1).equals("#"))) && (!(currentFrame.getPos(mc.getR(), mc.getC()-1).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveLeft();
-            currentFrame.setPos(mc.getC(), mc.getR(), hero);
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
           return false;
@@ -404,45 +402,45 @@ public class Map{
     //}
 
     public String[][] displayZone() {
-        int topLeftX = mc.getC() - 10;
-        int topLeftY = mc.getR() - 10;
+        int topLeftR = mc.getR() - 10;
+        int topLeftC = mc.getC() - 10;
 
-        int currX = 0;
-        int currY = 0;
+        int currR = 0;
+        int currC = 0;
 
-        topLeftX = Math.max(0, topLeftX);
-        topLeftY = Math.max(0, topLeftY);
+        topLeftR = Math.max(0, topLeftR);
+        topLeftC = Math.max(0, topLeftC);
 
-        topLeftX = Math.min(topLeftX, width-21);
-        topLeftY = Math.min(topLeftY, length-21);
+        topLeftR = Math.min(topLeftR, rows-21);
+        topLeftC = Math.min(topLeftC, cols-21);
 
         String[][] output = new String[21][21];
-        for(int i = topLeftX; i < topLeftX + 21; i++){
-            for(int e = topLeftY; e < topLeftY + 21; e++){
-                output[currX][currY] = currentFrame.getPos(i,e);
+        for(int i = topLeftR; i < topLeftR + 21; i++){
+            for(int e = topLeftC; e < topLeftC + 21; e++){
+                output[currR][currC] = currentFrame.getPos(i,e);
                 //System.out.print(output[currX][currY]);
-                currY++;
+                currC++;
             }
             //System.out.println("");
-            currY = 0;
-            currX++;
+            currC = 0;
+            currR++;
         }
 
       return output;
 
     }
 
-    public boolean isRoom(int x, int y) {
+    public boolean isRoom(int r, int c) {
         // returns true if coordinate is in a room
-        return currentFrame.getMaze()[x-1][y-1].equals(" ") &&
-               currentFrame.getMaze()[x][y-1].equals(" ") &&
-               currentFrame.getMaze()[x+1][y-1].equals(" ") &&
-               currentFrame.getMaze()[x-1][y].equals(" ") &&
-               currentFrame.getMaze()[x][y].equals(" ") &&
-               currentFrame.getMaze()[x+1][y].equals(" ") &&
-               currentFrame.getMaze()[x-1][y+1].equals(" ") &&
-               currentFrame.getMaze()[x][y+1].equals(" ") &&
-               currentFrame.getMaze()[x+1][y+1].equals(" ");
+        return currentFrame.getMaze()[r-1][c-1].equals(" ") &&
+               currentFrame.getMaze()[r][c-1].equals(" ") &&
+               currentFrame.getMaze()[r+1][c-1].equals(" ") &&
+               currentFrame.getMaze()[r-1][c].equals(" ") &&
+               currentFrame.getMaze()[r][c].equals(" ") &&
+               currentFrame.getMaze()[r+1][c].equals(" ") &&
+               currentFrame.getMaze()[r-1][c+1].equals(" ") &&
+               currentFrame.getMaze()[r][c+1].equals(" ") &&
+               currentFrame.getMaze()[r+1][c+1].equals(" ");
 
     }
 

@@ -15,12 +15,12 @@ public class Character {
    defense = 0;
   }
 
-  public Character(int newHealth, int newAttack, int newSpeed, int newC, int newR, String[][] maze) {
+  public Character(int newHealth, int newAttack, int newSpeed, int newR, int newC, String[][] maze) {
    health = newHealth;
    attack = newAttack;
    speed = newSpeed;
-   currentC = newC;
    currentR = newR;
+   currentC = newC;
    map = maze;
    lastTile = " ";
   }
@@ -33,11 +33,11 @@ public class Character {
     return currentC;
   }
 
-  public void changeX(int value) {
+  public void changeR(int value) {
     currentR += value;
   }
 
-  public void changeY(int value) {
+  public void changeC(int value) {
     currentC += value;
   }
 
@@ -88,28 +88,28 @@ public class Character {
   public void moveUp() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentC -= 1;
+      currentR -= 1;
     }
   }
 
   public void moveRight() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentR += 1;
+      currentC += 1;
     }
   }
 
   public void moveDown() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentC += 1;
+      currentR += 1;
     }
   }
 
   public void moveLeft() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       updLastTile();
-      currentR -= 1;
+      currentC -= 1;
     }
   }
 

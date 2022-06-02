@@ -19,8 +19,8 @@ public class MazeGenerator {
   private ArrayList<ArrayList<Tile>> _mazes;
   private int _rows, _cols;
 
-  public MazeGenerator(int x, int y){
-    _maze = new String[x][y];
+  public MazeGenerator(int r, int c){
+    _maze = new String[r][c];
     _rooms = new ArrayList();
     _mazes = new ArrayList();
     for(int i = 0; i <_maze.length; i++){
@@ -28,8 +28,8 @@ public class MazeGenerator {
         _maze[i][e] = WALL;
       }
     }
-    _rows = x;
-    _cols = y;
+    _rows = r;
+    _cols = c;
 
     buildRooms(randNum(8, 10));
     buildBorders();
@@ -96,7 +96,7 @@ public class MazeGenerator {
     }
     returnGates();
   }
-  
+
   private void returnGates(){
     for (int i = 1; i < _rows - 2; i ++){
       for (int j = 1; j < _cols - 2; j++){
