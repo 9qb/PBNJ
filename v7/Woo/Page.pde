@@ -14,7 +14,7 @@ class HomePage extends Page
   void setup(){
     background(0);
     image(loadImage("HomePage.png"),0,0);
-    image(loadImage("AmazingDungeon.png"), 85, -80);
+    image(loadImage("AmazingDungeon.png"), 95, -105);
     play = new Button(width/2, height/2, 15, "Play", 100, 30, new Game());
     howToPlay = new Button(width/2, height/2 + 100, 15, "HowToPlay", 100, 30, new HowToPlay());
   }
