@@ -66,7 +66,7 @@ public class Maze{
             for(int e = 0; e < _maze[0].length; e++){
                 if(_maze[i][e].equals("#"))
                    retVal = retVal +/* "\u001b[42m" + "\u001b[32m" + */  "#" /*+ "\u001b[30m" + "\u001b[40m" */;
-               else{
+                else{
                    retVal += _maze[i][e];
             }
             }

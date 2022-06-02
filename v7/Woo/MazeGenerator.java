@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class MazeGenerator {
 
@@ -8,7 +7,7 @@ public class MazeGenerator {
   private final String WORLD_BORDER = "@";
   private final String GATE = "!";
   private final String MAZEPATH = "$";
-  private final String END_TILE = "*";
+  private final String END_TILE = "E";
 
  /*
  Advised by students from Mr K's class while writing this class
@@ -39,6 +38,7 @@ public class MazeGenerator {
     mazeToSpace();
     uncarveMaze();
     cleanup();
+    addExit();
   }
 
   private void buildRooms(int numRooms){
@@ -65,7 +65,7 @@ public class MazeGenerator {
         randCol = randNum(2, _cols - 2);
       }
 
-      // passes check, so build out the space && add to stack
+      // passes check, so build out the space && add to al
       _rooms.add(new Room(randRow, randCol, randRow+randHeight, randCol+randBase));
 
       for (int b = 0; b < randBase && randCol+b < _cols-2; b++){
@@ -85,6 +85,32 @@ public class MazeGenerator {
   // returns [lowerLimit, upperLimit)
   public int randNum(int lowerLimit, int upperLimit){
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
+  }
+
+  private void addExit(){
+    boolean isAdded = false;
+    int randomR, randomC;
+    while (!isAdded){
+      randomR = randNum(1, _rows-1);
+      randomC = randNum(1, _cols-1);
+
+      if (isInRoom(randomR, randomC)){
+        _maze[randomR][randomC] = END_TILE;
+        isAdded = true;
+      }
+    }
+  }
+
+  private boolean isInRoom(int r, int c){
+    return [r-1][c-1].equals(" ") &&
+           [r][c-1].equals(" ") &&
+           [r+1][c-1].equals(" ") &&
+           [r-1][c].equals(" ") &&
+           [r][c].equals(" ") &&
+           [r+1][c].equals(" ") &&
+           [r-1][c+1].equals(" ") &&
+           [r][c+1].equals(" ") &&
+           [r+1][c+1].equals(" ");
   }
 
   private void cleanup(){
@@ -166,13 +192,6 @@ public class MazeGenerator {
         if (_maze[i][j].equals(MAZEPATH)){ _maze[i][j] = SPACE; }
       }
     }
-  }
-
-  private void generate(int startrow, int startcol){
-    _maze[startrow][startcol] = "S";
-    int endRow = Math.abs(_maze.length - 1 - startrow);
-    int endCol = Math.abs(_maze[startrow].length - 1 - startcol);
-    _maze[endRow][endCol] = "E";
   }
 
   private void carve(int row, int col){
