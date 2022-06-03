@@ -16,19 +16,22 @@ The algorithm for Mr. K's class for maze generation didn't generate rooms. We ha
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We need to figure out how to spawn monsters and how to let the user select between different heros.
+We need to add RPG elements to our maze and finish battle mechanics
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wow! oo!...
+You can create instances of Java classes in processing if the files are in the same repo
+You can load images in processing if the files for the images are in the same directory
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-we changed ___ to ___ bc...
+We changed from a traditional maze generation algorithm (the most basic one that was taught in Mr K's class) into a more complex dungeon generation algorithm
+We believe that our dungeon generation algorithm gives off a better feel of an RPG
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tales of wisdom gained...
-||||||||||||||||||||||||||||||||||||||||||
+Using x and y with variables fo 2D arrays can get confusing. It is better to use r and c because they map directly onto a matrix. 
+When we used x and y, we confused ourselves and inverted some of our movement methods.
 
 
 
@@ -41,29 +44,6 @@ tales of wisdom gained...
     \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
 ==============================================================
 
-
-2022-05-30
---------------------------------------------------------------
-Brian Li :: Completed UML Diagram
-Nakib Abedin :: Assisted with UML Diagram; Added Movement and displayZone that is centered around the hero
-Jefford Shau :: Added RPG elements
-==============================================================
-
-
-2022-05-28
---------------------------------------------------------------
-Brian Li :: Finalized maze generation algorithm
-Nakib Abedin :: Helped Jefford with transferring the maze into processing; figured out how to use custom tiles
-Jefford Shau :: Transferred maze into processing
-==============================================================
-
-
-2022-05-27
---------------------------------------------------------------
-Brian Li :: Worked on bugs with the Maze generation algorithm
-Nakib Abedin :: Applied ANSI escape codes to terminal maze
-Jefford Shau :: was absent in class
-==============================================================
 
 2022-05-26
 --------------------------------------------------------------
@@ -79,11 +59,18 @@ Nakib Abedin :: Worked on v0, set up the movement feature and the carving algori
 Jefford Shau :: Worked on v0, came up with strucutre of maze generation
 ==============================================================
 
-2022-05-28 - 2022-05-30
+2022-05-28 -> 2022-05-30
 --------------------------------------------------------------
 Brian Li :: Completed development of working dungeon generator
 Nakib Abedin :: Bugfixing of dungeon generator, began work on processing
 Jefford Shau :: Bugfixing, worked on RPG classes.
+==============================================================
+
+2022-05-30
+--------------------------------------------------------------
+Brian Li :: Completed UML Diagram
+Nakib Abedin :: Assisted with UML Diagram; Added Movement and displayZone that is centered around the hero
+Jefford Shau :: Added RPG elements
 ==============================================================
 
 2022-05-31
