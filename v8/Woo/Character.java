@@ -122,6 +122,7 @@ public class Character {
     return "";
   }
 
+
   // private void processTile() {
   //   if (lastTile.equals("E")){
   //

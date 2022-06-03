@@ -39,11 +39,11 @@ class Game extends Page{
    map = new Map();
    SIZE = 32;
    background(0);
-   mapTiles = new PImage[3];
+   mapTiles = new PImage[4];
    mapTiles[0] = loadImage("cobblestone.png");
    mapTiles[1] = loadImage("hero.png");
    mapTiles[2] = loadImage("water.png");
-  
+   mapTiles[3] = loadImage("Escape.png");
   }
   
   
@@ -62,6 +62,7 @@ class Game extends Page{
           image(mapTiles[0],currentX,currentY);
           image(mapTiles[1],currentX,currentY);
         }
+        else if (col.equals("E")){image(mapTiles[3], currentX, currentY);}
         else{image(mapTiles[0],currentX,currentY);}
         currentX += SIZE;
         

@@ -301,17 +301,17 @@ public class Map{
         }
       }
 
-      // creates the monsters in a room
-      while (monsters.size() != monsterCount) {
-        // do we need to reset monsters.size()?
-        int monsterR = temp.randNum(1, rows);
-        int monsterC = temp.randNum(1, cols);
-        if(isRoom(monsterR, monsterC)) {
-          monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
-          monsters.add(monster);
-        }
+      // // creates the monsters in a room
+      // while (monsters.size() != monsterCount) {
+      //   // do we need to reset monsters.size()?
+      //   int monsterR = temp.randNum(1, rows);
+      //   int monsterC = temp.randNum(1, cols);
+      //   if(isRoom(monsterR, monsterC)) {
+      //     monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
+      //     monsters.add(monster);
+      //   }
 
-      }
+      // }
 
       // creates an exit tile
       while (!exitPlaced){
@@ -342,6 +342,7 @@ public class Map{
         if( (!(currentFrame.getPos(mc.getR()-1, mc.getC()).equals("#"))) && (!(currentFrame.getPos(mc.getR()-1, mc.getC()).equals("@"))) ){
             currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveUp();
+            processTile();
             currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
@@ -352,6 +353,7 @@ public class Map{
         if( (!(currentFrame.getPos(mc.getR(), mc.getC()+1).equals("#"))) && (!(currentFrame.getPos(mc.getR(), mc.getC()+1).equals("@"))) ){
             currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveRight();
+            processTile();
             currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
@@ -362,6 +364,7 @@ public class Map{
         if( (!(currentFrame.getPos(mc.getR()+1, mc.getC()).equals("#"))) && (!(currentFrame.getPos(mc.getR()+1, mc.getC()).equals("@"))) ){
             currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveDown();
+            processTile();
             currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
@@ -372,6 +375,7 @@ public class Map{
         if( (!(currentFrame.getPos(mc.getR(), mc.getC()-1).equals("#"))) && (!(currentFrame.getPos(mc.getR(), mc.getC()-1).equals("@"))) ){
             currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
             mc.moveLeft();
+            processTile();
             currentFrame.setPos(mc.getR(), mc.getC(), hero);
             return true;
         } else {
