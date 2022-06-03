@@ -102,15 +102,15 @@ public class MazeGenerator {
   }
 
   private boolean isInRoom(int r, int c){
-    return [r-1][c-1].equals(" ") &&
-           [r][c-1].equals(" ") &&
-           [r+1][c-1].equals(" ") &&
-           [r-1][c].equals(" ") &&
-           [r][c].equals(" ") &&
-           [r+1][c].equals(" ") &&
-           [r-1][c+1].equals(" ") &&
-           [r][c+1].equals(" ") &&
-           [r+1][c+1].equals(" ");
+    return _maze[r-1][c-1].equals(" ") &&
+           _maze[r][c-1].equals(" ") &&
+           _maze[r+1][c-1].equals(" ") &&
+           _maze[r-1][c].equals(" ") &&
+           _maze[r][c].equals(" ") &&
+           _maze[r+1][c].equals(" ") &&
+           _maze[r-1][c+1].equals(" ") &&
+           _maze[r][c+1].equals(" ") &&
+           _maze[r+1][c+1].equals(" ");
   }
 
   private void cleanup(){

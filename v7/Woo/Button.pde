@@ -60,7 +60,18 @@ class Button extends Label{
     }
   }
   void draw(){
-    image(loadImage("button.png"), x-125, y-55);
-    super.draw();
+    //rectMode(CENTER);
+    ////make outline first
+    //fill(OUTLINE);
+    //rect( x, y, w, h);
+    ////then make inside
+    //fill(current);
+    //rect( x, y, w-4, h-4);
+    ////render the label
+    
+    //rectMode(CENTER);
+    //fill(OUTLINE);
+    //rect(x+16,y+22,240,80);
+    //super.draw();
   }
 }
