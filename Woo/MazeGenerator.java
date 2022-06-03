@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class MazeGenerator {
 
@@ -8,7 +7,7 @@ public class MazeGenerator {
   private final String WORLD_BORDER = "@";
   private final String GATE = "!";
   private final String MAZEPATH = "$";
-  private final String END_TILE = "*";
+  private final String END_TILE = "E";
 
  /*
  Advised by students from Mr K's class while writing this class
@@ -19,8 +18,8 @@ public class MazeGenerator {
   private ArrayList<ArrayList<Tile>> _mazes;
   private int _rows, _cols;
 
-  public MazeGenerator(int x, int y){
-    _maze = new String[x][y];
+  public MazeGenerator(int r, int c){
+    _maze = new String[r][c];
     _rooms = new ArrayList();
     _mazes = new ArrayList();
     for(int i = 0; i <_maze.length; i++){
@@ -28,8 +27,8 @@ public class MazeGenerator {
         _maze[i][e] = WALL;
       }
     }
-    _rows = x;
-    _cols = y;
+    _rows = r;
+    _cols = c;
 
     buildRooms(randNum(8, 10));
     buildBorders();
@@ -39,6 +38,7 @@ public class MazeGenerator {
     mazeToSpace();
     uncarveMaze();
     cleanup();
+    addExit();
   }
 
   private void buildRooms(int numRooms){
@@ -65,7 +65,7 @@ public class MazeGenerator {
         randCol = randNum(2, _cols - 2);
       }
 
-      // passes check, so build out the space && add to stack
+      // passes check, so build out the space && add to al
       _rooms.add(new Room(randRow, randCol, randRow+randHeight, randCol+randBase));
 
       for (int b = 0; b < randBase && randCol+b < _cols-2; b++){
@@ -83,17 +83,54 @@ public class MazeGenerator {
   } // end method
 
   // returns [lowerLimit, upperLimit)
-  private int randNum(int lowerLimit, int upperLimit){
+  public int randNum(int lowerLimit, int upperLimit){
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
   }
 
+  private void addExit(){
+    boolean isAdded = false;
+    int randomR, randomC;
+    while (!isAdded){
+      randomR = randNum(1, _rows-1);
+      randomC = randNum(1, _cols-1);
+
+      if (isInRoom(randomR, randomC)){
+        _maze[randomR][randomC] = END_TILE;
+        isAdded = true;
+      }
+    }
+  }
+
+  private boolean isInRoom(int r, int c){
+    return _maze[r-1][c-1].equals(" ") &&
+           _maze[r][c-1].equals(" ") &&
+           _maze[r+1][c-1].equals(" ") &&
+           _maze[r-1][c].equals(" ") &&
+           _maze[r][c].equals(" ") &&
+           _maze[r+1][c].equals(" ") &&
+           _maze[r-1][c+1].equals(" ") &&
+           _maze[r][c+1].equals(" ") &&
+           _maze[r+1][c+1].equals(" ");
+  }
+
   private void cleanup(){
+    openGates(); openGates();
     for (int i = 1; i < _rows - 2; i ++){
       for (int j = 1; j < _cols - 2; j++){
         cleanup(i, j);
       }
     }
-    openGates(); openGates();
+    returnGates();
+  }
+
+  private void returnGates(){
+    for (int i = 1; i < _rows - 2; i ++){
+      for (int j = 1; j < _cols - 2; j++){
+        if(_maze[i][j].equals(GATE)){
+          _maze[i][j] = SPACE;
+        }
+      }
+    }
   }
 
   private void cleanup(int row, int col){
@@ -155,13 +192,6 @@ public class MazeGenerator {
         if (_maze[i][j].equals(MAZEPATH)){ _maze[i][j] = SPACE; }
       }
     }
-  }
-
-  private void generate(int startrow, int startcol){
-    _maze[startrow][startcol] = "S";
-    int endRow = Math.abs(_maze.length - 1 - startrow);
-    int endCol = Math.abs(_maze[startrow].length - 1 - startcol);
-    _maze[endRow][endCol] = "E";
   }
 
   private void carve(int row, int col){
@@ -312,7 +342,7 @@ public class MazeGenerator {
   private void openGates(){
     markGates();
     for (int i = 0; i < _rooms.size(); i++){
-      _rooms.get(0).removeGates(randNum(1,6));
+      _rooms.get(0).removeGates(randNum(3,6));
     }
   }
 

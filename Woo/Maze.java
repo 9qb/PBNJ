@@ -3,7 +3,7 @@ public class Maze{
     Contains Maze
     Contains links to adjacent Mazes
     */
-    
+
     private String[][] _maze;
 
     // private Maze northMaze;
@@ -16,7 +16,7 @@ public class Maze{
      public Maze(String[][] arr){
          this._maze = arr;
      }
-     
+
      public String[][] getMaze(){
        return this._maze;
      }
@@ -50,12 +50,12 @@ public class Maze{
     //     return westMaze;
     // }
 
-    public void setPos(int x, int y, String cargo){
-        _maze[x][y] = cargo;
+    public void setPos(int r, int c, String cargo){
+        _maze[r][c] = cargo;
     }
 
-    public String getPos(int x, int y){
-        return _maze[x][y];
+    public String getPos(int r, int c){
+        return _maze[r][c];
     }
 
 
@@ -66,7 +66,7 @@ public class Maze{
             for(int e = 0; e < _maze[0].length; e++){
                 if(_maze[i][e].equals("#"))
                    retVal = retVal +/* "\u001b[42m" + "\u001b[32m" + */  "#" /*+ "\u001b[30m" + "\u001b[40m" */;
-               else{
+                else{
                    retVal += _maze[i][e];
             }
             }

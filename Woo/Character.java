@@ -4,60 +4,120 @@ public class Character {
   protected int speed;
   protected int currentR;
   protected int currentC;
-  protected String lastTile
+  protected int baseDamage;
+  protected int defense;
+  protected String lastTile;
+  protected String[][] map;
 
   public Character() {
-    health = 4;
-    baseDamage = 3;
-    defense = 0;
+   health = 4;
+   baseDamage = 3;
+   defense = 0;
   }
 
-  public Character(int newHealth, int newAttack, int newSpeed, int newC, int newR) {
-    health = newHealth;
-    attack =  newAttack;
-    speed = newSpeed;
-    currentC = newC;
-    currentR = newR;
-    lastTile = null;
+  public Character(int newHealth, int newAttack, int newSpeed, int newR, int newC, String[][] maze) {
+   health = newHealth;
+   attack = newAttack;
+   speed = newSpeed;
+   currentR = newR;
+   currentC = newC;
+   map = maze;
+   lastTile = " ";
+  }
+
+  public int getR() { // Y cord
+    return currentR;
+  }
+
+  public int getC() { // X cord
+    return currentC;
+  }
+
+  public void changeR(int value) {
+    currentR += value;
+  }
+
+  public void changeC(int value) {
+    currentC += value;
   }
 
   public int getHealth() {
-    return health;
+   return health;
   }
 
   public int getAtk() {
-    return attack;
+   return attack;
   }
 
   public int getSpeed() {
-    return speed;
+   return speed;
   }
 
-  public boolean canAttack() { // player is alive
-    return health > 0;
+  public boolean isAlive() { // character is alive
+   return health > 0;
   }
 
-  public void attack() {
-
+  public void updLastTile() {
+    map[currentR][currentC] = lastTile;
   }
 
-  public void attack(int r, int c) {
-
+  public String lastTile(){
+    return lastTile;
   }
 
-  public void playTurn() {
-
-  }
+  // public void attack() {
+  //
+  // }
+  //
+  // public void attack(int r, int c) {
+  //
+  // }
+  //
+  // public void playTurn() {
+  //
+  // }
 
   public void addHealth(int value) {
-    health += value;
+   health += value;
   }
 
   public void subtractHealth(int value) {
-    health -= value;
+   health -= value;
   }
 
-  private void processTile() {
-
+  public void moveUp() {
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentR -= 1;
+    }
   }
+
+  public void moveRight() {
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentC += 1;
+    }
+  }
+
+  public void moveDown() {
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentR += 1;
+    }
+  }
+
+  public void moveLeft() {
+    if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
+      updLastTile();
+      currentC -= 1;
+    }
+  }
+
+  public String getName() {
+    return "";
+  }
+
+  // private void processTile() {
+  //
+  // }
 }

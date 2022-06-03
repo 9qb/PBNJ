@@ -1,10 +1,8 @@
+import java.util.ArrayList;
+
 public class Map{
 
     private String hero = "X";
-    private int heroX;
-    private int heroY;
-    private int width;
-    private int length;
 
     private static void clear()
     {
@@ -12,84 +10,358 @@ public class Map{
       System.out.println("\033[" + 1 + ";" + 1 + "H");
     }
 
+    // maze instance variables
     private Maze maze;
     private Maze currentFrame;
+    private int rows;
+    private int cols;
+
+    // RPG instance variables
+    private Character mc;
+    private ArrayList<Item> inventory = new ArrayList<Item>(); // hero inventory
+    private Character monster;
+    private ArrayList<Character> currentMonster = new ArrayList<Character>(); // monsters in the frame
+    private ArrayList<Character> monsters = new ArrayList<Character>();
+    private int monsterCount = 8; // total amount of monsters per floor
+    private boolean battlePhase = false;
+
+    // system instance variables
+    private int score; // accumulates after each floor
 
     public Map(){
-        width = 81;
-        length = 144;
-        MazeGenerator troll = new MazeGenerator(width, length);
+        rows = 81;
+        cols = 144;
+        MazeGenerator troll = new MazeGenerator(rows, cols);
         maze = new Maze(troll.getGeneratedMaze());
-        String[][] heroPosFinder = maze.getMaze();
-        boolean isTrue = false;
-        for(int i =0; i < heroPosFinder.length-1;i++){
-          for(int e =0; e < heroPosFinder[0].length-1; e++){
-            if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
-                isTrue = true;
-                heroX = i;
-                heroY = e;
-              break;
-            }
-            if(isTrue){break;}
-          } 
-        }
+        // boolean isTrue = false;
+        // for(int i =0; i < heroPosFinder.length-1;i++){
+        //   for(int e =0; e < heroPosFinder[0].length-1; e++){
+        //     if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
+        //         isTrue = true;
+        //         mc.getC() = i;
+        //         mc.getR() = e;
+        //       break;
+        //     }
+        //     if(isTrue){break;}
+        //   }
+        // }
         currentFrame = maze;
-        currentFrame.setPos(heroX, heroY, hero);
+
+        // creates the hero in a room
+        while (mc == null) {
+          int heroR = troll.randNum(1, rows-1);
+          int heroC = troll.randNum(1, cols-1);
+          if(isRoom(heroR, heroC)) {
+            // isTrue = true;
+            mc = new Hero(100, 10, 1, heroR, heroC, maze.getMaze());
+            break;
+          }
+        }
+
+        // creates the monsters in a room
+        while (monsters.size() != monsterCount) {
+          int monsterR = troll.randNum(1, rows);
+          int monsterC = troll.randNum(1, cols);
+          if(isRoom(monsterR, monsterC)) {
+            monster = new Monster(100, 10, 1, monsterR, monsterC, maze.getMaze());
+            monsters.add(monster);
+          }
+        }
+
+        //for(int i =0; i < heroPosFinder.length-1;i++){
+        //  for(int e =0; e < heroPosFinder[0].length-1; e++){
+        //    if((heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!") && !isTrue)){
+        //        isTrue = true;
+        //        mc.getC() = i;
+        //        mc.getR() = e;
+        //      break;
+        //    }
+        //    if(isTrue){break;}
+        //  }
+        //}
+        currentFrame.setPos(mc.getR(), mc.getC(), hero);
     }
 
-    public String toString(){
-        clear();
-        return currentFrame.toString();
+    // player move
+    public void playerTurn(String key) {
+      // player movement
+      if (key == "W") {
+        moveUp();
+      }
+      else if (key == "A") {
+        moveLeft();
+      }
+      else if (key == "S") {
+        moveDown();
+      }
+      else if (key == "D") {
+        moveRight();
+      }
+      // hero trigger monster combat
+      currentMonster.clear();
+      for (Character mon : monsters) {
+        if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
+          currentMonster.add(mon);
+        }
+      }
+      battlePhase = true;
+      for (Character current : currentMonster) {
+        monster = current;
+        //battleChoice(0);
+        if (!mc.isAlive()) { // hero died
+          battlePhase = false;
+          return;
+        }
+        else { // monster died
+          monsters.remove(current);
+        }
+      }
+      battlePhase = false;
     }
 
-    public void moveUp(){
-        if(currentFrame.getPos(heroX-1, heroY).equals(" ") || currentFrame.getPos(heroX-1, heroY).equals("!")){
-            currentFrame.setPos(heroX, heroY," ");
-            heroX -= 1;
-            currentFrame.setPos(heroX, heroY, hero);
+    // monster move
+    public void monsterTurn() {
+      for (Character mon : monsters) {
+        int monC = mon.getC(); // stores current C tile
+        int monR = mon.getR(); // stores current R tile
+        // monster movement
+        int choice = (int)(Math.random() * 4);
+        boolean moved = false;
+        while (!moved) {
+          if (choice == 0 && maze.getPos(monR-1, monC) != "#") {
+            mon.moveUp();
+            moved = true;
+          }
+          else if (choice == 1 && maze.getPos(monR, monC-1) != "#") {
+            mon.moveLeft();
+            moved = true;
+          }
+          else if (choice == 2 && maze.getPos(monR+1, monC) != "#") {
+            mon.moveDown();
+            moved = true;
+          }
+          else if (choice == 3 && maze.getPos(monR, monC+1) != "#") {
+            mon.moveRight();
+            moved = true;
+          }
+        }
+      }
+      // monster trigger hero combat
+      currentMonster.clear();
+      for (Character mon : monsters) {
+        if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
+          currentMonster.add(mon);
+        }
+      }
+      battlePhase = true;
+      for (Character current : currentMonster) {
+        monster = current;
+        //battleChoice(0);
+        if (!mc.isAlive()) { // hero died
+          battlePhase = false;
+          return;
+        }
+        else { // monster died
+          monsters.remove(current);
+        }
+      }
+      battlePhase = false;
+    }
+
+    //public void battleChoice(int key) {
+    //  if (battlePhase == true) {
+    //    while( mc.isAlive() && monster.isAlive() ) {
+    //      System.out.println( "\nWhat is your choice?" );
+    //      System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
+    //      // use weapon
+    //      if ( key == 1 ) {
+    //        weaponChoice();
+    //      }
+    //      // use item
+    //      else if ( key == 2 ) {
+    //        if (!(useItem())) {
+    //          battleChoice();
+    //        }
+    //        else {
+    //          characterAttack(mon, hero); // no attack weapon or item
+    //        }
+    //      }
+    //      // escape
+    //      else if ( key == 3 ) {
+    //        int fleeChance = (int) (Math.random() * 10);
+    //        if (fleeChance < 2) {
+    //          System.out.println("\nThe " + mon.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + mon.getName() + "can land another hit.");
+    //          return;
+    //        }
+    //        else if (fleeChance < 5) {
+    //          System.out.println("\nYou begin to escape, but the " + mon.getName() + " slashes down at you one time and lands a hit before you escape.");
+    //          characterAttack(mon, hero, 1, 0, useShield());
+    //          return;
+    //        }
+    //        else {
+    //          System.out.println("You failed to escape!");
+    //        }
+    //      }
+    //    }
+    //    if (mc.isAlive()) {
+    //      return true;
+    //    }
+    //  }
+    //}
+
+    // public void weaponChoice(int key) {
+    //   int weaponCount = 3;
+    //   String s = "\nWhich weapon will you use?\n";
+    //   s += "\t1: Back\n";
+    //   s += "\t2: Fist\tPower: 1\n";
+    //   issaSword.clear();
+    //   for (int j = 0; j < inventory.size(); j++) {
+    //   if (inventory.get(j) instanceof Sword) {
+    //     issaSword.add(j); // adds inventory index
+    //     s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
+    //     weaponCount += 1;
+    //   }
+    // }
+    //   if (key == 1) {
+    //     return;
+    //   }
+    //   else if (key == 2) {
+    //     attackOrder(0);
+    //   }
+    //   else if (itemChoice > 2 && itemChoice < 7) {
+    //   attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
+    //   useItem(issaSword.get(itemChoice - 3)); // reduce durability
+    // }
+    // }
+
+    public boolean attackOrder(Character hero, Character mon) { // manages attack order
+      int order = (int) (Math.random() * 2);
+      if (order == 0) { // player attacks first
+          //characterAttack(hero, mon);
+          if (mon.isAlive()) {
+            //characterAttack(mon, hero);
+          }
+      }
+      else if (order == 1) { // monster attacks first
+          //characterAttack(mon, hero);
+          if (mon.isAlive()) {
+            //characterAttack(hero, mon);
+          }
+      }
+      if (hero.isAlive()) {
+        return true;
+      }
+      return false;
+    }
+
+    public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
+      int dmg = attacker.getAtk() + weaponPower - shieldPower;
+      if (dmg < 0) {
+        dmg = 0;
+      }
+      attacked.subtractHealth(dmg);
+      System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
+      System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
+    }
+
+    public void round(String key) {
+      if (battlePhase == false) {
+        playerTurn(key);
+        if (mc.isAlive()) {
+          monsterTurn();
+        }
+        if (mc.isAlive() && ifEnd()) { // generate another floor
+          nextFloor();
+        }
+        else if (!mc.isAlive()) {
+          dead();
+        }
+      }
+    }
+
+    // helper method for play()
+    public boolean ifEnd() { // if hero is on end tile
+      return maze.getPos(mc.getC(), mc.getR()).equals("*");
+    }
+
+    public void nextFloor() { // how to generate next floor
+      System.out.println("You cleared the floor!");
+      System.out.println("Current score: " + score);
+      System.out.println("Generating next stage ...");
+      System.out.println("...");
+    }
+
+    public void dead() {
+      System.out.println("You have died. Better luck next time.");
+      System.out.println("Final Score: " + score);
+    }
+
+     public String toString() {
+         clear();
+         return currentFrame.toString();
+     }
+
+    // player movement
+    public boolean moveUp() {
+        if( (!(currentFrame.getPos(mc.getR()-1, mc.getC()).equals("#"))) && (!(currentFrame.getPos(mc.getR()-1, mc.getC()).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
+            mc.moveUp();
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    public void moveRight(){
-        if(currentFrame.getPos(heroX, heroY+1).equals(" ") || currentFrame.getPos(heroX, heroY+1).equals("!")){
-            currentFrame.setPos(heroX, heroY," ");
-            heroY += 1;
-            currentFrame.setPos(heroX, heroY, hero);
+    public boolean moveRight() {
+        if( (!(currentFrame.getPos(mc.getR(), mc.getC()+1).equals("#"))) && (!(currentFrame.getPos(mc.getR(), mc.getC()+1).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
+            mc.moveRight();
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    public void moveDown(){
-        if(currentFrame.getPos(heroX+1, heroY).equals(" ") || currentFrame.getPos(heroX+1, heroY).equals("!")){
-            currentFrame.setPos(heroX, heroY," ");
-            heroX += 1;
-            currentFrame.setPos(heroX, heroY, hero);
+    public boolean moveDown() {
+        if( (!(currentFrame.getPos(mc.getR()+1, mc.getC()).equals("#"))) && (!(currentFrame.getPos(mc.getR()+1, mc.getC()).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
+            mc.moveDown();
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    public void moveLeft(){
-        if(currentFrame.getPos(heroX, heroY-1).equals(" ") || currentFrame.getPos(heroX, heroY-1).equals("!")){
-            currentFrame.setPos(heroX, heroY," ");
-            heroY -= 1;
-            currentFrame.setPos(heroX, heroY, hero);
+    public boolean moveLeft() {
+        if( (!(currentFrame.getPos(mc.getR(), mc.getC()-1).equals("#"))) && (!(currentFrame.getPos(mc.getR(), mc.getC()-1).equals("@"))) ){
+            currentFrame.setPos(mc.getR(), mc.getC(), mc.lastTile());
+            mc.moveLeft();
+            currentFrame.setPos(mc.getR(), mc.getC(), hero);
+            return true;
+        } else {
+          return false;
         }
     }
-    
-    public String[][] getMaze(){
+
+    public String[][] getMaze() {
       return maze.getMaze();
     }
-    
+
     //public String[][] displayZone(){
-    //  int left = heroX - 10;
-    //  int right = heroX + 10;
-    //  int up = heroY - 10;
-    //  int down = heroY + 10;
-     
+    //  int left = mc.getC() - 10;
+    //  int right = mc.getC() + 10;
+    //  int up = mc.getR() - 10;
+    //  int down = mc.getR() + 10;
+
     //  String[][] output = new String[21][21];
 
     //  int counterL = 0;
     //  int counterR = 0;
     //  int counterU = 0;
     //  int counterD = 0;
-      
+
     //  if(left < 0){
-    //      counterL = Math.abs(left); 
+    //      counterL = Math.abs(left);
     //      for(int i = 0; i < output.length; i++){
     //        for(int h = 0; h < counterL; h++){
     //          output[i][h] = "#";
@@ -97,7 +369,7 @@ public class Map{
     //      }
     //    }
     //    else if(right > output.length){
-    //      counterR = right-output.length-1; 
+    //      counterR = right-output.length-1;
     //      for(int i = 0; i < output.length; i++){
     //        for(int h = output.length; h > output[0].length-counterR; h--){
     //          output[i][h] = "#";
@@ -129,35 +401,48 @@ public class Map{
     //  return output;
     //}
 
-    public String[][] displayZone(){
-        int topLeftX = heroX - 10;
-        int topLeftY = heroY - 10;
+    public String[][] displayZone() {
+        int topLeftR = mc.getR() - 10;
+        int topLeftC = mc.getC() - 10;
 
-        int currX = 0;
-        int currY = 0;
+        int currR = 0;
+        int currC = 0;
 
-        topLeftX = Math.max(0, topLeftX);
-        topLeftY = Math.max(0, topLeftY);
+        topLeftR = Math.max(0, topLeftR);
+        topLeftC = Math.max(0, topLeftC);
 
-        topLeftX = Math.min(topLeftX, width-21);
-        topLeftY = Math.min(topLeftY, length-21);
+        topLeftR = Math.min(topLeftR, rows-21);
+        topLeftC = Math.min(topLeftC, cols-21);
 
         String[][] output = new String[21][21];
-        for(int i = topLeftX; i < topLeftX + 21; i++){
-            for(int e = topLeftY; e < topLeftY + 21; e++){
-                output[currX][currY] = currentFrame.getPos(i,e);
+        for(int i = topLeftR; i < topLeftR + 21; i++){
+            for(int e = topLeftC; e < topLeftC + 21; e++){
+                output[currR][currC] = currentFrame.getPos(i,e);
                 //System.out.print(output[currX][currY]);
-                currY++;
+                currC++;
             }
             //System.out.println("");
-            currY = 0;
-            currX++;
+            currC = 0;
+            currR++;
         }
-  
+
       return output;
 
     }
-    
+
+    public boolean isRoom(int r, int c) {
+        // returns true if coordinate is in a room
+        return currentFrame.getMaze()[r-1][c-1].equals(" ") &&
+               currentFrame.getMaze()[r][c-1].equals(" ") &&
+               currentFrame.getMaze()[r+1][c-1].equals(" ") &&
+               currentFrame.getMaze()[r-1][c].equals(" ") &&
+               currentFrame.getMaze()[r][c].equals(" ") &&
+               currentFrame.getMaze()[r+1][c].equals(" ") &&
+               currentFrame.getMaze()[r-1][c+1].equals(" ") &&
+               currentFrame.getMaze()[r][c+1].equals(" ") &&
+               currentFrame.getMaze()[r+1][c+1].equals(" ");
+
+    }
 
     public static void main(String[] args) {
         Map test = new Map();
