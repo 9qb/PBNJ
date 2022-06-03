@@ -7,6 +7,8 @@ public class Debugger{
     Map map = new Map();
     System.out.println(map);
 
+    map.processTile();
+
     while(sc.hasNextLine()){
       String motion = sc.nextLine();
       if(motion.equalsIgnoreCase("W")){

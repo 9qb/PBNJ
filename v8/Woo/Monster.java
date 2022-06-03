@@ -4,7 +4,7 @@ public class Monster extends Character {
    super();
  }
 
- public Monster(int newHealth, int newAttack, int newSpeed, int newR, int newC, String[][] maze) {
+ public Monster(int newHealth, int newAttack, int newSpeed, int newR, int newC, Maze maze) {
    super(newHealth, newAttack, newSpeed, newR, newC, maze);
  }
 

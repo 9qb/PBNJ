@@ -7,7 +7,6 @@ public class MazeGenerator {
   private final String WORLD_BORDER = "@";
   private final String GATE = "!";
   private final String MAZEPATH = "$";
-  private final String END_TILE = "E";
 
  /*
  Advised by students from Mr K's class while writing this class
@@ -38,7 +37,6 @@ public class MazeGenerator {
     mazeToSpace();
     uncarveMaze();
     cleanup();
-    addExit();
   }
 
   private void buildRooms(int numRooms){
@@ -85,32 +83,6 @@ public class MazeGenerator {
   // returns [lowerLimit, upperLimit)
   public int randNum(int lowerLimit, int upperLimit){
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
-  }
-
-  private void addExit(){
-    boolean isAdded = false;
-    int randomR, randomC;
-    while (!isAdded){
-      randomR = randNum(1, _rows-1);
-      randomC = randNum(1, _cols-1);
-
-      if (isInRoom(randomR, randomC)){
-        _maze[randomR][randomC] = END_TILE;
-        isAdded = true;
-      }
-    }
-  }
-
-  private boolean isInRoom(int r, int c){
-    return _maze[r-1][c-1].equals(" ") &&
-           _maze[r][c-1].equals(" ") &&
-           _maze[r+1][c-1].equals(" ") &&
-           _maze[r-1][c].equals(" ") &&
-           _maze[r][c].equals(" ") &&
-           _maze[r+1][c].equals(" ") &&
-           _maze[r-1][c+1].equals(" ") &&
-           _maze[r][c+1].equals(" ") &&
-           _maze[r+1][c+1].equals(" ");
   }
 
   private void cleanup(){

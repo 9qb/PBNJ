@@ -5,50 +5,14 @@ public class Maze{
     */
 
     private String[][] _maze;
+    
+    public Maze(String[][] arr){
+      this._maze = arr;
+    }
 
-    // private Maze northMaze;
-    // private Maze eastMaze;
-    // private Maze southMaze;
-    // private Maze westMaze;
-
-
-
-     public Maze(String[][] arr){
-         this._maze = arr;
-     }
-
-     public String[][] getMaze(){
-       return this._maze;
-     }
-
-    // public void setNorth(Maze north){
-    //     this.northMaze = north;
-    // }
-
-    // public void setEast(Maze east){
-    //     this.eastMaze = east;
-    // }
-
-    // public void setSouth(Maze south){
-    //     this.southMaze = south;
-    // }
-
-    // public void setWest(Maze west){
-    //     this.westMaze = west;
-    // }
-
-    // public Maze getNorth(){
-    //     return northMaze;
-    // }
-    // public Maze getEast(){
-    //     return eastMaze;
-    // }
-    // public Maze getSouth(){
-    //     return southMaze;
-    // }
-    // public Maze getWest(){
-    //     return westMaze;
-    // }
+    public String[][] getMaze(){
+      return this._maze;
+    }
 
     public void setPos(int r, int c, String cargo){
         _maze[r][c] = cargo;

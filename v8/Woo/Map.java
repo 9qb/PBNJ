@@ -15,6 +15,7 @@ public class Map{
     private Maze currentFrame;
     private int rows;
     private int cols;
+    private boolean exitPlaced;
 
     // RPG instance variables
     private Character mc;
@@ -33,18 +34,6 @@ public class Map{
         cols = 144;
         MazeGenerator troll = new MazeGenerator(rows, cols);
         maze = new Maze(troll.getGeneratedMaze());
-        // boolean isTrue = false;
-        // for(int i =0; i < heroPosFinder.length-1;i++){
-        //   for(int e =0; e < heroPosFinder[0].length-1; e++){
-        //     if(heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!")){
-        //         isTrue = true;
-        //         mc.getC() = i;
-        //         mc.getR() = e;
-        //       break;
-        //     }
-        //     if(isTrue){break;}
-        //   }
-        // }
         currentFrame = maze;
 
         // creates the hero in a room
@@ -53,7 +42,7 @@ public class Map{
           int heroC = troll.randNum(1, cols-1);
           if(isRoom(heroR, heroC)) {
             // isTrue = true;
-            mc = new Hero(100, 10, 1, heroR, heroC, maze.getMaze());
+            mc = new Hero(100, 10, 1, heroR, heroC, currentFrame);
             break;
           }
         }
@@ -63,22 +52,23 @@ public class Map{
           int monsterR = troll.randNum(1, rows);
           int monsterC = troll.randNum(1, cols);
           if(isRoom(monsterR, monsterC)) {
-            monster = new Monster(100, 10, 1, monsterR, monsterC, maze.getMaze());
+            monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
             monsters.add(monster);
+          }
+
+        }
+
+        // creates an exit tile
+        while (!exitPlaced){
+          int exitR = troll.randNum(1, rows);
+          int exitC = troll.randNum(1, cols);
+          if (isRoom(exitR, exitC)){
+            currentFrame.setPos(exitR, exitC, "E");
+            exitPlaced = true;
           }
         }
 
-        //for(int i =0; i < heroPosFinder.length-1;i++){
-        //  for(int e =0; e < heroPosFinder[0].length-1; e++){
-        //    if((heroPosFinder[i][e].equals(" ") || heroPosFinder[i][e].equals("!") && !isTrue)){
-        //        isTrue = true;
-        //        mc.getC() = i;
-        //        mc.getR() = e;
-        //      break;
-        //    }
-        //    if(isTrue){break;}
-        //  }
-        //}
+        // place hero
         currentFrame.setPos(mc.getR(), mc.getC(), hero);
     }
 
@@ -279,9 +269,15 @@ public class Map{
       }
     }
 
-    // helper method for play()
+    // helper method for processTile
     public boolean ifEnd() { // if hero is on end tile
-      return maze.getPos(mc.getC(), mc.getR()).equals("*");
+      return mc.lastTile().equals("E");
+    }
+
+    public void processTile(){
+      if (ifEnd()){
+        nextFloor();
+      }
     }
 
     public void nextFloor() { // how to generate next floor
@@ -289,6 +285,46 @@ public class Map{
       System.out.println("Current score: " + score);
       System.out.println("Generating next stage ...");
       System.out.println("...");
+
+      MazeGenerator temp = new MazeGenerator(rows, cols);
+      maze = new Maze(temp.getGeneratedMaze());
+      currentFrame = maze;
+
+      // creates the hero in a room
+      while (true) {
+        int heroR = temp.randNum(1, rows-1);
+        int heroC = temp.randNum(1, cols-1);
+        if(isRoom(heroR, heroC)) {
+          // isTrue = true;
+          mc = new Hero(mc.getHealth(), mc.getAtk(), mc.getSpeed(), heroR, heroC, currentFrame);
+          break;
+        }
+      }
+
+      // creates the monsters in a room
+      while (monsters.size() != monsterCount) {
+        // do we need to reset monsters.size()?
+        int monsterR = temp.randNum(1, rows);
+        int monsterC = temp.randNum(1, cols);
+        if(isRoom(monsterR, monsterC)) {
+          monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
+          monsters.add(monster);
+        }
+
+      }
+
+      // creates an exit tile
+      while (!exitPlaced){
+        int exitR = temp.randNum(1, rows);
+        int exitC = temp.randNum(1, cols);
+        if (isRoom(exitR, exitC)){
+          currentFrame.setPos(exitR, exitC, "E");
+          exitPlaced = true;
+        }
+      }
+
+      // place hero
+      currentFrame.setPos(mc.getR(), mc.getC(), hero);
     }
 
     public void dead() {
