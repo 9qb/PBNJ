@@ -58,12 +58,12 @@ public class Map{
           if(isRoom(monsterR, monsterC)) {
             monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
             monsters.add(monster);
+            currentFrame.setPos(monsterR, monsterC, "M");
           }
-
         }
 
         // creates an exit tile
-        while (!exitPlaced){
+        while (!exitPlaced) {
           int exitR = troll.randNum(1, rows);
           int exitC = troll.randNum(1, cols);
           if (isRoom(exitR, exitC)){
@@ -242,7 +242,7 @@ public class Map{
             //characterAttack(hero, mon);
           }
       }
-      if (hero.isAlive()) {
+      if (mc.isAlive()) {
         return true;
       }
       return false;
