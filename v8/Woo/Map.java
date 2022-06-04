@@ -29,6 +29,10 @@ public class Map{
     // system instance variables
     private int score; // accumulates after each floor
 
+    // private ArrayList<Integer> issaSword = new ArrayList<Integer>();
+    // private ArrayList<Integer> issaPotion = new ArrayList<Integer>();
+    // private ArrayList<Integer> issaShield = new ArrayList<Integer>();
+
     public Map(){
         rows = 81;
         cols = 144;
@@ -336,6 +340,205 @@ public class Map{
          clear();
          return currentFrame.toString();
      }
+
+     // public Item createItem (String name, int id, String type, int durability, int power) {
+     //   if (type == "shield") {
+     //     Item newitem = new Shield(name, id, durability, power);
+     //     return newitem;
+     //   }
+     //   else if (type == "sword") {
+     //     Item newitem = new Sword(name, id, durability, power);
+     //     return newitem;
+     //   }
+     //   else if (type == "potion") {
+     //     Item newitem = new Potion(name, id, durability, power);
+     //     return newitem;
+     //   }
+     //   Item newitem = new Item();
+     //   return newitem;
+     // }
+
+     // public void weapon() {
+     //   int itemChoice = 1;
+     //   int weaponCount = 3;
+     //   String s = "\nWhich weapon will you use?\n";
+     //   s += "\t1: Back\n";
+     //   s += "\t2: Fist\tPower: 1\n";
+     //   issaSword.clear();
+     //   for (int j = 0; j < inventory.size(); j++) {
+     //     if (inventory.get(j) instanceof Sword) {
+     //       issaSword.add(j); // adds inventory index
+     //       s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
+     //       weaponCount += 1;
+     //     }
+     //   }
+     //   s += "Selection: ";
+     //   System.out.print( s );
+     //   try {
+     //     itemChoice = Integer.parseInt( in.readLine() );
+     //   }
+     //   catch (IOException e) { }
+     //   if (itemChoice == 1) {
+     //     return;
+     //   }
+     //   else if (itemChoice == 2) {
+     //     attack(0);
+     //   }
+     //   else if (itemChoice > 2 && itemChoice < 7) {
+     //     attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
+     //     useItem(issaSword.get(itemChoice - 3)); // reduce durability
+     //   }
+     // }
+
+  //    public boolean useItem() {
+  //   int itemChoice = 1;
+  //   int itemCount = 2;
+  //   String s = "\nWhich item will you use?\n";
+  //   s += "\t1: Back\n";
+  //   issaPotion.clear();
+  //   for (int j = 0; j < inventory.size(); j++) {
+  //     if (inventory.get(j) instanceof Potion) {
+  //       issaPotion.add(j); // adds inventory index
+  //       s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
+  //       itemCount += 1;
+  //     }
+  //   }
+  //   s += "Selection: ";
+  //   System.out.print( s );
+  //   try {
+  //     itemChoice = Integer.parseInt( in.readLine() );
+  //   }
+  //   catch (IOException e) { }
+  //   if (itemChoice == 1) {
+  //     return false;
+  //   }
+  //   else if (itemChoice > 2 && itemChoice < 6) {
+  //     if (inventory.get(issaPotion.get(itemChoice - 2)) instanceof Potion) {
+  //       if (inventory.get(issaPotion.get(itemChoice - 2)).getName() == "Potion of Healing") {
+  //         pat.setHealth(20);
+  //         inventory.remove(issaPotion.get(itemChoice - 2));
+  //         System.out.println("You used a potion of healing and now you are at max health!");
+  //       }
+  //     }
+  //   }
+  //   return true;
+  // }
+
+  // public int useShield() {
+  //   String s;
+  //   issaShield.clear();
+  //   for(int idx = 0; idx < inventory.size(); idx++) {
+  //     if (inventory.get(idx) instanceof Shield) {
+  //       issaShield.add(idx);
+  //     }
+  //   }
+  //   if (issaShield.size() > 0) {
+  //     int itemCount = 1;
+  //     int itemChoice = 1;
+  //     s = "\nWhich shield will you use?\n";
+  //     for (int j = 0; j < inventory.size(); j++) {
+  //       if (inventory.get(j) instanceof Shield) {
+  //         s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
+  //         itemCount += 1;
+  //         }
+  //     }
+  //     s += "Selection: ";
+  //     System.out.println( s );
+  //     try {
+  //       itemChoice = Integer.parseInt( in.readLine() );
+  //     }
+  //     catch (IOException e) { }
+  //     if (itemChoice > 0 && itemChoice < 5) {
+  //       int shieldPower = inventory.get(issaShield.get(itemChoice - 1)).getPower();
+  //       useItem(issaShield.get(itemChoice - 1)); // reduce durability
+  //       return shieldPower;
+  //     }
+  //     return 0;
+  //   }
+  //   return 0;
+  // }
+  //
+  // // use item from inventory
+  // public void useItem(int index) {
+  //   if (inventory.get(index) instanceof Sword || inventory.get(index) instanceof Shield) {
+  //     int reducedDur = 5 * ((int) (Math.random() * 6));
+  //     inventory.get(index).reduceDurability(reducedDur);
+  //   }
+  //   if (inventory.get(index).getDurability() <= 0) {
+  //     System.out.println("Your " + inventory.get(index).getName() + "has broke!");
+  //     inventory.remove(index);
+  //   }
+  //   return;
+  // }
+
+  // public Item randItem() {
+  //   Item luckyItem = createItem("", nextitemId, "", "", 0, 0);
+  //   int randDur = 2 * ((int) (Math.random() * 51));
+  //   if (days < 10) {
+  //     int randItem = (int) (Math.random() * 6);
+  //     if (randItem == 0) {
+  //       luckyItem = createItem("Rusty Dagger", nextitemId, "sword", "", randDur, 2);
+  //     }
+  //     else if (randItem == 1) {
+  //       luckyItem = createItem("Wooden Shield", nextitemId, "shield", "", randDur, 1);
+  //     }
+  //     else if (randItem == 2) {
+  //       luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 0);
+  //     }
+  //     else if (randItem == 3) {
+  //       luckyItem = createItem("Pitchfork", nextitemId, "sword", "", randDur, 3);
+  //     }
+  //     else if (randItem == 4) {
+  //       luckyItem = createItem("Pickaxe", nextitemId, "sword", "", randDur, 1);
+  //     }
+  //     else if (randItem == 5) {
+  //       luckyItem = createItem("Cardboard", nextitemId, "shield", "", randDur, 0);
+  //     }
+  //   }
+  //   else if (days < 20) {
+  //     int randItem = (int) (Math.random() * 6);
+  //     if (randItem == 0) {
+  //       luckyItem = createItem("Goblin Club", nextitemId, "sword", "", randDur, 5);
+  //     }
+  //     else if (randItem == 1) {
+  //       luckyItem = createItem("Leather Shield", nextitemId, "shield", "", randDur, 2);
+  //     }
+  //     else if (randItem == 2) {
+  //       luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 1);
+  //     }
+  //     else if (randItem == 3) {
+  //       luckyItem = createItem("Katana", nextitemId, "sword", "", randDur, 3);
+  //     }
+  //     else if (randItem == 4) {
+  //       luckyItem = createItem("Cutlass", nextitemId, "sword", "", randDur, 4);
+  //     }
+  //     else if (randItem == 5) {
+  //       luckyItem = createItem("Stone Shield", nextitemId, "sword", "", randDur, 3);
+  //     }
+  //   }
+  //   else if (days < 30) {
+  //     int randItem = (int) (Math.random() * 6);
+  //     if (randItem == 0) {
+  //       luckyItem = createItem("Excalibur", nextitemId, "sword", "", randDur, 6);
+  //     }
+  //     else if (randItem == 1) {
+  //       luckyItem = createItem("Diamond Shield", nextitemId, "shield", "", randDur, 6);
+  //     }
+  //     else if (randItem == 2) {
+  //       luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 1);
+  //     }
+  //     else if (randItem == 3) {
+  //       luckyItem = createItem("Long Sword", nextitemId, "sword", "", randDur, 5);
+  //     }
+  //     else if (randItem == 4) {
+  //       luckyItem = createItem("Round Shield", nextitemId, "shield", "", randDur, 5);
+  //     }
+  //     else if (randItem == 5) {
+  //       luckyItem = createItem("Stone Shield", nextitemId, "sword", "", randDur, 3);
+  //     }
+  //   }
+  //   return luckyItem;
+  // }
 
     // player movement
     public boolean moveUp() {
