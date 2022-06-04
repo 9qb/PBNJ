@@ -55,7 +55,7 @@ public class Map{
         while (monsters.size() != monsterCount) {
           int monsterR = troll.randNum(1, rows);
           int monsterC = troll.randNum(1, cols);
-          if(isRoom(monsterR, monsterC)) {
+          if(isRoom(monsterR, monsterC) && Math.sqrt(Math.pow(monsterC - mc.getC(), 2) + Math.pow(monsterR - mc.getR(), 2)) > 10) { // monster spawns distance of at least 10
             monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
             monsters.add(monster);
             currentFrame.setPos(monsterR, monsterC, "M");
@@ -66,7 +66,7 @@ public class Map{
         while (!exitPlaced) {
           int exitR = troll.randNum(1, rows);
           int exitC = troll.randNum(1, cols);
-          if (isRoom(exitR, exitC)){
+          if (isRoom(exitR, exitC) && Math.sqrt(Math.pow(exitC - mc.getC(), 2) + Math.pow(exitR - mc.getR(), 2)) > 50) {
             currentFrame.setPos(exitR, exitC, "E");
             exitPlaced = true;
           }
