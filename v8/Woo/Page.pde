@@ -53,7 +53,6 @@ class Game extends Page{
     
     
     for( String[] row : map.displayZone() ){
-      
       for( String col : row ){
         //print(col);
         if( col.equals("#") ) image(mapTiles[2],currentX,currentY);
@@ -70,6 +69,14 @@ class Game extends Page{
       currentX = 0;
       currentY += SIZE;
       //println("");
+      int randNum = int(random(60));
+      if(randNum == 1){
+        randNum = int(random(4));
+        if(randNum == 0){map.moveUp();}
+        if(randNum == 1){map.moveRight();}
+        if(randNum == 2){map.moveDown();}
+        if(randNum == 3){map.moveLeft();}
+      }
     }
     
   }

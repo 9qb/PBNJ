@@ -2,15 +2,16 @@ import java.util.ArrayList;
 
 public class MazeGenerator {
 
+  /*
+    Randomly generates a dungeon
+    Uses a refactored version of the maze generation algorithm taught in Mr K's class
+  */
+
   private final String SPACE = " ";
   private final String WALL = "#";
   private final String WORLD_BORDER = "@";
   private final String GATE = "!";
   private final String MAZEPATH = "$";
-
- /*
- Advised by students from Mr K's class while writing this class
- */
 
   private String[][] _maze;
   private ArrayList<Room> _rooms;

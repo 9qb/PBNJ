@@ -1,7 +1,6 @@
 public class Maze{
     /*
-    Contains Maze
-    Contains links to adjacent Mazes
+        Contains Maze
     */
 
     private String[][] _maze;
