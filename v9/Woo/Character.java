@@ -68,6 +68,10 @@ public class Character {
     return lastTile;
   }
 
+  public void lastTileToSpace(){
+    lastTile = " ";
+  }
+
   // public void attack() {
   //
   // }

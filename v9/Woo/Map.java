@@ -246,14 +246,15 @@ public class Map{
       }
     }
 
-    // helper method for processTile
-    public boolean ifEnd() { // if hero is on end tile
-      return mc.lastTile().equals("E");
-    }
-
     public void processTile(){
-      if (ifEnd()){
+      if (mc.lastTile().equals("E")){
         nextFloor();
+      }
+
+      if (mc.lastTile().equals("M")){
+        // fight!
+
+        mc.lastTileToSpace();
       }
     }
 
