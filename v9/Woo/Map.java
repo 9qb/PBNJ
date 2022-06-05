@@ -29,10 +29,6 @@ public class Map{
     // system instance variables
     private int score; // accumulates after each floor
 
-    // private ArrayList<Integer> issaSword = new ArrayList<Integer>();
-    // private ArrayList<Integer> issaPotion = new ArrayList<Integer>();
-    // private ArrayList<Integer> issaShield = new ArrayList<Integer>();
-
     public Map(){
         rows = 81;
         cols = 144;
@@ -96,25 +92,16 @@ public class Map{
       for (Character mon : monsters) {
         if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
           currentMonster.add(mon);
+          battlePhase = true;
+          break;
         }
       }
-      battlePhase = true;
-      for (Character current : currentMonster) {
-        monster = current;
-        //battleChoice(0);
-        if (!mc.isAlive()) { // hero died
-          battlePhase = false;
-          return;
-        }
-        else { // monster died
-          monsters.remove(current);
-        }
-      }
-      battlePhase = false;
+
     }
 
     // monster move
     public void monsterTurn() {
+      // moves all monsters on the map
       for (Character mon : monsters) {
         int monC = mon.getC(); // stores current C tile
         int monR = mon.getR(); // stores current R tile
@@ -162,24 +149,33 @@ public class Map{
       battlePhase = false;
     }
 
-    public boolean attackOrder(Character hero, Character mon) { // manages attack order
-      int order = (int) (Math.random() * 2);
-      if (order == 0) { // player attacks first
-          //characterAttack(hero, mon);
-          if (mon.isAlive()) {
-            //characterAttack(mon, hero);
-          }
+    public void combat(int key) {
+      Character current = currentMonster.get(0);
+      Character temp = current;
+      if (battlePhase) {
+        // player attack
+        if (key == 1) {
+          characterAttack(mc, temp, 10, 0);
+        }
+        // use potion (not implemented)
+        else if (key == 2) {
+        }
+        // flee (not implemented)
+        else if (key == 3) {
+        }
       }
-      else if (order == 1) { // monster attacks first
-          //characterAttack(mon, hero);
-          if (mon.isAlive()) {
-            //characterAttack(hero, mon);
-          }
+      if (!temp.isAlive()) {
+        monsters.remove(current);
+        battlePhase = false;
+      // monster attack
+      if (mc.isAlive() && battlePhase) {
+        characterAttack(temp, mc, 15, 0);
+        }
       }
-      if (mc.isAlive()) {
-        return true;
+      else if (!mc.isAlive()){
+        // player died
+        dead();
       }
-      return false;
     }
 
     public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
@@ -198,9 +194,11 @@ public class Map{
         if (mc.isAlive()) {
           monsterTurn();
         }
-        if (mc.isAlive() && ifEnd()) { // generate another floor
+        // generate another floor
+        if (mc.isAlive() && ifEnd()) {
           nextFloor();
         }
+        // player died
         else if (!mc.isAlive()) {
           dead();
         }
@@ -241,8 +239,8 @@ public class Map{
 
       // creates the monsters in a room
       while (monsters.size() != monsterCount) {
-        int monsterR = troll.randNum(1, rows);
-        int monsterC = troll.randNum(1, cols);
+        int monsterR = (int) (Math.random() * (rows - 1)) + 1;
+        int monsterC = (int) (Math.random() * (cols - 1)) + 1;
         if(isRoom(monsterR, monsterC) && Math.sqrt(Math.pow(monsterC - mc.getC(), 2) + Math.pow(monsterR - mc.getR(), 2)) > 10) { // monster spawns distance of at least 10
           monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
           monsters.add(monster);
@@ -252,8 +250,8 @@ public class Map{
 
       // creates an exit tile
       while (!exitPlaced) {
-        int exitR = troll.randNum(1, rows);
-        int exitC = troll.randNum(1, cols);
+        int exitR = (int) (Math.random() * (rows - 1)) + 1;
+        int exitC = (int) (Math.random() * (cols - 1)) + 1;
         if (isRoom(exitR, exitC) && Math.sqrt(Math.pow(exitC - mc.getC(), 2) + Math.pow(exitR - mc.getR(), 2)) > 50) {
           currentFrame.setPos(exitR, exitC, "E");
           exitPlaced = true;

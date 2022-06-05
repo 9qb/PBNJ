@@ -72,12 +72,12 @@ void keyPressed(){
  //     map.round("D");
  // }
  //   else if(key == "1"){
- //     map.battleChoice(1);
+ //     map.combat(1); // attack
  // }
  //   else if(key == "2"){
- //     map.battleChoice(2);
+ //     map.combat(2); // use potion (not implemented)
  // }
  //   else if(key == "3"){
- //     map.battleChoice(3);
+ //     map.combat(3); // flee (not implemented)
  // }
  // }
