@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Map{
 
     private String hero = "X";
+    private String enemy = "M";
 
     private static void clear()
     {
@@ -54,7 +55,7 @@ public class Map{
           if(isRoom(monsterR, monsterC) && Math.sqrt(Math.pow(monsterC - mc.getC(), 2) + Math.pow(monsterR - mc.getR(), 2)) > 10) { // monster spawns distance of at least 10
             monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
             monsters.add(monster);
-            currentFrame.setPos(monsterR, monsterC, "M");
+            currentFrame.setPos(monsterR, monsterC, enemy);
           }
         }
 
@@ -110,19 +111,27 @@ public class Map{
         boolean moved = false;
         while (!moved) {
           if (choice == 0 && maze.getPos(monR-1, monC) != "#") {
+            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
             mon.moveUp();
+            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
             moved = true;
           }
           else if (choice == 1 && maze.getPos(monR, monC-1) != "#") {
+            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
             mon.moveLeft();
+            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
             moved = true;
           }
           else if (choice == 2 && maze.getPos(monR+1, monC) != "#") {
+            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
             mon.moveDown();
+            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
             moved = true;
           }
           else if (choice == 3 && maze.getPos(monR, monC+1) != "#") {
+            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
             mon.moveRight();
+            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
             moved = true;
           }
         }
@@ -244,7 +253,7 @@ public class Map{
         if(isRoom(monsterR, monsterC) && Math.sqrt(Math.pow(monsterC - mc.getC(), 2) + Math.pow(monsterR - mc.getR(), 2)) > 10) { // monster spawns distance of at least 10
           monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
           monsters.add(monster);
-          currentFrame.setPos(monsterR, monsterC, "M");
+          currentFrame.setPos(monsterR, monsterC, enemy);
         }
       }
 
