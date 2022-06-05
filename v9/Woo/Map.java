@@ -127,46 +127,6 @@ public class Map{
       }
 
 
-
-
-
-
-
-    //   // moves all monsters on the map
-    //   for (int i = 0; i < monsters.size(); i++) {
-    //     int monC = monsters.get(i).getC(); // stores current C tile
-    //     int monR = monsters.get(i).getR(); // stores current R tile
-    //     // monster movement
-    //     int choice = (int)(Math.random() * 4);
-    //     boolean moved = false;
-    //     while (!moved) {
-    //       if (choice == 0 && maze.getPos(monR-1, monC) != "#") {
-    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-    //         monsters.get(i).moveUp();
-    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
-    //         moved = true;
-    //       }
-    //       else if (choice == 1 && maze.getPos(monR, monC-1) != "#") {
-    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-    //         monsters.get(i).moveLeft();
-    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
-    //         moved = true;
-    //       }
-    //       else if (choice == 2 && maze.getPos(monR+1, monC) != "#") {
-    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-    //         monsters.get(i).moveDown();
-    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
-    //         moved = true;
-    //       }
-    //       else if (choice == 3 && maze.getPos(monR, monC+1) != "#") {
-    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-    //         monsters.get(i).moveRight();
-    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
-    //         moved = true;
-    //       }
-    //     }
-    //   }
-    //
     //   // check if we should start a battle
     //   for (int j = 0; j < monsters.size(); j++) {
     //     if (mc.getC() == monsters.get(j).getC() && mc.getR() == monsters.get(j).getR()) {
@@ -252,7 +212,7 @@ public class Map{
       }
 
       if (mc.lastTile().equals("M")){
-        // fight!
+        battlePhase = true;
 
         mc.lastTileToSpace();
       }
