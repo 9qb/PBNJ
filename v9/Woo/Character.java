@@ -60,9 +60,7 @@ public class Character {
   }
 
   public void replaceTile(int r, int c) {
-    // map[currentR][currentC] = lastTile;
     dungeon.setPos(currentR, currentC, lastTile);
-    // lastTile = map[r][c];
     lastTile = dungeon.getPos(r, c);
   }
 

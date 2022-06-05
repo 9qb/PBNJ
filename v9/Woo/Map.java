@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Map{
 
@@ -21,9 +22,9 @@ public class Map{
     // RPG instance variables
     private Character mc;
     private ArrayList<Item> inventory = new ArrayList<Item>(); // hero inventory
-    private Character monster;
-    private ArrayList<Character> currentMonster = new ArrayList<Character>(); // monsters in the frame
-    private ArrayList<Character> monsters = new ArrayList<Character>();
+    private Monster monster;
+    private ArrayList<Monster> monsters = new ArrayList<Monster>();
+    private PriorityQueue<Character> battleOrder = new PriorityQueue();
     private int monsterCount = 8; // total amount of monsters per floor
     private boolean battlePhase = false;
 
@@ -88,124 +89,155 @@ public class Map{
       else if (key == "D") {
         moveRight();
       }
-      // hero trigger monster combat
-      currentMonster.clear();
-      for (Character mon : monsters) {
-        if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
-          currentMonster.add(mon);
-          battlePhase = true;
-          break;
-        }
-      }
 
+      // // check if we should start a battle
+      // for (Character mon : monsters) {
+      //   if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
+      //     battleOrder.add(mon);
+      //     battlePhase = true;
+      //     break;
+      //   }
+      // }
+      //
+      // while (!(battleOrder.isEmpty())){
+      //   battlePhase = true;
+      //   for (Character current : battleOrder) {
+      //     monster = current;
+      //     //battleChoice(0);
+      //     if (!mc.isAlive()) { // hero died
+      //       battlePhase = false;
+      //       return;
+      //     }
+      //     else { // monster died
+      //       monsters.remove(current);
+      //     }
+      //   }
+      //   battlePhase = false;
+      // }
+      //
     }
 
-    // monster move
+    // // monster move
     public void monsterTurn() {
-      // moves all monsters on the map
-      for (Character mon : monsters) {
-        int monC = mon.getC(); // stores current C tile
-        int monR = mon.getR(); // stores current R tile
-        // monster movement
-        int choice = (int)(Math.random() * 4);
-        boolean moved = false;
-        while (!moved) {
-          if (choice == 0 && maze.getPos(monR-1, monC) != "#") {
-            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-            mon.moveUp();
-            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
-            moved = true;
-          }
-          else if (choice == 1 && maze.getPos(monR, monC-1) != "#") {
-            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-            mon.moveLeft();
-            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
-            moved = true;
-          }
-          else if (choice == 2 && maze.getPos(monR+1, monC) != "#") {
-            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-            mon.moveDown();
-            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
-            moved = true;
-          }
-          else if (choice == 3 && maze.getPos(monR, monC+1) != "#") {
-            // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
-            mon.moveRight();
-            currentFrame.setPos(mon.getR(), mon.getC(), enemy);
-            moved = true;
-          }
+      // each monster will play their turn
+      for (int i = 0; i < monsters.size(); i++){
+        if ((monsters.get(i)).playTurn()){
+          // battle method goes here
         }
       }
-      // monster trigger hero combat
-      currentMonster.clear();
-      for (Character mon : monsters) {
-        if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
-          currentMonster.add(mon);
-        }
-      }
-      battlePhase = true;
-      for (Character current : currentMonster) {
-        monster = current;
-        //battleChoice(0);
-        if (!mc.isAlive()) { // hero died
-          battlePhase = false;
-          return;
-        }
-        else { // monster died
-          monsters.remove(current);
-        }
-      }
-      battlePhase = false;
+
+
+
+
+
+
+
+    //   // moves all monsters on the map
+    //   for (int i = 0; i < monsters.size(); i++) {
+    //     int monC = monsters.get(i).getC(); // stores current C tile
+    //     int monR = monsters.get(i).getR(); // stores current R tile
+    //     // monster movement
+    //     int choice = (int)(Math.random() * 4);
+    //     boolean moved = false;
+    //     while (!moved) {
+    //       if (choice == 0 && maze.getPos(monR-1, monC) != "#") {
+    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
+    //         monsters.get(i).moveUp();
+    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
+    //         moved = true;
+    //       }
+    //       else if (choice == 1 && maze.getPos(monR, monC-1) != "#") {
+    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
+    //         monsters.get(i).moveLeft();
+    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
+    //         moved = true;
+    //       }
+    //       else if (choice == 2 && maze.getPos(monR+1, monC) != "#") {
+    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
+    //         monsters.get(i).moveDown();
+    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
+    //         moved = true;
+    //       }
+    //       else if (choice == 3 && maze.getPos(monR, monC+1) != "#") {
+    //         // currentFrame.setPos(mon.getR(), mon.getC(), mon.lastTile());
+    //         monsters.get(i).moveRight();
+    //         currentFrame.setPos(monsters.get(i).getR(), monsters.get(i).getC(), enemy);
+    //         moved = true;
+    //       }
+    //     }
+    //   }
+    //
+    //   // check if we should start a battle
+    //   for (int j = 0; j < monsters.size(); j++) {
+    //     if (mc.getC() == monsters.get(j).getC() && mc.getR() == monsters.get(j).getR()) {
+    //       battleOrder.add(monsters.get(j));
+    //     }
+    //   }
+    //
+    //   while (!(battleOrder.isEmpty())){
+    //     battlePhase = true;
+    //     for (Character current : battleOrder) {
+    //       monster = current;
+    //       //battleChoice(0);
+    //       if (!mc.isAlive()) { // hero died
+    //         battlePhase = false;
+    //         return;
+    //       }
+    //       else { // monster died
+    //         monsters.remove(current);
+    //       }
+    //     }
+    //     battlePhase = false;
+    //   }
     }
 
-    public void combat(int key) {
-      Character current = currentMonster.get(0);
-      Character temp = current;
-      if (battlePhase) {
-        // player attack
-        if (key == 1) {
-          characterAttack(mc, temp, 10, 0);
-        }
-        // use potion (not implemented)
-        else if (key == 2) {
-        }
-        // flee (not implemented)
-        else if (key == 3) {
-        }
-      }
-      if (!temp.isAlive()) {
-        monsters.remove(current);
-        battlePhase = false;
-      // monster attack
-      if (mc.isAlive() && battlePhase) {
-        characterAttack(temp, mc, 15, 0);
-        }
-      }
-      else if (!mc.isAlive()){
-        // player died
-        dead();
-      }
-    }
+    // public void combat(int key) {
+    //   Character current = battleOrder.peek();
+    //   Character temp = current;
+    //   if (battlePhase) {
+    //     // player attack
+    //     if (key == 1) {
+    //       characterAttack(mc, temp, 10, 0);
+    //     }
+    //     // use potion (not implemented)
+    //     else if (key == 2) {
+    //     }
+    //     // flee (not implemented)
+    //     else if (key == 3) {
+    //     }
+    //   }
+    //   if (!temp.isAlive()) {
+    //     monsters.remove(current);
+    //     battleOrder.poll();
+    //     battlePhase = false;
+    //   // monster attack
+    //   if (mc.isAlive() && battlePhase) {
+    //     characterAttack(temp, mc, 15, 0);
+    //     }
+    //   }
+    //   else if (!mc.isAlive()){
+    //     // player died
+    //     dead();
+    //   }
+    // }
 
-    public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
-      int dmg = attacker.getAtk() + weaponPower - shieldPower;
-      if (dmg < 0) {
-        dmg = 0;
-      }
-      attacked.subtractHealth(dmg);
-      System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
-      System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
-    }
+    // public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
+    //   int dmg = attacker.getAtk() + weaponPower - shieldPower;
+    //   if (dmg < 0) {
+    //     dmg = 0;
+    //   }
+    //   attacked.subtractHealth(dmg);
+    //   System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
+    //   System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
+    // }
 
     public void round(String key) {
       if (battlePhase == false) {
         playerTurn(key);
+        processTile();
+
         if (mc.isAlive()) {
-          monsterTurn();
-        }
-        // generate another floor
-        if (mc.isAlive()) {
-          processTile();
+          monsterTurn(); // let monsters play a turn
         }
         // player died
         else if (!mc.isAlive()) {
@@ -226,6 +258,7 @@ public class Map{
     }
 
     public void nextFloor() { // how to generate next floor
+      score += 100;
       System.out.println("You cleared the floor!");
       System.out.println("Current score: " + score);
       System.out.println("Generating next stage ...");
@@ -234,6 +267,8 @@ public class Map{
       MazeGenerator temp = new MazeGenerator(rows, cols);
       maze = new Maze(temp.getGeneratedMaze());
       currentFrame = maze;
+      monsters.clear();
+      exitPlaced = false;
 
       // creates the hero in a room
       while (true) {
