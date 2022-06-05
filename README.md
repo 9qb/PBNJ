@@ -4,5 +4,7 @@
 - You play as the hero, traversing through mutliple rooms in a dungeon (each as separate mazes), battling monsters if they arise, to navigate to a higher floor until you perish. 
 
 ## How to launch
-As of now, run this inside terminal. <br>
+Clone the repo <br>
+Open terminal <br>
+Run this line in the root directory: <br>
 ```javac Woo.java && java Woo```
