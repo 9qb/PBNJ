@@ -204,8 +204,8 @@ public class Map{
           monsterTurn();
         }
         // generate another floor
-        if (mc.isAlive() && ifEnd()) {
-          nextFloor();
+        if (mc.isAlive()) {
+          processTile();
         }
         // player died
         else if (!mc.isAlive()) {

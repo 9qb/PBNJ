@@ -30,18 +30,18 @@ We believe that our dungeon generation algorithm gives off a better feel of an R
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Using x and y with variables fo 2D arrays can get confusing. It is better to use r and c because they map directly onto a matrix. 
+Using x and y with variables fo 2D arrays can get confusing. It is better to use r and c because they map directly onto a matrix.
 When we used x and y, we confused ourselves and inverted some of our movement methods.
 
 
 
- ______   ______   __   __   __       ______   _______     
-/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
-\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
- \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
-  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
-   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
-    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
+ ______   ______   __   __   __       ______   _______
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
 ==============================================================
 
 
@@ -56,7 +56,7 @@ Jefford Shau :: Further developed maze generation algorithm, helped with the pro
 --------------------------------------------------------------
 Brian Li :: General setup of repo, made sure everything is where it's supposed to be.
 Nakib Abedin :: Worked on v0, set up the movement feature and the carving algorithm
-Jefford Shau :: Worked on v0, came up with strucutre of maze generation
+Jefford Shau :: Worked on v0, came up with structure of maze generation
 ==============================================================
 
 2022-05-28 -> 2022-05-30
@@ -85,4 +85,11 @@ Jefford Shau :: Worked on RPG classes. Helped with flowchart.
 Brian Li :: Debugging attempts, created Debugger.java as a temporary class to view errors in Terminal.
 Nakib Abedin :: Added new textures, backgrounds. Debugging.
 Jefford Shau :: Worked on RPG classes. Debugging.
+==============================================================
+
+2022-06-04
+--------------------------------------------------------------
+Brian Li :: Debugging.
+Nakib Abedin :: Worked on Processing Title screen display.
+Jefford Shau :: Completed basic combat system.
 ==============================================================
