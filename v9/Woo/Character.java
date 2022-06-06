@@ -124,6 +124,65 @@ public class Character {
     return "";
   }
 
+  public void characterAttack(Character attacked, int weaponPower) {
+    int dmg = attack + weaponPower;
+    if (dmg < 0) {
+      dmg = 0;
+    }
+    attacked.subtractHealth(dmg);
+    System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
+    System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
+  }
+
+  public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
+    int i = 1;
+    System.out.println( "\nWhat is your choice?" );
+    System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
+    try {
+      i = Integer.parseInt( in.readLine() );
+    }
+    catch ( IOException e ) { }
+    if ( i == 1 ) {
+      characterAttack(attacked, 1);
+    }
+    else if ( i == 2 ) {
+      int fleeChance = (int) (Math.random() * 2);
+      if (fleeChance == 0) {
+        System.out.println("\nThe Monster swings down on you, but you quickly dodge to the side. You escape in time before the Monster can land another hit.");
+        return true;
+      }
+      else {
+        System.out.println("\nYou begin to escape, but the Monster slashes grabs you and stops you in your tracks.");
+        return false;
+      }
+    }
+    return false;
+  }
+
+  // public void weapon(Character attacked) {
+  //     int itemChoice = 1;
+  //     int displayItemCount = 1;
+  //     String s = "\nWhich weapon will you use?\n";
+  //     s += "\t1: Fist\tPower: 1\n";
+  //     for (int j = 0; j < inventory.size(); j++) {
+  //       s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
+  //       weaponCount += 1;
+  //       }
+  //     }
+  //     s += "Selection: ";
+  //     System.out.print( s );
+  //     try {
+  //       itemChoice = Integer.parseInt( in.readLine() );
+  //     }
+  //     catch (IOException e) { }
+  //     if (itemChoice == 2) {
+  //       characterattack(attacked, 1);
+  //     }
+  //     else if (itemChoice > 1 && itemChoice < inventory.size()) {
+  //       attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
+  //       useItem(issaSword.get(itemChoice - 3)); // reduce durability
+  //     }
+  //   }
 
   // private void processTile() {
   //   if (lastTile.equals("E")){

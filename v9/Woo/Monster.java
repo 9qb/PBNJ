@@ -96,5 +96,10 @@ public class Monster extends Character {
    return false;
  }
 
+ @Override
+ public void chooseMove(Character attacked){
+   characterAttack(attacked, 0);
+ }
+
 
 }
