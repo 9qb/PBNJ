@@ -130,7 +130,7 @@ public class Character {
       dmg = 0;
     }
     attacked.subtractHealth(dmg);
-    System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
+    //System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
     System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
   }
 
@@ -138,10 +138,10 @@ public class Character {
     int i = 1;
     System.out.println( "\nWhat is your choice?" );
     System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
-    try {
-      i = Integer.parseInt( in.readLine() );
-    }
-    catch ( IOException e ) { }
+    //try {
+    //  //i = Integer.parseInt( in.readLine() );
+    //}
+    //catch ( IOException e ) { }
     if ( i == 1 ) {
       characterAttack(attacked, 1);
     }

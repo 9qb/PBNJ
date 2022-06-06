@@ -8,7 +8,7 @@ This code refactors his code to suit our needs.
 color STANDARD = #ffffff;
 color HOVER = #a8a8a8;
 color OUTLINE = #000000;
-color TEXTCOLOR = #ffffff;
+color TEXTCOLOR = #000000;
 
 class Element{
   float x, y;
@@ -77,7 +77,7 @@ class Button extends Label{
     
     rectMode(CENTER);
     fill(OUTLINE);
-    rect(x,y,240,80);
+    //rect(x,y,240,80);
     super.draw();
   }
 }

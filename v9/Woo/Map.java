@@ -186,12 +186,12 @@ public class Map{
       turnOrder.offerFirst(first); turnOrder.offerLast(second);
 
       // while both are still alive, play until one dead
-      while (turnOrder.getFirst().isAlive() && turnOrder.getLast().isAlive()){
-        if (turnOrder.getFirst().chooseMove()){ break; }
-        if (turnOrder.getLast().isAlive()){
-          if (turnOrder.getLast().chooseMove()){ break; }
-        }
-      }
+      //while (turnOrder.getFirst().isAlive() && turnOrder.getLast().isAlive()){
+      //  if (turnOrder.getFirst().chooseMove()){ break; }
+      //  if (turnOrder.getLast().isAlive()){
+      //    if (turnOrder.getLast().chooseMove()){ break; }
+      //  }
+      //}
 
       // check which is dead
       if (!(turnOrder.getFirst().isAlive())){
@@ -212,7 +212,7 @@ public class Map{
         }
         else {
           // you died
-          dead()
+          dead();
           return;
         }
       }

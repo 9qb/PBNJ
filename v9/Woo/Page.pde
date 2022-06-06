@@ -107,15 +107,20 @@ class BattlePage extends Page
   
   void setup(){
     thisPage = new BattlePage();
-    Attack = new Button(width/2 - 150,height-200,32.0,"Attack",160, 90, thisPage);
-    Flee = new Button(width/2 +150,height-200,32.0,"Flee",160, 90, thisPage);
-    ChangeWeapon = new Button(width/2,height-50,32.0,"ChangeWeapon", 160, 90, thisPage);
+    Attack = new Button(width/2 - 150,height-200,32.0,"Attack",240, 90, thisPage);
+    Flee = new Button(width/2 +150,height-200,32.0,"Flee",240, 90, thisPage);
+    ChangeWeapon = new Button(width/2,height-75,32.0,"Change Weapon", 240, 90, thisPage);
   }
   
   void draw(){
+    background(#422840);
     Attack.draw();
     Flee.draw();
     ChangeWeapon.draw();
+    
+    image(loadImage("battleScreenHero.png"), 100,150 );
+    image(loadImage("battleScreenMonster.png"), 425, 150);
+    image(loadImage("battleSword.png"),290,200);
   }
   
   void process(){
