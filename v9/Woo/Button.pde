@@ -1,3 +1,9 @@
+/*
+Special thanks to Salaj Rijal for posting code for buttons on Piazza.
+This code refactors his code to suit our needs.
+*/
+
+
 //defaults
 color STANDARD = #ffffff;
 color HOVER = #a8a8a8;
@@ -60,18 +66,29 @@ class Button extends Label{
     }
   }
   void draw(){
-    //rectMode(CENTER);
-    ////make outline first
-    //fill(OUTLINE);
-    //rect( x, y, w, h);
-    ////then make inside
-    //fill(current);
-    //rect( x, y, w-4, h-4);
-    ////render the label
+    rectMode(CENTER);
+    //make outline first
+    fill(OUTLINE);
+    rect( x, y, w, h);
+    //then make inside
+    fill(current);
+    rect( x, y, w-4, h-4);
+    //render the label
     
-    //rectMode(CENTER);
-    //fill(OUTLINE);
-    //rect(x+16,y+22,240,80);
-    //super.draw();
+    rectMode(CENTER);
+    fill(OUTLINE);
+    rect(x,y,240,80);
+    super.draw();
   }
+}
+
+class Hitbox extends Button
+{
+  Hitbox(float x, float y, float size, String text, float w, float h, Page next){
+    super(x, y, size, text, w, h, next);
+  }
+ 
+  void draw(){}
+  
+  
 }
