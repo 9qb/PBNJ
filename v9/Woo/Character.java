@@ -1,3 +1,8 @@
+import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.IOExpection;
+
 public class Character {
   protected int health;
   protected int attack;
@@ -9,6 +14,9 @@ public class Character {
   protected String lastTile;
   protected Maze dungeon;
   protected String[][] map;
+
+  protected InputStreamReader isr = new InputStreamReader(System.in);
+  protected BufferedReader in = new BufferedReader(isr);
 
   public Character() {
    health = 4;
@@ -136,12 +144,17 @@ public class Character {
 
   public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
     int i = 1;
+    String input = "";
     System.out.println( "\nWhat is your choice?" );
     System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
-    //try {
-    //  //i = Integer.parseInt( in.readLine() );
-    //}
-    //catch ( IOException e ) { }
+
+    try{
+      i = Integer.parseInt( in.readLine() );
+    }
+    catch(IOException e){
+      // nothign?
+    }
+
     if ( i == 1 ) {
       characterAttack(attacked, 1);
     }
@@ -152,41 +165,10 @@ public class Character {
         return true;
       }
       else {
-        System.out.println("\nYou begin to escape, but the Monster slashes grabs you and stops you in your tracks.");
+        System.out.println("\nYou begin to escape, but the Monster stops you in your tracks.");
         return false;
       }
     }
     return false;
   }
-
-  // public void weapon(Character attacked) {
-  //     int itemChoice = 1;
-  //     int displayItemCount = 1;
-  //     String s = "\nWhich weapon will you use?\n";
-  //     s += "\t1: Fist\tPower: 1\n";
-  //     for (int j = 0; j < inventory.size(); j++) {
-  //       s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
-  //       weaponCount += 1;
-  //       }
-  //     }
-  //     s += "Selection: ";
-  //     System.out.print( s );
-  //     try {
-  //       itemChoice = Integer.parseInt( in.readLine() );
-  //     }
-  //     catch (IOException e) { }
-  //     if (itemChoice == 2) {
-  //       characterattack(attacked, 1);
-  //     }
-  //     else if (itemChoice > 1 && itemChoice < inventory.size()) {
-  //       attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
-  //       useItem(issaSword.get(itemChoice - 3)); // reduce durability
-  //     }
-  //   }
-
-  // private void processTile() {
-  //   if (lastTile.equals("E")){
-  //
-  //   }
-  // }
 }

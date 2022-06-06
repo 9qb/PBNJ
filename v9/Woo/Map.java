@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Map{
 
@@ -123,6 +124,7 @@ public class Map{
         if ((monsters.get(i)).playTurn()){
           // battle method goes here
           battle(monsters.get(i), mc);
+          battlePhase = false;
         }
       }
 
@@ -184,19 +186,27 @@ public class Map{
     public void battle(Character first, Character second){
       LinkedList<Character> turnOrder = new LinkedList();
       turnOrder.offerFirst(first); turnOrder.offerLast(second);
+      battlePhase = true;
 
-      // while both are still alive, play until one dead
-      //while (turnOrder.getFirst().isAlive() && turnOrder.getLast().isAlive()){
-      //  if (turnOrder.getFirst().chooseMove()){ break; }
-      //  if (turnOrder.getLast().isAlive()){
-      //    if (turnOrder.getLast().chooseMove()){ break; }
-      //  }
-      //}
+      // play battle
+      System.out.println("A battle has started!");
+      while (first.isAlive() && second.isAlive()){
+        first.chooseMove(second);
+        second.chooseMove(first);
+      }
+
+      // check if character is dead
+      if (!(mc.isAlive())){
+        System.out.println("Sorry, you have died.");
+        System.out.println("Score: " + score);
+        System.exit(0);
+      }
 
       // check which is dead
       if (!(turnOrder.getFirst().isAlive())){
         if (turnOrder.getFirst() instanceof Monster){
           // you kill the monster
+          monsters.remove(turnOrder.getFirst());
           return;
         }
         else {
@@ -208,6 +218,7 @@ public class Map{
       else{ // whoever was 2nd has died
         if (turnOrder.getLast() instanceof Monster){
           // you killed the monster
+          monsters.remove(turnOrder.getLast());
           return;
         }
         else {
@@ -240,9 +251,20 @@ public class Map{
 
       if (mc.lastTile().equals("M")){
         // itertate thru, find the monster, initiate the battle
-
-        mc.lastTileToSpace();
+        for (int i = 0; i < monsters.size(); i++){
+          if (monsters.get(i).getR() == mc.getR() && monsters.get(i).getC() == mc.getC()){
+            battle(mc, monsters.get(i));
+            battlePhase = false;
+            mc.lastTileToSpace();
+            score += 50;
+            System.out.println("You defeated a monster!");
+            System.out.println("Current score: " + score);
+            return;
+          }
+        }
       }
+
+
     }
 
     public void nextFloor() { // how to generate next floor
@@ -393,41 +415,6 @@ public class Map{
                currentFrame.getMaze()[r][c+1].equals(" ") &&
                currentFrame.getMaze()[r+1][c+1].equals(" ");
 
-    }
-
-    public static void main(String[] args) {
-        Map test = new Map();
-        System.out.println(test);
-
-        test.displayZone();
-
-        // test.changeEast();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeNorth();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeSouth();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeEast();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeWest();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeSouth();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeNorth();
-        // System.out.println(test);
-        // System.out.println("______________");
     }
 
 }

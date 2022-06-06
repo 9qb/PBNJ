@@ -18,7 +18,7 @@ public class Monster extends Character {
    int choice;
    boolean moved = false;
    while (!moved) {
-     choice = (int)(Math.random() * 4);
+     choice = (int)(Math.random() * 5);
 
      if (choice == 0 && (dungeon.getPos(currentR-1, currentC) == " " || dungeon.getPos(currentR-1, currentC) == "X")) {
        if (dungeon.getPos(currentR-1, currentC) == "X"){
@@ -92,14 +92,19 @@ public class Monster extends Character {
        dungeon.setPos(currentR, currentC, "M");
        moved = true;
      }
+     else {
+       // do nothing
+       return false;
+     }
    }
    return false;
  }
 
- //@Override
- //public void chooseMove(Character attacked){
- //  characterAttack(attacked, 0);
- //}
+ @Override
+ public boolean chooseMove(Character attacked){
+  characterAttack(attacked, 0);
+  return false;
+ }
 
 
 }
