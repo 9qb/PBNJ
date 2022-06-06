@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.IOExpection;
 
 public class Character {
   protected int health;
@@ -15,8 +14,8 @@ public class Character {
   protected Maze dungeon;
   protected String[][] map;
 
-  protected InputStreamReader isr = new InputStreamReader(System.in);
-  protected BufferedReader in = new BufferedReader(isr);
+  // for terminal testing
+  protected Scanner sc = new Scanner(System.in);
 
   public Character() {
    health = 4;
@@ -144,14 +143,13 @@ public class Character {
 
   public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
     int i = 1;
-    String input = "";
     System.out.println( "\nWhat is your choice?" );
     System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
 
     try{
-      i = Integer.parseInt( in.readLine() );
+      i = Integer.parseInt( sc.nextLine() );
     }
-    catch(IOException e){
+    catch(Exception e){
       // nothign?
     }
 

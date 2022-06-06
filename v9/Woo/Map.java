@@ -44,7 +44,7 @@ public class Map{
           int heroC = troll.randNum(1, cols-1);
           if(isRoom(heroR, heroC)) {
             // isTrue = true;
-            mc = new Hero(100, 10, 1, heroR, heroC, currentFrame);
+            mc = new Hero(150, 10, 1, heroR, heroC, currentFrame);
             break;
           }
         }
@@ -192,7 +192,9 @@ public class Map{
       System.out.println("A battle has started!");
       while (first.isAlive() && second.isAlive()){
         first.chooseMove(second);
-        second.chooseMove(first);
+        if (second.isAlive()){
+          second.chooseMove(first);
+        }
       }
 
       // check if character is dead
