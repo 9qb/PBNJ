@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Map{
 
@@ -24,7 +25,6 @@ public class Map{
     private ArrayList<Item> inventory = new ArrayList<Item>(); // hero inventory
     private Monster monster;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
-    private PriorityQueue<Character> battleOrder = new PriorityQueue();
     private int monsterCount = 8; // total amount of monsters per floor
     private boolean battlePhase = false;
 
@@ -44,7 +44,7 @@ public class Map{
           int heroC = troll.randNum(1, cols-1);
           if(isRoom(heroR, heroC)) {
             // isTrue = true;
-            mc = new Hero(100, 10, 1, heroR, heroC, currentFrame);
+            mc = new Hero(150, 10, 1, heroR, heroC, currentFrame);
             break;
           }
         }
@@ -123,6 +123,8 @@ public class Map{
       for (int i = 0; i < monsters.size(); i++){
         if ((monsters.get(i)).playTurn()){
           // battle method goes here
+          battle(monsters.get(i), mc);
+          battlePhase = false;
         }
       }
 
@@ -181,15 +183,53 @@ public class Map{
     //   }
     // }
 
-    // public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
-    //   int dmg = attacker.getAtk() + weaponPower - shieldPower;
-    //   if (dmg < 0) {
-    //     dmg = 0;
-    //   }
-    //   attacked.subtractHealth(dmg);
-    //   System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
-    //   System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
-    // }
+    public void battle(Character first, Character second){
+      LinkedList<Character> turnOrder = new LinkedList();
+      turnOrder.offerFirst(first); turnOrder.offerLast(second);
+      battlePhase = true;
+
+      // play battle
+      System.out.println("A battle has started!");
+      while (first.isAlive() && second.isAlive()){
+        first.chooseMove(second);
+        if (second.isAlive()){
+          second.chooseMove(first);
+        }
+      }
+
+      // check if character is dead
+      if (!(mc.isAlive())){
+        System.out.println("Sorry, you have died.");
+        System.out.println("Score: " + score);
+        System.exit(0);
+      }
+
+      // check which is dead
+      if (!(turnOrder.getFirst().isAlive())){
+        if (turnOrder.getFirst() instanceof Monster){
+          // you kill the monster
+          monsters.remove(turnOrder.getFirst());
+          return;
+        }
+        else {
+          // you died
+          dead();
+          return;
+        }
+      }
+      else{ // whoever was 2nd has died
+        if (turnOrder.getLast() instanceof Monster){
+          // you killed the monster
+          monsters.remove(turnOrder.getLast());
+          return;
+        }
+        else {
+          // you died
+          dead();
+          return;
+        }
+      }
+    }
 
     public void round(String key) {
       if (battlePhase == false) {
@@ -212,10 +252,21 @@ public class Map{
       }
 
       if (mc.lastTile().equals("M")){
-        battlePhase = true;
-
-        mc.lastTileToSpace();
+        // itertate thru, find the monster, initiate the battle
+        for (int i = 0; i < monsters.size(); i++){
+          if (monsters.get(i).getR() == mc.getR() && monsters.get(i).getC() == mc.getC()){
+            battle(mc, monsters.get(i));
+            battlePhase = false;
+            mc.lastTileToSpace();
+            score += 50;
+            System.out.println("You defeated a monster!");
+            System.out.println("Current score: " + score);
+            return;
+          }
+        }
       }
+
+
     }
 
     public void nextFloor() { // how to generate next floor
@@ -366,41 +417,6 @@ public class Map{
                currentFrame.getMaze()[r][c+1].equals(" ") &&
                currentFrame.getMaze()[r+1][c+1].equals(" ");
 
-    }
-
-    public static void main(String[] args) {
-        Map test = new Map();
-        System.out.println(test);
-
-        test.displayZone();
-
-        // test.changeEast();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeNorth();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeSouth();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeEast();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeWest();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeSouth();
-        // System.out.println(test);
-        // System.out.println("______________");
-        //
-        // test.changeNorth();
-        // System.out.println(test);
-        // System.out.println("______________");
     }
 
 }

@@ -9,13 +9,13 @@ class Page{
 
 class HomePage extends Page
 {
-  Button play;
-  Button howToPlay;
+  Hitbox play;
+  Hitbox howToPlay;
   void setup(){
     background(0);
     image(loadImage("HomePagev4.png"),0,0);
-    play = new Button(width/2+16, height/2 +22, 15, "Play", 240, 80, new Game());
-    howToPlay = new Button(width/2 +16, height/2 + 122, 15, "How To Play", 240, 80, new HowToPlay());
+    play = new Hitbox(width/2+16, height/2 +22, 15, "Play", 240, 80, new Game());
+    howToPlay = new Hitbox(width/2 +16, height/2 + 122, 15, "How To Play", 240, 80, new HowToPlay());
   }
   
   void draw(){
@@ -95,6 +95,41 @@ class Game extends Page{
       map.moveRight();
   }
   }
+
+}
+
+class BattlePage extends Page
+{
+  BattlePage thisPage;
+  Button Attack;
+  Button Flee;
+  Button ChangeWeapon;
+  
+  void setup(){
+    thisPage = new BattlePage();
+    Attack = new Button(width/2 - 150,height-200,32.0,"Attack",240, 90, thisPage);
+    Flee = new Button(width/2 +150,height-200,32.0,"Flee",240, 90, thisPage);
+    ChangeWeapon = new Button(width/2,height-75,32.0,"Change Weapon", 240, 90, thisPage);
+    
+    image(loadImage("BattleScreenBackground.png"), -1, -1);
+    image(loadImage("battleScreenHero.png"), 100,150 );
+    image(loadImage("battleScreenMonster.png"), 425, 150);
+    image(loadImage("battleSword.png"),290,215);
+  }
+  
+  void draw(){
+    Attack.draw();
+    Flee.draw();
+    ChangeWeapon.draw();
+  }
+  
+  void process(){
+    Attack.process();
+    Flee.process();
+    ChangeWeapon.process();
+  }
+  
+  
 
 }
 

@@ -1,3 +1,7 @@
+import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+
 public class Character {
   protected int health;
   protected int attack;
@@ -9,6 +13,9 @@ public class Character {
   protected String lastTile;
   protected Maze dungeon;
   protected String[][] map;
+
+  // for terminal testing
+  protected Scanner sc = new Scanner(System.in);
 
   public Character() {
    health = 4;
@@ -124,10 +131,42 @@ public class Character {
     return "";
   }
 
+  public void characterAttack(Character attacked, int weaponPower) {
+    int dmg = attack + weaponPower;
+    if (dmg < 0) {
+      dmg = 0;
+    }
+    attacked.subtractHealth(dmg);
+    //System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
+    System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
+  }
 
-  // private void processTile() {
-  //   if (lastTile.equals("E")){
-  //
-  //   }
-  // }
+  public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
+    int i = 1;
+    System.out.println( "\nWhat is your choice?" );
+    System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
+
+    try{
+      i = Integer.parseInt( sc.nextLine() );
+    }
+    catch(Exception e){
+      // nothign?
+    }
+
+    if ( i == 1 ) {
+      characterAttack(attacked, 1);
+    }
+    else if ( i == 2 ) {
+      int fleeChance = (int) (Math.random() * 2);
+      if (fleeChance == 0) {
+        System.out.println("\nThe Monster swings down on you, but you quickly dodge to the side. You escape in time before the Monster can land another hit.");
+        return true;
+      }
+      else {
+        System.out.println("\nYou begin to escape, but the Monster stops you in your tracks.");
+        return false;
+      }
+    }
+    return false;
+  }
 }
