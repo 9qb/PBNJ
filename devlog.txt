@@ -93,3 +93,10 @@ Brian Li :: Debugging.
 Nakib Abedin :: Worked on Processing Title screen display.
 Jefford Shau :: Completed basic combat system.
 ==============================================================
+
+2022-06-06
+--------------------------------------------------------------
+Brian Li :: Implementation of basic battle system.
+Nakib Abedin :: Worked on Processing battle menu.
+Jefford Shau :: Aided with battle system, debugging.
+==============================================================
