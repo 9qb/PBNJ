@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 
 public class Map{
 
@@ -24,7 +24,6 @@ public class Map{
     private ArrayList<Item> inventory = new ArrayList<Item>(); // hero inventory
     private Monster monster;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
-    private PriorityQueue<Character> battleOrder = new PriorityQueue();
     private int monsterCount = 8; // total amount of monsters per floor
     private boolean battlePhase = false;
 
@@ -123,6 +122,7 @@ public class Map{
       for (int i = 0; i < monsters.size(); i++){
         if ((monsters.get(i)).playTurn()){
           // battle method goes here
+          battle(monsters.get(i), mc);
         }
       }
 
@@ -182,18 +182,41 @@ public class Map{
     // }
 
     public void battle(Character first, Character second){
-      atom://teletype/portal/0efbd235-fa25-4311-8701-18a3736c0001
-    }
+      LinkedList<Character> turnOrder = new LinkedList();
+      turnOrder.offerFirst(first); turnOrder.offerLast(second);
 
-    // public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
-    //   int dmg = attacker.getAtk() + weaponPower - shieldPower;
-    //   if (dmg < 0) {
-    //     dmg = 0;
-    //   }
-    //   attacked.subtractHealth(dmg);
-    //   System.out.println( "\n" + attacker.getName() + " dealt " + dmg + " damage.");
-    //   System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
-    // }
+      // while both are still alive, play until one dead
+      while (turnOrder.getFirst().isAlive() && turnOrder.getLast().isAlive()){
+        if (turnOrder.getFirst().chooseMove()){ break; }
+        if (turnOrder.getLast().isAlive()){
+          if (turnOrder.getLast().chooseMove()){ break; }
+        }
+      }
+
+      // check which is dead
+      if (!(turnOrder.getFirst().isAlive())){
+        if (turnOrder.getFirst() instanceof Monster){
+          // you kill the monster
+          return;
+        }
+        else {
+          // you died
+          dead();
+          return;
+        }
+      }
+      else{ // whoever was 2nd has died
+        if (turnOrder.getLast() instanceof Monster){
+          // you killed the monster
+          return;
+        }
+        else {
+          // you died
+          dead()
+          return;
+        }
+      }
+    }
 
     public void round(String key) {
       if (battlePhase == false) {
@@ -216,7 +239,7 @@ public class Map{
       }
 
       if (mc.lastTile().equals("M")){
-        battlePhase = true;
+        // itertate thru, find the monster, initiate the battle
 
         mc.lastTileToSpace();
       }
