@@ -181,6 +181,10 @@ public class Map{
     //   }
     // }
 
+    public void battle(Character first, Character second){
+      atom://teletype/portal/0efbd235-fa25-4311-8701-18a3736c0001
+    }
+
     // public void characterAttack(Character attacker, Character attacked, int weaponPower, int shieldPower) {
     //   int dmg = attacker.getAtk() + weaponPower - shieldPower;
     //   if (dmg < 0) {
