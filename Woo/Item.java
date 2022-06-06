@@ -1,21 +1,18 @@
 public class Item {
   protected String name;
   protected int itemId;
-  protected String description;
   protected int durability;
   protected int power;
 
   public Item() {
     this.name = "Item";
-    this.description = "A default item.";
     this.itemId = 100;
     this.durability = 100;
     this.power = 1;
   }
 
-  public Item(String name, int id, String description, int durability, int power) {
+  public Item(String name, int id, int durability, int power) {
     this.name = name;
-    this.description = description;
     this.itemId = id;
     this.durability = durability;
     this.power = power;

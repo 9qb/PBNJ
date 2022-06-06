@@ -7,22 +7,24 @@ public class Debugger{
     Map map = new Map();
     System.out.println(map);
 
+    map.processTile();
+
     while(sc.hasNextLine()){
       String motion = sc.nextLine();
       if(motion.equalsIgnoreCase("W")){
-        map.moveUp();
+        map.round("W");
         System.out.println(map);
         //System.out.println(map.getR() + " , " + map.getC());
       }else if(motion.equalsIgnoreCase("A")){
-        map.moveLeft();
+        map.round("A");
         System.out.println(map);
         //System.out.println(map.getR() + " , " + map.getC());
       }else if(motion.equalsIgnoreCase("S")){
-        map.moveDown();
+        map.round("S");
         System.out.println(map);
         //System.out.println(map.getR() + " , " + map.getC());
       }else if(motion.equalsIgnoreCase("D")){
-        map.moveRight();
+        map.round("D");
         System.out.println(map);
         //System.out.println(map.getR() + " , " + map.getC());
       }else{

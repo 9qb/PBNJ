@@ -39,11 +39,11 @@ class Game extends Page{
    map = new Map();
    SIZE = 32;
    background(0);
-   mapTiles = new PImage[3];
+   mapTiles = new PImage[4];
    mapTiles[0] = loadImage("cobblestone.png");
    mapTiles[1] = loadImage("hero.png");
    mapTiles[2] = loadImage("water.png");
-  
+   mapTiles[3] = loadImage("Escape.png");
   }
   
   
@@ -53,7 +53,6 @@ class Game extends Page{
     
     
     for( String[] row : map.displayZone() ){
-      
       for( String col : row ){
         //print(col);
         if( col.equals("#") ) image(mapTiles[2],currentX,currentY);
@@ -62,6 +61,7 @@ class Game extends Page{
           image(mapTiles[0],currentX,currentY);
           image(mapTiles[1],currentX,currentY);
         }
+        else if (col.equals("E")){image(mapTiles[3], currentX, currentY);}
         else{image(mapTiles[0],currentX,currentY);}
         currentX += SIZE;
         
@@ -69,6 +69,14 @@ class Game extends Page{
       currentX = 0;
       currentY += SIZE;
       //println("");
+      int randNum = int(random(60));
+      if(randNum == 1){
+        randNum = int(random(4));
+        if(randNum == 0){map.moveUp();}
+        if(randNum == 1){map.moveRight();}
+        if(randNum == 2){map.moveDown();}
+        if(randNum == 3){map.moveLeft();}
+      }
     }
     
   }
