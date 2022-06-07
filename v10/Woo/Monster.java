@@ -82,8 +82,20 @@ public class Monster extends Character {
   @Override
   public boolean chooseMove(Character attacked){
     System.out.println("The monster attacked you!");
-    characterAttack(attacked, 0);
+    characterAttack(attacked, lastUsedWeapon);
     return false;
+  }
+
+  @Override
+  public void characterAttack(Character attacked, Weapon weapon){
+    int dmg = attack + weapon.getPower();
+    weapon.reduceDurability(1);
+    if (dmg < 0){
+      dmg = 0;
+    }
+    attacked.subtractHealth(dmg);
+    System.out.println("The monster dealt " + dmg + " damage.");
+    System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAtk());
   }
 
 }

@@ -21,7 +21,6 @@ public class Map{
 
     // RPG instance variables
     private Character mc;
-    private ArrayList<Item> inventory = new ArrayList<Item>(); // hero inventory
     private Monster monster;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
     private int monsterCount = 8; // total amount of monsters per floor
@@ -39,7 +38,7 @@ public class Map{
         currentFrame = maze;
 
         // creates the hero in a room
-        while (mc == null) {
+        while (true) {
           int heroR = troll.randNum(1, rows-1);
           int heroC = troll.randNum(1, cols-1);
           if(isRoom(heroR, heroC)) {
@@ -55,7 +54,7 @@ public class Map{
           int monsterC = (int) (Math.random() * (cols - 1)) + 1;
           if(isRoom(monsterR, monsterC) && Math.sqrt(Math.pow(monsterC - mc.getC(), 2) + Math.pow(monsterR - mc.getR(), 2)) > 10) { // monster spawns distance of at least 10
             monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
-            monsters.add(monster);
+            monsters.add(new Monster(100, 10, 1, monsterR, monsterC, currentFrame));
             currentFrame.setPos(monsterR, monsterC, enemy);
           }
         }
@@ -70,13 +69,23 @@ public class Map{
           }
         }
 
+        // spawn one treasure chest
+        while (true){
+          int treasureR = (int) (Math.random() * (rows - 1)) + 1;
+          int treasureC = (int) (Math.random() * (cols - 1)) + 1;
+          if (isRoom(treasureR, treasureC) && Math.sqrt(Math.pow(treasureC - mc.getC(), 2) + Math.pow(treasureR - mc.getR(), 2)) > 50){
+            currentFrame.setPos(treasureR, treasureC, "T");
+            break;
+          }
+        }
+
         // creates an exit tile
-        while (!exitPlaced) {
+        while (true) {
           int exitR = (int) (Math.random() * (rows - 1)) + 1;
           int exitC = (int) (Math.random() * (cols - 1)) + 1;
           if (isRoom(exitR, exitC) && Math.sqrt(Math.pow(exitC - mc.getC(), 2) + Math.pow(exitR - mc.getR(), 2)) > 50) {
             currentFrame.setPos(exitR, exitC, "E");
-            exitPlaced = true;
+            break;
           }
         }
 
@@ -110,6 +119,8 @@ public class Map{
           System.out.println("The monster has initiated a battle with you!");
           battle(monsters.get(i), mc);
           battlePhase = false;
+          System.out.println("You defeated a monster!");
+          System.out.println("Current score: " + score);
         }
       }
     }
@@ -194,6 +205,12 @@ public class Map{
         nextFloor();
       }
 
+      if (mc.lastTile().equals("T")){ // give random weapon
+        // maybe move this stuff to the weapon's default constructor?
+        mc.addWeapon(new Weapon("Big Meatstick", MazeGenerator.randNum(1, 20), MazeGenerator.randNum(15, 26))); // change to random name soon!!
+        mc.lastTileToSpace();
+      }
+
       if (mc.lastTile().equals("H")){ // restore health to max
         mc.addHealth(150 - mc.getHealth());
       }
@@ -236,7 +253,7 @@ public class Map{
         int heroC = temp.randNum(1, cols-1);
         if(isRoom(heroR, heroC)) {
           // isTrue = true;
-          mc = new Hero(mc.getHealth(), mc.getAtk(), mc.getSpeed(), heroR, heroC, currentFrame);
+          mc = new Hero(mc.getHealth(), mc.getAtk(), mc.getSpeed(), heroR, heroC, mc.getInventory(), currentFrame);
           break;
         }
       }
@@ -259,6 +276,16 @@ public class Map{
         if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
           currentFrame.setPos(healR, healC, "H");
           healTiles++;
+        }
+      }
+
+      // spawn one treasure chest
+      while (true){
+        int treasureR = (int) (Math.random() * (rows - 1)) + 1;
+        int treasureC = (int) (Math.random() * (cols - 1)) + 1;
+        if (isRoom(treasureR, treasureC) && Math.sqrt(Math.pow(treasureC - mc.getC(), 2) + Math.pow(treasureR - mc.getR(), 2)) > 50){
+          currentFrame.setPos(treasureR, treasureC, "T");
+          break;
         }
       }
 

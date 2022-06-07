@@ -82,7 +82,7 @@ public class MazeGenerator {
   } // end method
 
   // returns [lowerLimit, upperLimit)
-  public int randNum(int lowerLimit, int upperLimit){
+  public static int randNum(int lowerLimit, int upperLimit){
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
   }
 

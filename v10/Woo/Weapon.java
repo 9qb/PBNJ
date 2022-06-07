@@ -1,6 +1,6 @@
 public class Weapon {
   protected String name;
-  protected int WeaponId;
+  protected int weaponId;
   protected int durability;
   protected int power;
 
