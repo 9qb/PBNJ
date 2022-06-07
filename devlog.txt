@@ -100,3 +100,10 @@ Brian Li :: Implementation of basic battle system.
 Nakib Abedin :: Worked on Processing battle menu.
 Jefford Shau :: Aided with battle system, debugging.
 ==============================================================
+
+2022-06-07
+--------------------------------------------------------------
+Brian Li :: Implementation of treasure chests, inventory, weapon selections.
+Nakib Abedin :: Worked on Processing menus, added new visuals.
+Jefford Shau :: Aided with weapon system, helped develop weapon class.
+==============================================================
