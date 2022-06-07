@@ -1,19 +1,17 @@
-public class Item {
+public class Weapon {
   protected String name;
-  protected int itemId;
+  protected int WeaponId;
   protected int durability;
   protected int power;
 
-  public Item() {
-    this.name = "Item";
-    this.itemId = 100;
+  public Weapon() {
+    this.name = "Weapon";
     this.durability = 100;
     this.power = 1;
   }
 
-  public Item(String name, int id, int durability, int power) {
+  public Weapon(String name, int durability, int power) {
     this.name = name;
-    this.itemId = id;
     this.durability = durability;
     this.power = power;
   }
@@ -23,7 +21,7 @@ public class Item {
   }
 
   public int getId () {
-    return itemId;
+    return weaponId;
   }
 
   public int getDurability () {

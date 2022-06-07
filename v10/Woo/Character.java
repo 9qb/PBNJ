@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.util.LinkedList;
 
 public class Character {
   protected int health;
@@ -13,6 +14,7 @@ public class Character {
   protected String lastTile;
   protected Maze dungeon;
   protected String[][] map;
+  protected LinkedList<Weapon>;
 
   // for terminal testing
   protected Scanner sc = new Scanner(System.in);
@@ -32,6 +34,8 @@ public class Character {
    dungeon = maze;
    map = dungeon.getMaze();
    lastTile = " ";
+   inventory = new LinkedList<Weapon>();
+   inventory.add("Fist", -1, 1);
   }
 
   public int getR() {
@@ -79,18 +83,6 @@ public class Character {
     lastTile = " ";
   }
 
-  // public void attack() {
-  //
-  // }
-  //
-  // public void attack(int r, int c) {
-  //
-  // }
-  //
-  // public void playTurn() {
-  //
-  // }
-
   public void addHealth(int value) {
    health += value;
   }
@@ -131,7 +123,7 @@ public class Character {
     return "";
   }
 
-  public void characterAttack(Character attacked, int weaponPower) {
+  public void characterAttack(Character attacked, int weaponPower, in durability) {
     int dmg = attack + weaponPower;
     if (dmg < 0) {
       dmg = 0;
@@ -144,13 +136,14 @@ public class Character {
   public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
     int i = 1;
     System.out.println( "\nWhat is your choice?" );
-    System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
+    System.out.println( "\t1: Attack\n\t2: Flee\n\t3: Change Weapon: Selection: " );
 
     try{
       i = Integer.parseInt( sc.nextLine() );
     }
     catch(Exception e){
-      // nothign?
+      System.out.println("Invalid input. Please enter an integer.");
+      chooseMove(attacked);
     }
 
     if ( i == 1 ) {
@@ -167,6 +160,37 @@ public class Character {
         return false;
       }
     }
+    else if ( i == 3 ) {
+      int inventoryIdx = weapon();
+      characterAttack (attacked, inventory.get(inventoryIdx).getPower(), inventory.get(inventoryIdx).getDurability());
+    }
     return false;
+  }
+
+  public int weapon() { // returns index of chosen inventory weapon
+    weaponChoice = 0;
+    String s = "Which weapon will you use?";
+    for (int i = 0; i < inventory.size(); i++) {
+      if (inventory.get(i) instaceOf Weapon) {
+        s += (i + 1) + ": " + inventory.get(i).getName() + ", Attack Power: " + inventory.get(i).getPower() + ", Durability: " + inventory.get(i).getDurability() + "\n";
+      }
+    }
+    s += "Selection: ";
+    System.out.println(s);
+
+    try{
+      weaponChoice = Integer.parseInt( sc.nextLine() );
+    }
+    catch(Exception e){
+      System.out.println("Invalid input. Please enter an integer.");
+      weapon();
+    }
+
+    if (weaponChoice == 1) {
+      return 0;
+    }
+    if (weaponChoice > 1 && weaponChoice < 5) { // selection between integers 1 - 4
+      retun weaponChoice - 1;
+    }
   }
 }
