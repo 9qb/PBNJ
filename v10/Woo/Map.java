@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Map{
 
@@ -26,6 +25,7 @@ public class Map{
     private Monster monster;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
     private int monsterCount = 8; // total amount of monsters per floor
+    private int healTiles = 0;
     private boolean battlePhase = false;
 
     // system instance variables
@@ -51,8 +51,8 @@ public class Map{
 
         // creates the monsters in a room
         while (monsters.size() != monsterCount) {
-          int monsterR = troll.randNum(1, rows);
-          int monsterC = troll.randNum(1, cols);
+          int monsterR = (int) (Math.random() * (rows - 1)) + 1;
+          int monsterC = (int) (Math.random() * (cols - 1)) + 1;
           if(isRoom(monsterR, monsterC) && Math.sqrt(Math.pow(monsterC - mc.getC(), 2) + Math.pow(monsterR - mc.getR(), 2)) > 10) { // monster spawns distance of at least 10
             monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
             monsters.add(monster);
@@ -60,10 +60,20 @@ public class Map{
           }
         }
 
+        // spawn 2 healing tiles
+        while (healTiles != 2){
+          int healR = (int) (Math.random() * (rows - 1)) + 1;
+          int healC = (int) (Math.random() * (cols - 1)) + 1;
+          if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
+            currentFrame.setPos(healR, healC, "H");
+            healTiles++;
+          }
+        }
+
         // creates an exit tile
         while (!exitPlaced) {
-          int exitR = troll.randNum(1, rows);
-          int exitC = troll.randNum(1, cols);
+          int exitR = (int) (Math.random() * (rows - 1)) + 1;
+          int exitC = (int) (Math.random() * (cols - 1)) + 1;
           if (isRoom(exitR, exitC) && Math.sqrt(Math.pow(exitC - mc.getC(), 2) + Math.pow(exitR - mc.getR(), 2)) > 50) {
             currentFrame.setPos(exitR, exitC, "E");
             exitPlaced = true;
@@ -97,10 +107,12 @@ public class Map{
       for (int i = 0; i < monsters.size(); i++){
         if ((monsters.get(i)).playTurn()){
           // battle method goes here
+          System.out.println("The monster has initiated a battle with you!");
           battle(monsters.get(i), mc);
           battlePhase = false;
         }
       }
+    }
 
     public void battle(Character first, Character second){
       LinkedList<Character> turnOrder = new LinkedList();
@@ -110,9 +122,21 @@ public class Map{
       // play battle
       System.out.println("A battle has started!");
       while (first.isAlive() && second.isAlive()){
-        first.chooseMove(second);
+        if (first.chooseMove(second)){ // if true, then hero has fleed
+          System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+          score -= 200;
+          currentFrame.setPos(mc.getR(), mc.getC(), "X");
+          monsters.remove(second);
+          return;
+        }
         if (second.isAlive()){
-          second.chooseMove(first);
+          if (second.chooseMove(first)){ // if true, then hero has fleed
+            System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+            score -= 200;
+            currentFrame.setPos(mc.getR(), mc.getC(), "X");
+            monsters.remove(first);
+            return;
+          }
         }
       }
 
@@ -166,14 +190,19 @@ public class Map{
     }
 
     public void processTile(){
-      if (mc.lastTile().equals("E")){
+      if (mc.lastTile().equals("E")){ // escape the floor, go to next floor
         nextFloor();
+      }
+
+      if (mc.lastTile().equals("H")){ // restore health to max
+        mc.addHealth(150 - mc.getHealth());
       }
 
       if (mc.lastTile().equals("M")){
         // itertate thru, find the monster, initiate the battle
         for (int i = 0; i < monsters.size(); i++){
           if (monsters.get(i).getR() == mc.getR() && monsters.get(i).getC() == mc.getC()){
+            System.out.println("You initiated a battle with a monster!");
             battle(mc, monsters.get(i));
             battlePhase = false;
             mc.lastTileToSpace();
@@ -220,6 +249,16 @@ public class Map{
           monster = new Monster(100, 10, 1, monsterR, monsterC, currentFrame);
           monsters.add(monster);
           currentFrame.setPos(monsterR, monsterC, enemy);
+        }
+      }
+
+      // spawn 2 healing tiles
+      while (healTiles != 2){
+        int healR = (int) (Math.random() * (rows - 1)) + 1;
+        int healC = (int) (Math.random() * (cols - 1)) + 1;
+        if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
+          currentFrame.setPos(healR, healC, "H");
+          healTiles++;
         }
       }
 
