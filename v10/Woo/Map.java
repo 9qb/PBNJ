@@ -89,32 +89,6 @@ public class Map{
       else if (key == "D") {
         moveRight();
       }
-
-      // // check if we should start a battle
-      // for (Character mon : monsters) {
-      //   if (mc.getC() == mon.getC() && mc.getR() == mon.getR()) {
-      //     battleOrder.add(mon);
-      //     battlePhase = true;
-      //     break;
-      //   }
-      // }
-      //
-      // while (!(battleOrder.isEmpty())){
-      //   battlePhase = true;
-      //   for (Character current : battleOrder) {
-      //     monster = current;
-      //     //battleChoice(0);
-      //     if (!mc.isAlive()) { // hero died
-      //       battlePhase = false;
-      //       return;
-      //     }
-      //     else { // monster died
-      //       monsters.remove(current);
-      //     }
-      //   }
-      //   battlePhase = false;
-      // }
-      //
     }
 
     // // monster move
@@ -127,61 +101,6 @@ public class Map{
           battlePhase = false;
         }
       }
-
-
-    //   // check if we should start a battle
-    //   for (int j = 0; j < monsters.size(); j++) {
-    //     if (mc.getC() == monsters.get(j).getC() && mc.getR() == monsters.get(j).getR()) {
-    //       battleOrder.add(monsters.get(j));
-    //     }
-    //   }
-    //
-    //   while (!(battleOrder.isEmpty())){
-    //     battlePhase = true;
-    //     for (Character current : battleOrder) {
-    //       monster = current;
-    //       //battleChoice(0);
-    //       if (!mc.isAlive()) { // hero died
-    //         battlePhase = false;
-    //         return;
-    //       }
-    //       else { // monster died
-    //         monsters.remove(current);
-    //       }
-    //     }
-    //     battlePhase = false;
-    //   }
-    }
-
-    // public void combat(int key) {
-    //   Character current = battleOrder.peek();
-    //   Character temp = current;
-    //   if (battlePhase) {
-    //     // player attack
-    //     if (key == 1) {
-    //       characterAttack(mc, temp, 10, 0);
-    //     }
-    //     // use potion (not implemented)
-    //     else if (key == 2) {
-    //     }
-    //     // flee (not implemented)
-    //     else if (key == 3) {
-    //     }
-    //   }
-    //   if (!temp.isAlive()) {
-    //     monsters.remove(current);
-    //     battleOrder.poll();
-    //     battlePhase = false;
-    //   // monster attack
-    //   if (mc.isAlive() && battlePhase) {
-    //     characterAttack(temp, mc, 15, 0);
-    //     }
-    //   }
-    //   else if (!mc.isAlive()){
-    //     // player died
-    //     dead();
-    //   }
-    // }
 
     public void battle(Character first, Character second){
       LinkedList<Character> turnOrder = new LinkedList();
