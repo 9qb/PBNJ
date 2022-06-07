@@ -2,7 +2,7 @@ Page currentPage;
 
 void setup(){
   size(672, 672);
-  currentPage = new BattlePage();
+  currentPage = new HomePage();
   currentPage.setup();
 
 }
