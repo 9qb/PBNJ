@@ -23,7 +23,7 @@ public class Map{
     private Character mc;
     private Monster monster;
     private ArrayList<Monster> monsters = new ArrayList<Monster>();
-    private int monsterCount = 8; // total amount of monsters per floor
+    private int monsterCount = 15; // total amount of monsters per floor
     private int healTiles = 0;
     private boolean battlePhase = false;
 
@@ -206,8 +206,7 @@ public class Map{
       }
 
       if (mc.lastTile().equals("T")){ // give random weapon
-        // maybe move this stuff to the weapon's default constructor?
-        mc.addWeapon(new Weapon("Big Meatstick", MazeGenerator.randNum(1, 20), MazeGenerator.randNum(15, 26))); // change to random name soon!!
+        mc.addWeapon(new Weapon());
         mc.lastTileToSpace();
       }
 
@@ -253,7 +252,7 @@ public class Map{
         int heroC = temp.randNum(1, cols-1);
         if(isRoom(heroR, heroC)) {
           // isTrue = true;
-          mc = new Hero(mc.getHealth(), mc.getAtk(), mc.getSpeed(), heroR, heroC, mc.getInventory(), currentFrame);
+          mc = new Hero(mc.getHealth(), mc.getAtk(), mc.getSpeed(), heroR, heroC, mc.getInventory(), mc.getLastWeapon(), currentFrame);
           break;
         }
       }

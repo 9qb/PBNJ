@@ -11,8 +11,8 @@ public class Hero extends Character {
    super(newHealth, newAttack, newSpeed, newR, newC, maze);
   }
 
-  public Hero(int newHealth, int newAttack, int newSpeed, int newR, int newC, LinkedList<Weapon> newInventory, Maze maze) {
-   super(newHealth, newAttack, newSpeed, newR, newC, newInventory, maze);
+  public Hero(int newHealth, int newAttack, int newSpeed, int newR, int newC, LinkedList<Weapon> newInventory, Weapon lastUsedWpn, Maze maze) {
+   super(newHealth, newAttack, newSpeed, newR, newC, newInventory, lastUsedWpn, maze);
   }
 
   public String getName() {

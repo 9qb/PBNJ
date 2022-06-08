@@ -38,7 +38,7 @@ public class Character {
    lastUsedWeapon = inventory.getFirst();
   }
 
-  public Character(int newHealth, int newAttack, int newSpeed, int newR, int newC, LinkedList<Weapon> newInventory, Maze maze){
+  public Character(int newHealth, int newAttack, int newSpeed, int newR, int newC, LinkedList<Weapon> newInventory, Weapon lastUsedWpn, Maze maze){
     health = newHealth;
     attack = newAttack;
     speed = newSpeed;
@@ -48,7 +48,7 @@ public class Character {
     map = dungeon.getMaze();
     lastTile = " ";
     inventory = newInventory;
-    lastUsedWeapon = inventory.getFirst();
+    lastUsedWeapon = lastUsedWpn;
   }
 
   public int getR() {
@@ -202,7 +202,11 @@ public class Character {
     return false;
   }
 
-  public int weapon() { // returns index of chosen inventory weapon
+  public Weapon getLastWeapon(){
+    return lastUsedWeapon;
+  }
+
+  private int weapon() { // returns index of chosen inventory weapon
     int weaponChoice = 0;
     String s = "Which weapon will you use?\n";
     s += "0: Go back\n";
@@ -231,9 +235,11 @@ public class Character {
       return -1;
     }
     else if (weaponChoice == 1) {
+      lastUsedWeapon = inventory.getFirst();
       return 0;
     }
     else if (weaponChoice > 1 && weaponChoice < inventory.size()+1) {
+      lastUsedWeapon = inventory.get(weaponChoice - 1);
       return weaponChoice - 1;
     }
     else{
