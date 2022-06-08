@@ -45,6 +45,7 @@ public class MazeGenerator {
     cleanup();
   }
 
+  // generate rooms randomly in the 2D array
   private void buildRooms(int numRooms){
     for (int i = 0; i < numRooms; i++){
       // choose random dimensions of room
@@ -87,6 +88,7 @@ public class MazeGenerator {
   } // end method
 
   // returns [lowerLimit, upperLimit)
+  // helper method
   public static int randNum(int lowerLimit, int upperLimit){
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
   }
@@ -101,6 +103,7 @@ public class MazeGenerator {
     returnGates();
   }
 
+  // sets gates back to normal spaces
   private void returnGates(){
     for (int i = 1; i < _rows - 2; i ++){
       for (int j = 1; j < _cols - 2; j++){
