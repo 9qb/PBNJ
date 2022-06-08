@@ -18,7 +18,8 @@ public class Monster extends Character {
 
   // if return true, that means hero and monster possess the same tile. we should battle
   public boolean playTurn(){
-    // choose random direction to move
+    // monster movement
+    // random direction
     int choice;
     boolean moved = false;
     while (!moved) {
@@ -84,6 +85,8 @@ public class Monster extends Character {
     return false;
   }
 
+  // overrides character move selection system
+  // monster attacks do not need player input
   @Override
   public boolean chooseMove(Character attacked){
     System.out.println("The monster attacked you!");
@@ -91,6 +94,8 @@ public class Monster extends Character {
     return false;
   }
 
+  // overrides character attacking System
+  // monster does not use weapons
   @Override
   public void characterAttack(Character attacked, Weapon weapon){
     int dmg = attack + weapon.getPower();

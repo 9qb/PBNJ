@@ -23,7 +23,9 @@ public class MazeGenerator {
   private ArrayList<ArrayList<Tile>> _mazes;
   private int _rows, _cols;
 
+  // default constructor, generates the maze
   public MazeGenerator(int r, int c){
+    // sets all tiles to walls
     _maze = new String[r][c];
     _rooms = new ArrayList();
     _mazes = new ArrayList();
@@ -35,6 +37,7 @@ public class MazeGenerator {
     _rows = r;
     _cols = c;
 
+    // changes tiles in the maze
     buildRooms(randNum(8, 10));
     buildBorders();
     carveMaze();
@@ -56,11 +59,6 @@ public class MazeGenerator {
       int randRow = randNum(2, _rows - 3);
       int randCol = randNum(2, _cols - 3);
 
-      // System.out.println("randRow: " + randRow); // diag
-      // System.out.println("randHeight:" + randHeight); // diag
-      // System.out.println("randCol: " + randCol); // diag
-      // System.out.println("randBase: " + randBase); // diag
-
       // check if bottom right corner still fits within map
       // if not, resize
       while (randRow + randHeight >= _rows-2 && randCol + randBase >= _cols-2){
@@ -75,10 +73,7 @@ public class MazeGenerator {
 
       for (int b = 0; b < randBase && randCol+b < _cols-2; b++){
         for (int h = 0; h < randHeight && randRow+h < _rows-2; h++){
-          // System.out.println("randRow: " + randRow + " ~~ h: " + h); // diag
-          // System.out.println("randCol: " + randCol + " ~~ b: " + b); // diag
           if (_maze[randRow+h][randCol+b].equals(WALL)){
-            // System.out.println("set r=" + (randRow+h) + ", c=" + (randCol+b) + " to space"); // diag
             _maze[randRow+h][randCol+b] = SPACE;
           }
         }
@@ -87,7 +82,7 @@ public class MazeGenerator {
     } // end for loop
   } // end method
 
-  // returns [lowerLimit, upperLimit)
+  // returns [lowerLimit, upperLimit) integer
   // helper method
   public static int randNum(int lowerLimit, int upperLimit){
     return (int)(Math.random() * (upperLimit - lowerLimit) + lowerLimit);
@@ -145,6 +140,7 @@ public class MazeGenerator {
     }
   }
 
+  // creates map border
   private void buildBorders(){
     for (int i = 0; i < _cols - 1; i++){
       _maze[0][i] = WORLD_BORDER;
@@ -167,6 +163,7 @@ public class MazeGenerator {
     // carve(1,1);
   }
 
+  // creates mazepath
   private void mazeToSpace(){
     for (int i = 1; i < _rows - 1; i ++){
       for (int j = 1; j < _cols - 1; j++){

@@ -129,7 +129,7 @@ public class Character {
     System.out.println("You found a " + weapon.getName() + ". Enjoy it!");
   }
 
-  // movement methods
+  // charater movement methods
   public void moveUp() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       replaceTile(currentR-1, currentC);
@@ -162,7 +162,8 @@ public class Character {
     return "Hero";
   }
 
-  // attacking system
+  // character attacking system,
+  // changes weapon Durability
   public void characterAttack(Character attacked, Weapon weapon){
     int dmg = attack + weapon.getPower();
     weapon.reduceDurability(1);
@@ -180,7 +181,7 @@ public class Character {
     }
   }
 
-  // move selection system
+  // hero move selection system
   // returns true if you manage to flee, false otherwise.
   public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
     int i = 1;
@@ -223,8 +224,9 @@ public class Character {
     return lastUsedWeapon;
   }
 
-  // weapon selection system
-  private int weapon() { // returns index of chosen inventory weapon
+  // hero weapon selection system
+  // returns index of chosen inventory weapon
+  private int weapon() {
     int weaponChoice = 0;
     String s = "Which weapon will you use?\n";
     s += "0: Go back\n";

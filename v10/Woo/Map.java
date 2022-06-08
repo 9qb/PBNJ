@@ -35,6 +35,7 @@ public class Map{
     // system instance variables
     private int score; // accumulates after each floor
 
+    // default constructor
     public Map(){
         rows = 81;
         cols = 144;
@@ -53,7 +54,7 @@ public class Map{
           }
         }
 
-        // creates the monsters in a room
+        // create and spawns the monsters in a room
         while (monsters.size() != monsterCount) {
           int monsterR = (int) (Math.random() * (rows - 1)) + 1;
           int monsterC = (int) (Math.random() * (cols - 1)) + 1;
@@ -74,7 +75,7 @@ public class Map{
           }
         }
 
-        // spawn one treasure chest
+        // spawn one treasure chest tile
         while (true){
           int treasureR = (int) (Math.random() * (rows - 1)) + 1;
           int treasureC = (int) (Math.random() * (cols - 1)) + 1;
@@ -98,9 +99,8 @@ public class Map{
         currentFrame.setPos(mc.getR(), mc.getC(), hero);
     }
 
-    // player move
+    // player movement
     public void playerTurn(String key) {
-      // player movement
       if (key == "W") {
         moveUp();
       }
@@ -115,12 +115,12 @@ public class Map{
       }
     }
 
-    // monster move
+    // monster movement
     public void monsterTurn() {
       // each monster will play their turn
       for (int i = 0; i < monsters.size(); i++){
         if ((monsters.get(i)).playTurn()){
-          // battle method goes here
+          // monster initiaties battle
           System.out.println("The monster has initiated a battle with you!");
           battle(monsters.get(i), mc);
           battlePhase = false;
@@ -164,7 +164,7 @@ public class Map{
         System.exit(0);
       }
 
-      // check which is dead
+      // check which character is dead
       if (!(turnOrder.getFirst().isAlive())){
         if (turnOrder.getFirst() instanceof Monster){
           // you kill the monster
@@ -194,11 +194,10 @@ public class Map{
     // play a "round," you make your move, then monsters make their moves
     public void round(String key) {
       if (battlePhase == false) {
-        playerTurn(key);
-        processTile();
-
+        playerTurn(key); // player movement
+        processTile(); // checks player for special tile
         if (mc.isAlive()) {
-          monsterTurn(); // let monsters play a turn
+          monsterTurn(); // monster turn
         }
         // player died
         else if (!mc.isAlive()) {
@@ -248,6 +247,7 @@ public class Map{
       System.out.println("Generating next stage ...");
       System.out.println("...");
 
+      // generates new monster floor
       MazeGenerator temp = new MazeGenerator(rows, cols);
       maze = new Maze(temp.getGeneratedMaze());
       currentFrame = maze;
@@ -366,6 +366,7 @@ public class Map{
         }
     }
 
+    // accessor method for maze
     public String[][] getMaze() {
       return maze.getMaze();
     }

@@ -10,12 +10,14 @@ import java.util.Scanner;
 public class Debugger{
   public static void main(String[] args){
 
+    // Scanner used for input
     Scanner sc = new Scanner(System.in);
     Map map = new Map();
     System.out.println(map);
 
     map.processTile();
 
+    // takes in player input for hero movement
     while(sc.hasNextLine()){
       String motion = sc.nextLine();
       if(motion.equalsIgnoreCase("W")){

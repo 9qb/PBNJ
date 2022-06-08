@@ -5,7 +5,7 @@
 
 public class Maze{
     /*
-        Contains Maze
+        Contains Maze Class
     */
 
     private String[][] _maze;
