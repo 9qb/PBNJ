@@ -1,10 +1,15 @@
+// PBNJ - Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// Final Project -- Dungeon Crawler
+// 2022-06-10
+
 public class Maze{
     /*
         Contains Maze
     */
 
     private String[][] _maze;
-    
+
     public Maze(String[][] arr){
       this._maze = arr;
     }

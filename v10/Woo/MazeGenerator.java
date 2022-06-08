@@ -1,3 +1,8 @@
+// PBNJ - Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// Final Project -- Dungeon Crawler
+// 2022-06-10
+
 import java.util.ArrayList;
 
 public class MazeGenerator {

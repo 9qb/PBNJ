@@ -1,3 +1,8 @@
+// PBNJ - Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// Final Project -- Dungeon Crawler
+// 2022-06-10
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -110,7 +115,7 @@ public class Map{
       }
     }
 
-    // // monster move
+    // monster move
     public void monsterTurn() {
       // each monster will play their turn
       for (int i = 0; i < monsters.size(); i++){
@@ -125,6 +130,7 @@ public class Map{
       }
     }
 
+    // initiates battle between two characters
     public void battle(Character first, Character second){
       LinkedList<Character> turnOrder = new LinkedList();
       turnOrder.offerFirst(first); turnOrder.offerLast(second);
@@ -185,6 +191,7 @@ public class Map{
       }
     }
 
+    // play a "round," you make your move, then monsters make their moves
     public void round(String key) {
       if (battlePhase == false) {
         playerTurn(key);
@@ -200,6 +207,7 @@ public class Map{
       }
     }
 
+    // process the tile the character is currently standing on
     public void processTile(){
       if (mc.lastTile().equals("E")){ // escape the floor, go to next floor
         nextFloor();
@@ -230,10 +238,10 @@ public class Map{
         }
       }
 
-
     }
 
-    public void nextFloor() { // how to generate next floor
+    // moves on to next floor
+    public void nextFloor() {
       score += 100;
       System.out.println("You cleared the floor!");
       System.out.println("Current score: " + score);
@@ -251,7 +259,6 @@ public class Map{
         int heroR = temp.randNum(1, rows-1);
         int heroC = temp.randNum(1, cols-1);
         if(isRoom(heroR, heroC)) {
-          // isTrue = true;
           mc = new Hero(mc.getHealth(), mc.getAtk(), mc.getSpeed(), heroR, heroC, mc.getInventory(), mc.getLastWeapon(), currentFrame);
           break;
         }
@@ -302,6 +309,7 @@ public class Map{
       currentFrame.setPos(mc.getR(), mc.getC(), hero);
     }
 
+    // execute if dead
     public void dead() {
       System.out.println("You have died. Better luck next time.");
       System.out.println("Final Score: " + score);
@@ -362,6 +370,7 @@ public class Map{
       return maze.getMaze();
     }
 
+    // only shows the region surrounding the Hero
     public String[][] displayZone() {
         int topLeftR = mc.getR() - 10;
         int topLeftC = mc.getC() - 10;
@@ -389,8 +398,8 @@ public class Map{
       return output;
     }
 
+    // returns true if coordinate is in a room
     public boolean isRoom(int r, int c) {
-        // returns true if coordinate is in a room
         return currentFrame.getMaze()[r-1][c-1].equals(" ") &&
                currentFrame.getMaze()[r][c-1].equals(" ") &&
                currentFrame.getMaze()[r+1][c-1].equals(" ") &&

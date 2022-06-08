@@ -1,3 +1,8 @@
+// PBNJ - Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// Final Project -- Dungeon Crawler
+// 2022-06-10
+
 import java.util.Scanner;
 import java.util.LinkedList;
 
@@ -18,12 +23,14 @@ public class Character {
   // for terminal testing
   protected Scanner sc = new Scanner(System.in);
 
+  // default const, should not be used
   public Character() {
    health = 4;
    baseDamage = 3;
    defense = 0;
   }
 
+  // overloaded const, used in initial generation of the first level
   public Character(int newHealth, int newAttack, int newSpeed, int newR, int newC, Maze maze) {
    health = newHealth;
    attack = newAttack;
@@ -38,6 +45,7 @@ public class Character {
    lastUsedWeapon = inventory.getFirst();
   }
 
+  // overloaded const, used in generation of following levels
   public Character(int newHealth, int newAttack, int newSpeed, int newR, int newC, LinkedList<Weapon> newInventory, Weapon lastUsedWpn, Maze maze){
     health = newHealth;
     attack = newAttack;
@@ -51,6 +59,7 @@ public class Character {
     lastUsedWeapon = lastUsedWpn;
   }
 
+  // ACCESSOR & MODIFIER METHODS
   public int getR() {
     return currentR;
   }
@@ -83,10 +92,12 @@ public class Character {
     return inventory;
   }
 
-  public boolean isAlive() { // character is alive
+  // return if alive
+  public boolean isAlive() {
    return health > 0;
   }
 
+  // sets tile on the Dungeon to the original tile before the character steps on it
   public void replaceTile(int r, int c) {
     dungeon.setPos(currentR, currentC, lastTile);
     lastTile = dungeon.getPos(r, c);
@@ -96,6 +107,7 @@ public class Character {
     return lastTile;
   }
 
+  // sets lastTile to space, used when the character steps onto a tile with a one-time use
   public void lastTileToSpace(){
     lastTile = " ";
   }
@@ -111,11 +123,13 @@ public class Character {
    }
   }
 
+  // adds weapon to inventory
   public void addWeapon(Weapon weapon){
     inventory.add(weapon);
     System.out.println("You found a " + weapon.getName() + ". Enjoy it!");
   }
 
+  // movement methods
   public void moveUp() {
     if (currentR > 0 && currentR < map.length-1 && currentC > 0 && currentC < map[0].length){
       replaceTile(currentR-1, currentC);
@@ -148,6 +162,7 @@ public class Character {
     return "Hero";
   }
 
+  // attacking system
   public void characterAttack(Character attacked, Weapon weapon){
     int dmg = attack + weapon.getPower();
     weapon.reduceDurability(1);
@@ -165,6 +180,8 @@ public class Character {
     }
   }
 
+  // move selection system
+  // returns true if you manage to flee, false otherwise.
   public boolean chooseMove(Character attacked){ // returns whether player escapes successfully
     int i = 1;
     System.out.println( "\nWhat is your choice?" );
@@ -206,6 +223,7 @@ public class Character {
     return lastUsedWeapon;
   }
 
+  // weapon selection system
   private int weapon() { // returns index of chosen inventory weapon
     int weaponChoice = 0;
     String s = "Which weapon will you use?\n";
@@ -247,4 +265,5 @@ public class Character {
       return weapon();
     }
   }
+
 }

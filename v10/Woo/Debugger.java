@@ -1,4 +1,11 @@
+// PBNJ - Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// Final Project -- Dungeon Crawler
+// 2022-06-10
+
 import java.util.Scanner;
+
+// Terminal Version for testing only.
 
 public class Debugger{
   public static void main(String[] args){

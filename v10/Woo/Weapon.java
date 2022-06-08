@@ -1,3 +1,8 @@
+// PBNJ - Brian Li, Nakib Abedin, Jefford Shau
+// APCS pd07
+// Final Project -- Dungeon Crawler
+// 2022-06-10
+
 public class Weapon {
   protected String name;
   protected int weaponId;
