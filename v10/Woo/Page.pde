@@ -14,8 +14,8 @@ class HomePage extends Page
   void setup(){
     background(0);
     image(loadImage("HomePagev4.png"),0,0);
-    play = new Hitbox(width/2+16, height/2 +22, 15, "Play", 240, 80, new Game());
-    howToPlay = new Hitbox(width/2 +16, height/2 + 122, 15, "How To Play", 240, 80, new HowToPlay());
+    play = new Hitbox(width/2+16, height/2 +22, 15, "Play", 240, 80, gamePage);
+    howToPlay = new Hitbox(width/2 +16, height/2 + 122, 15, "How To Play", 240, 80, howToPlayPage);
   }
   
   void draw(){
@@ -34,10 +34,12 @@ class Game extends Page{
   Map map;
   PImage[] mapTiles;
   int SIZE;
+  boolean battlePhase;
   
   void setup(){
    map = new Map();
    SIZE = 32;
+   battlePhase = false;
    background(0);
    mapTiles = new PImage[5];
    mapTiles[0] = loadImage("cobblestone.png");
@@ -64,30 +66,32 @@ class Game extends Page{
           image(mapTiles[1],currentX,currentY);
         }
         else if (col.equals("E")){image(mapTiles[3], currentX, currentY);}
-        else if (col.equals("M")){image(mapTiles[4], currentX, currentY);}
+        else if (col.equals("M")){
+          image(mapTiles[0],currentX,currentY);
+          image(mapTiles[4], currentX, currentY);  
+      }
         else{image(mapTiles[0],currentX,currentY);}
         currentX += SIZE;
         
       }
       currentX = 0;
       currentY += SIZE;
-      
     }
-    
+
   }
   
  void keyPressed(){
     if(key == 'W' || key == 'w'){
-      map.moveUp();
+      map.round("W");
   }
     else if(key == 'A' || key == 'a'){
-      map.moveLeft();
+      map.round("A");
     }
     else if(key == 'S' || key =='s'){
-      map.moveDown();
+      map.round("S");
   }
     else if(key == 'D' || key == 'd'){
-      map.moveRight();
+      map.round("D");
   }
   }
 
@@ -123,8 +127,6 @@ class BattlePage extends Page
     Flee.process();
     ChangeWeapon.process();
   }
-  
-  
 
 }
 

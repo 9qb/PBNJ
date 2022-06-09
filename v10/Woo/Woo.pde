@@ -1,15 +1,32 @@
 Page currentPage;
+Game gamePage;
+BattlePage battlePage;
+HowToPlay howToPlayPage;
 
 void setup(){
   size(672, 672);
   currentPage = new HomePage();
+  gamePage = new Game();
+  battlePage = new BattlePage();
+  howToPlayPage = new HowToPlay();
   currentPage.setup();
-
 }
 
 void draw(){
   currentPage.process();
   currentPage.draw();
+  if(currentPage == gamePage){
+      if(gamePage.battlePhase){
+        System.out.println("Working");
+        currentPage = battlePage;
+        currentPage.setup();
+        currentPage.process();
+        currentPage.draw();
+      }
+  }
+  if(currentPage == battlePage){
+    System.out.println("yes its asn instance");
+  }
 }
 
 void keyPressed(){
