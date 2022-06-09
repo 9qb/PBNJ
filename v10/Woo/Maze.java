@@ -18,10 +18,12 @@ public class Maze{
       return this._maze;
     }
 
+    // sets a tile to cargo
     public void setPos(int r, int c, String cargo){
         _maze[r][c] = cargo;
     }
 
+    // gets the cargo associated with the tile
     public String getPos(int r, int c){
         return _maze[r][c];
     }
@@ -36,7 +38,7 @@ public class Maze{
                    retVal = retVal +/* "\u001b[42m" + "\u001b[32m" + */  "#" /*+ "\u001b[30m" + "\u001b[40m" */;
                 else{
                    retVal += _maze[i][e];
-            }
+                 }
             }
             retVal += "\n";
         }

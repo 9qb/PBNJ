@@ -100,8 +100,8 @@ public class MazeGenerator {
 
   // sets gates back to normal spaces
   private void returnGates(){
-    for (int i = 1; i < _rows - 2; i ++){
-      for (int j = 1; j < _cols - 2; j++){
+    for (int i = 0; i < _rows; i ++){
+      for (int j = 0; j < _cols; j++){
         if(_maze[i][j].equals(GATE)){
           _maze[i][j] = SPACE;
         }
@@ -109,6 +109,7 @@ public class MazeGenerator {
     }
   }
 
+  // final run through the maze, makes maze generation look more spacious and less rigid
   private void cleanup(int row, int col){
     if (row > 1 && col > 1 && row < _maze.length - 2 && col < _maze[row].length - 2 && _maze[row][col].equals(WALL)) {
       // if has 3 adjacent spaces, might as well just remove to declutter the map
@@ -131,12 +132,14 @@ public class MazeGenerator {
 
       if (count >= 3) {
         _maze[row][col] = SPACE;
+
+        // check if we can uncarve adjacent tiles as a result of this tile being turned to space
+        uncarve(row+1, col);
+        uncarve(row-1, col);
+        uncarve(row, col+1);
+        uncarve(row, col-1);
       }
 
-      uncarve(row+1, col);
-      uncarve(row-1, col);
-      uncarve(row, col+1);
-      uncarve(row, col-1);
     }
   }
 
@@ -153,17 +156,16 @@ public class MazeGenerator {
     _maze[_rows-1][_cols - 1] = WORLD_BORDER;
   }
 
+  // tries to carve a maze on every tile within the 2D array
   private void carveMaze(){
     for (int i = 1; i < _rows - 2; i ++){
       for (int j = 1; j < _cols - 2; j++){
         carve(i,j);
       }
     }
-
-    // carve(1,1);
   }
 
-  // creates mazepath
+  // turns mazepath tiles to space tiles
   private void mazeToSpace(){
     for (int i = 1; i < _rows - 1; i ++){
       for (int j = 1; j < _cols - 1; j++){
@@ -172,6 +174,7 @@ public class MazeGenerator {
     }
   }
 
+  // tries to carve a maze recursively through the 2D array
   private void carve(int row, int col){
     // can carve: not on border, not a space, fewer than 2 neighboring spaces
     if(canCarve(row,col) && _maze[row][col].equals(WALL)){
@@ -192,32 +195,10 @@ public class MazeGenerator {
         carve(row + direction[0], col + direction[1]);
       }
     }
-
   }
 
-  private void carve(int row, int col, ArrayList<Tile> al){
-    // can carve: not on border, not a space, fewer than 2 neighboring spaces
-    if(canCarve(row,col) && _maze[row][col].equals(WALL)){
-      al.add(new Tile(row,col));
-      _maze[row][col] = MAZEPATH;
-
-      //make an arrayList of directions i made the directions: [row offset , col offset]
-      ArrayList<int[]>directions = new ArrayList<int[]>();
-      //fill up the arrayList Here
-      directions.add(new int[]{0, -1});
-      directions.add(new int[]{0, 1});
-      directions.add(new int[]{-1, 0});
-      directions.add(new int[]{1, 0});
-
-      while(directions.size() > 0){
-        //choose a direction randomly:
-        int randDirection = (int)(Math.random() * (directions.size()));
-        int[] direction = directions.remove(randDirection);
-        carve(row + direction[0], col + direction[1], al);
-      }
-    }
-  }
-
+  // checks if this tile is possible to be carved:
+  // criteria: not on border, not a space, fewer than 2 neighboring spaces
   private boolean canCarve(int row, int col) {
     if (row <= 0 || col <= 0 || row >= _maze.length - 1 || col >= _maze[row].length - 1) {
       return false;
@@ -263,6 +244,7 @@ public class MazeGenerator {
     return true;
   }
 
+  // "uncarves" the maze by iterating through each tile to see if it is possible to uncarve
   private void uncarveMaze(){
     for (int n = 0; n < 2; n++){
       for (int i = 1; i < _rows - 2; i ++){
@@ -273,11 +255,14 @@ public class MazeGenerator {
     }
   }
 
+  // "uncarves" a tile by filling in the space to be a wall again
+  // criteria: has 3 adjacent wall tiles. (i.e. this tile is a dead end)
   private void uncarve(int row, int col){
     if(canUncarve(row, col) && _maze[row][col].equals(SPACE)){
-      // System.out.println("(" + row + ", " + col + ")" + " has been uncarved");
+      // System.out.println("(" + row + ", " + col + ")" + " has been uncarved"); // diag
       _maze[row][col] = WALL;
 
+      // checks if we can uncarve adjacent tiles as a result of this tile being uncarved
       uncarve(row+1, col);
       uncarve(row-1, col);
       uncarve(row, col+1);
@@ -285,6 +270,8 @@ public class MazeGenerator {
     }
   }
 
+  // checks if we can uncarve a certain tile
+  // criteria: has 3 adjacent wall tiles. (i.e. this tile is a dead end)
   private boolean canUncarve(int row, int col){
     if (row <= 0 || col <= 0 || row >= _maze.length - 1 || col >= _maze[row].length - 1) {
       return false;
@@ -303,10 +290,9 @@ public class MazeGenerator {
     if (_maze[row][col+1].equals(WALL) || _maze[row][col+1].equals(WORLD_BORDER) )
       count++;
 
-    // System.out.println("count: " + count);
+    // System.out.println("count: " + count); //diag
 
     if (count >= 3) {
-      // System.out.println(true);
       return true;
     }
 
@@ -317,19 +303,25 @@ public class MazeGenerator {
     return false;
   }
 
+  // opens up [3,6) "gate" tiles
+  // a gate tile is a tile that is between a room and the carved maze
   private void openGates(){
+    // intermediate method: marks possible gate tiles
     markGates();
     for (int i = 0; i < _rooms.size(); i++){
       _rooms.get(0).removeGates(randNum(3,6));
     }
   }
 
+  // marks possible gate tiles (tiles separating the room from the outer maze)
   private void markGates(){
     for (int i = 0; i < _rooms.size(); i++){
       _rooms.get(i).markGates();
     }
   }
 
+  // determines if a tile is a gate tile
+  // criteria: a tile has only two adjacent "MAZEPATH" tiles or "SPACE" tiles
   private boolean isGate(int row, int col) {
     if (row <= 0 || col <= 0 || row >= _maze.length - 1 || col >= _maze[row].length - 1) {
       return false;
@@ -373,6 +365,7 @@ public class MazeGenerator {
   class Room{
     private int _tlr, _tlc, _brr, _brc;
     private ArrayList<Tile> gates = new ArrayList();
+    // constructor: supplies the rows and columns of the top left of the room and bottom right of the room
     Room(int TLr, int TLc, int BRr, int BRc){
       _tlr = TLr;
       _tlc = TLc;
@@ -383,6 +376,7 @@ public class MazeGenerator {
     // intermediate method, marks surrounding tiles of all rooms
     void markGates(){
       // iterate thru all borders of the room, if it can be a gate, mark as so
+      // and add to the gates arraylist within the room
       for (int i = _tlr; i <= _brr; i++){
         // System.out.println("is " + i + ", " + (_tlc-1) + " a gate? " + isGate(i, _tlc-1)); // diag
         if (isGate(i, _tlc-1)){
@@ -409,6 +403,7 @@ public class MazeGenerator {
       }
     }
 
+    // removes supplied number of gates within the room
     void removeGates(int numGates){
       for (int i = 0; i < numGates && !(gates.isEmpty()); i++){
         gates.remove(randNum(0, gates.size())).setTile(SPACE);
@@ -422,6 +417,7 @@ public class MazeGenerator {
   }
 
   // helper class
+  // simple class to record coordinates of a tile
   class Tile{
     int r, c;
     Tile(int row, int col){
@@ -430,33 +426,6 @@ public class MazeGenerator {
     int getRow(){ return r; }
     int getCol(){ return c; }
     void setTile(String tileType){ _maze[r][c] = tileType; }
-    boolean equals(Tile otherTile){ return this.r == otherTile.getRow() && this.c == otherTile.getCol(); }
   }
-
-
-  public String toString(){
-      String retVal = "";
-      for(int i = 0; i<_maze.length; i++){
-          for(int e=0; e<_maze[0].length; e++){
-            if(_maze[i][e].equals("#") || _maze[i][e].equals("@"))
-              retVal = retVal + /*"\u001b[42m" + "\u001b[32m" + */ "#" /*+ "\u001b[30m" + "\u001b[40m"*/ ;
-            else{
-              retVal += _maze[i][e];
-            }
-          }
-          retVal += "\n";
-      }
-      return retVal;
-  }
-
-  public static void main(String[] args) {
-      MazeGenerator test = new MazeGenerator(27,48);
-      // System.out.println(test._mazes.size());
-      System.out.println(test);
-      System.out.println("");
-      // test.carve(1,1);
-      // System.out.println(test);
-  }
-
 
 }
