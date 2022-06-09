@@ -92,3 +92,29 @@ class Hitbox extends Button
   
   
 }
+
+class AttackButton extends Button
+{
+  AttackButton(float x, float y, float size, String text, float w, float h, Page next){
+    super(x, y, size, text, w, h, next);
+  }
+  
+  void onClick(){
+     gamePage.map.mc.characterAttack(battlePage.monster, gamePage.map.mc.getLastWeapon());
+     battlePage.monster.characterAttack(battlePage.mc, battlePage.monster.getLastWeapon());
+  }
+}
+
+class FleeButton extends Button
+{
+  FleeButton(float x, float y, float size, String text, float w, float h, Page next){
+    super(x, y, size, text, w, h, next);
+  }
+}
+
+class ChangeWeapon extends Button
+{
+  ChangeWeapon(float x, float y, float size, String text, float w, float h, Page next){
+    super(x, y, size, text, w, h, next);
+  }
+}

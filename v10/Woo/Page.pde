@@ -77,6 +77,8 @@ class Game extends Page{
       currentX = 0;
       currentY += SIZE;
     }
+    
+    battlePhase = map.battlePhase;
 
   }
   
@@ -103,9 +105,16 @@ class BattlePage extends Page
   Button Attack;
   Button Flee;
   Button ChangeWeapon;
+  Character mc = gamePage.map.mc;
+  Monster monster;
+  
+  BattlePage(Character hero, Monster mons){
+    mc = hero;
+    this.monster = mons;
+  }
   
   void setup(){
-    thisPage = new BattlePage();
+    thisPage = new BattlePage(mc, monster);
     Attack = new Button(width/2 - 150,height-200,32.0,"Attack",240, 90, thisPage);
     Flee = new Button(width/2 +150,height-200,32.0,"Flee",240, 90, thisPage);
     ChangeWeapon = new Button(width/2,height-75,32.0,"Change Weapon", 240, 90, thisPage);
@@ -120,12 +129,35 @@ class BattlePage extends Page
     Attack.draw();
     Flee.draw();
     ChangeWeapon.draw();
+    
+    battle(mc, monster);
   }
   
   void process(){
     Attack.process();
     Flee.process();
     ChangeWeapon.process();
+  }
+  
+  void battle(Character first, Character second){
+   if(!(first.isAlive())  || !(second.isAlive())){
+   if (first.chooseMove(second)){ // if true, then hero has fleed
+          System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+          gamePage.map.score -= 200;
+          gamePage.map.currentFrame.setPos(mc.getR(), mc.getC(), "X");
+          gamePage.map.monsters.remove(second);
+          return;
+        }
+        if (second.isAlive()){
+          if (second.chooseMove(first)){ // if true, then hero has fleed
+            System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+            gamePage.map.score -= 200;
+            gamePage.map.currentFrame.setPos(mc.getR(), mc.getC(), "X");
+            gamePage.map.monsters.remove(first);
+            return;
+          }
+        } 
+  }
   }
 
 }

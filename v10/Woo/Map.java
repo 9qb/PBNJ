@@ -19,21 +19,21 @@ public class Map{
 
     // maze instance variables
     private Maze maze;
-    private Maze currentFrame;
+    public Maze currentFrame;
     private int rows;
     private int cols;
     private boolean exitPlaced;
 
     // RPG instance variables
-    private Character mc;
+    public Character mc;
     private Monster monster;
-    private ArrayList<Monster> monsters = new ArrayList<Monster>();
-    private int monsterCount = 15; // total amount of monsters per floor
+    public ArrayList<Monster> monsters = new ArrayList<Monster>();
+    private int monsterCount = 20; // total amount of monsters per floor
     private int healTiles = 0;
-    private boolean battlePhase = false;
+    public boolean battlePhase = false;
 
     // system instance variables
-    private int score; // accumulates after each floor
+    public int score; // accumulates after each floor
 
     // default constructor
     public Map(){
@@ -124,12 +124,21 @@ public class Map{
           
           battlePhase = true;
           battle(monsters.get(i), mc);
-          battlePhase = false;
+          //battlePhase = false;
           
           System.out.println("You defeated a monster!");
           System.out.println("Current score: " + score);
         }
       }
+    }
+
+    public Monster findMonster(){
+      for (int i = 0; i < monsters.size(); i++){
+        if (monsters.get(i).getR() == mc.getR() && monsters.get(i).getC() == mc.getC()){
+          return monsters.get(i);
+        }
+      }
+      return null;
     }
 
     // initiates battle between two characters
@@ -139,24 +148,24 @@ public class Map{
 
       // play battle
       System.out.println("A battle has started!");
-      while (first.isAlive() && second.isAlive()){
-        if (first.chooseMove(second)){ // if true, then hero has fleed
-          System.out.println("Your act of cowardice is sad. Your score has been reduced.");
-          score -= 200;
-          currentFrame.setPos(mc.getR(), mc.getC(), "X");
-          monsters.remove(second);
-          return;
-        }
-        if (second.isAlive()){
-          if (second.chooseMove(first)){ // if true, then hero has fleed
-            System.out.println("Your act of cowardice is sad. Your score has been reduced.");
-            score -= 200;
-            currentFrame.setPos(mc.getR(), mc.getC(), "X");
-            monsters.remove(first);
-            return;
-          }
-        }
-      }
+      //while (first.isAlive() && second.isAlive()){
+      //  if (first.chooseMove(second)){ // if true, then hero has fleed
+      //    System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+      //    score -= 200;
+      //    currentFrame.setPos(mc.getR(), mc.getC(), "X");
+      //    monsters.remove(second);
+      //    return;
+      //  }
+      //  if (second.isAlive()){
+      //    if (second.chooseMove(first)){ // if true, then hero has fleed
+      //      System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+      //      score -= 200;
+      //      currentFrame.setPos(mc.getR(), mc.getC(), "X");
+      //      monsters.remove(first);
+      //      return;
+      //    }
+      //  }
+      //}
 
       // check if character is dead
       if (!(mc.isAlive())){
@@ -230,7 +239,7 @@ public class Map{
             
             battlePhase = true;
             battle(mc, monsters.get(i));
-            battlePhase = false;
+            //battlePhase = false;
             
             mc.lastTileToSpace();
             score += 50;

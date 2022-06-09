@@ -7,7 +7,6 @@ void setup(){
   size(672, 672);
   currentPage = new HomePage();
   gamePage = new Game();
-  battlePage = new BattlePage();
   howToPlayPage = new HowToPlay();
   currentPage.setup();
 }
@@ -16,12 +15,10 @@ void draw(){
   currentPage.process();
   currentPage.draw();
   if(currentPage == gamePage){
-      if(gamePage.battlePhase){
+      if(((Game)currentPage).battlePhase){
         System.out.println("Working");
-        currentPage = battlePage;
+        currentPage = new BattlePage(gamePage.map.mc, gamePage.map.findMonster());
         currentPage.setup();
-        currentPage.process();
-        currentPage.draw();
       }
   }
   if(currentPage == battlePage){
