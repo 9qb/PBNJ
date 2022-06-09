@@ -121,8 +121,11 @@ public class Map{
         if ((monsters.get(i)).playTurn()){
           // monster initiaties battle
           System.out.println("The monster has initiated a battle with you!");
+          
+          battlePhase = true;
           battle(monsters.get(i), mc);
           battlePhase = false;
+          
           System.out.println("You defeated a monster!");
           System.out.println("Current score: " + score);
         }
@@ -133,7 +136,6 @@ public class Map{
     public void battle(Character first, Character second){
       LinkedList<Character> turnOrder = new LinkedList();
       turnOrder.offerFirst(first); turnOrder.offerLast(second);
-      battlePhase = true;
 
       // play battle
       System.out.println("A battle has started!");
@@ -225,8 +227,11 @@ public class Map{
         for (int i = 0; i < monsters.size(); i++){
           if (monsters.get(i).getR() == mc.getR() && monsters.get(i).getC() == mc.getC()){
             System.out.println("You initiated a battle with a monster!");
+            
+            battlePhase = true;
             battle(mc, monsters.get(i));
             battlePhase = false;
+            
             mc.lastTileToSpace();
             score += 50;
             System.out.println("You defeated a monster!");
