@@ -48,7 +48,6 @@ public class Map{
           int heroR = troll.randNum(1, rows-1);
           int heroC = troll.randNum(1, cols-1);
           if(isRoom(heroR, heroC)) {
-            // isTrue = true;
             mc = new Hero(150, 10, 1, heroR, heroC, currentFrame);
             break;
           }
