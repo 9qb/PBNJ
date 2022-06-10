@@ -60,7 +60,7 @@ Nakib Abedin :: Worked on v0, set up the movement feature and the carving algori
 Jefford Shau :: Worked on v0, came up with structure of maze generation
 ==============================================================
 
-2022-05-28 -> 2022-05-30
+2022-05-28 thur 2022-05-30
 --------------------------------------------------------------
 Brian Li :: Completed development of working dungeon generator
 Nakib Abedin :: Bugfixing of dungeon generator, began work on processing
@@ -120,5 +120,5 @@ Jefford Shau :: Finalized battle system and weapon system. Added method descript
 --------------------------------------------------------------
 Brian Li :: Updated flowchart and README.md. Worked on beautification of terminal.
 Nakib Abedin :: Finalized code. Worked on beautification of terminal.
-Jefford Shau :: Updated UML Diagram. Worked on beautification of terminal.
+Jefford Shau :: Updated UML Diagram and devlog.txt. Worked on beautification of terminal.
 ==============================================================

@@ -6,7 +6,6 @@
 import java.util.LinkedList;
 
 public class Hero extends Character {
-  private String input;
 
   public Hero() {
     super();
