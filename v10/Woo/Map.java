@@ -30,6 +30,7 @@ public class Map{
     public ArrayList<Monster> monsters = new ArrayList<Monster>();
     private int monsterCount = 15; // total amount of monsters per floor
     public boolean battlePhase = false;
+    private String lastMsg = "N/A";
 
     // system instance variables
     public int score; // accumulates after each floor
@@ -224,8 +225,10 @@ public class Map{
       }
 
       if (mc.lastTile().equals("T")){ // give random weapon
-        mc.addWeapon(new Weapon());
+        Weapon temp = new Weapon();
+        mc.addWeapon(temp);
         mc.lastTileToSpace();
+        lastMsg = temp.getName();
       }
 
       if (mc.lastTile().equals("H")){ // restore health to max
@@ -300,7 +303,7 @@ public class Map{
         }
       }
 
-      // spawn one treasure chest
+      // spawn 4 treasure chest
       int chestTiles = 0;
       while (chestTiles != 4){
         int treasureR = (int) (Math.random() * (rows - 1)) + 1;
@@ -337,17 +340,17 @@ public class Map{
          for(String[] row : displayZone){
            for(String col : row){
              if(col.equals("#") || col.equals("@"))
-              output += "\033[0;37m"+ "#";
+              output += "\u001B[37m"+"\u001B[47m" +"#" + "\u001B[0m";
              else if(col.equals("M"))
-              output += "\033[0;31m"+ col;
+              output += "\u001B[31m"+ col + "\u001B[0m";
              else if(col.equals("H"))
-               output += "\036[0;33m"+ col;
+               output += "\u001B[32m"+ col + "\u001B[0m";
              else if(col.equals("E"))
-              output += "\036[0;35m"+ col;
+              output += "\u001B[35m"+ col + "\u001B[0m";
              else if(col.equals("X"))
-               output += "\036[0;36m"+ col;
+               output += "\u001B[36m"+ col + "\u001B[0m";
             else if(col.equals("T"))
-              output += "\036[0;33m"+ col;
+              output += "\u001B[33m"+ col + "\u001B[0m";
              else
                output += col;
            }
@@ -400,6 +403,21 @@ public class Map{
         } else {
           return false;
         }
+    }
+
+    // accessor for text
+    public String getLastMsg(){
+      return lastMsg;
+    }
+
+    // accessor for Score
+    public int getScore(){
+      return score;
+    }
+
+    // accessor for HP
+    public int getHP(){
+      return mc.getHealth();
     }
 
     // accessor method for maze

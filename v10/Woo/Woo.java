@@ -91,6 +91,9 @@ public class Woo{
     Map map = new Map();
     map.clear();
     System.out.println(map);
+    System.out.println("\nCurrent HP: " + map.getHP());
+    System.out.println("Last Item Received: " + map.getLastMsg());
+    System.out.println("Score: " + map.getScore());
 
     // takes in player input for hero movement
     while(sc.hasNextLine()){
@@ -99,26 +102,40 @@ public class Woo{
         map.round("W");
         map.clear();
         System.out.println(map);
+        System.out.println("\nCurrent HP: " + map.getHP());
+        System.out.println("Last Item Received: " + map.getLastMsg());
+        System.out.println("Score: " + map.getScore());
         //System.out.println(map.getR() + " , " + map.getC());
       }else if(motion.equalsIgnoreCase("A")){
         map.round("A");
         map.clear();
         System.out.println(map);
+        System.out.println("\nCurrent HP: " + map.getHP());
+        System.out.println("Last Item Received: " + map.getLastMsg());
+        System.out.println("Score: " + map.getScore());
         //System.out.println(map.getR() + " , " + map.getC());
       }else if(motion.equalsIgnoreCase("S")){
         map.round("S");
         map.clear();
         System.out.println(map);
+        System.out.println("\nCurrent HP: " + map.getHP());
+        System.out.println("Last Item Received: " + map.getLastMsg());
+        System.out.println("Score: " + map.getScore());
         //System.out.println(map.getR() + " , " + map.getC());
       }else if(motion.equalsIgnoreCase("D")){
         map.round("D");
         map.clear();
         System.out.println(map);
+        System.out.println("\nCurrent HP: " + map.getHP());
+        System.out.println("Last Item Received: " + map.getLastMsg());
+        System.out.println("Score: " + map.getScore());
         //System.out.println(map.getR() + " , " + map.getC());
       }else{
         map.clear();
         System.out.println(map);
-        System.out.println("invalid input");
+        System.out.println("\nCurrent HP: " + map.getHP());
+        System.out.println("Last Item Received: " + map.getLastMsg());
+        System.out.println("Score: " + map.getScore());
       }
     }
   }
