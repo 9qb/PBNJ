@@ -12,6 +12,6 @@ Prerequisites: [Java](https://www.java.com/download/ie_manual.jsp)
 3. Run this line in the root directory:  <br>
    ```$ javac Woo.java && java Woo```
    
-Alternatively, if you do not want to use Processing or want to see the layout of the map in its purest, realest, raw beauty, you may run the following in your terminal: <br>
+Alternatively, if you want to see the layout of the map in its purest, realest, raw beauty, you may run the following in your terminal: <br>
 ```$ javac Debugger.java && java Debugger``` <br>
 However, be aware this is not the intended method of playing the game and is mainly used if you are interested in viewing the inner workings of the project. There may be elements in the final Woo version that are not present in the Debugging version.
