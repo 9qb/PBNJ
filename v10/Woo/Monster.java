@@ -89,6 +89,7 @@ public class Monster extends Character {
   // monster attacks do not need player input
   @Override
   public boolean chooseMove(Character attacked){
+    // Map.clear();
     System.out.println("The monster attacked you!");
     characterAttack(attacked, lastUsedWeapon);
     return false;

@@ -11,7 +11,7 @@ public class Map{
     private String hero = "X";
     private String enemy = "M";
 
-    private static void clear()
+    public static void clear()
     {
       System.out.println("\033[2J");
       System.out.println("\033[" + 1 + ";" + 1 + "H");
@@ -28,8 +28,7 @@ public class Map{
     public Character mc;
     private Monster monster;
     public ArrayList<Monster> monsters = new ArrayList<Monster>();
-    private int monsterCount = 20; // total amount of monsters per floor
-    private int healTiles = 0;
+    private int monsterCount = 15; // total amount of monsters per floor
     public boolean battlePhase = false;
 
     // system instance variables
@@ -64,8 +63,9 @@ public class Map{
           }
         }
 
-        // spawn 2 healing tiles
-        while (healTiles != 2){
+        // spawn 6 healing tiles
+        int healTiles = 0;
+        while (healTiles != 6){
           int healR = (int) (Math.random() * (rows - 1)) + 1;
           int healC = (int) (Math.random() * (cols - 1)) + 1;
           if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
@@ -74,13 +74,14 @@ public class Map{
           }
         }
 
-        // spawn one treasure chest tile
-        while (true){
+        // spawn 4 treasure chest tile
+        int chestCount = 0;
+        while (chestCount != 4){
           int treasureR = (int) (Math.random() * (rows - 1)) + 1;
           int treasureC = (int) (Math.random() * (cols - 1)) + 1;
           if (isRoom(treasureR, treasureC) && Math.sqrt(Math.pow(treasureC - mc.getC(), 2) + Math.pow(treasureR - mc.getR(), 2)) > 50){
             currentFrame.setPos(treasureR, treasureC, "T");
-            break;
+            chestCount++;
           }
         }
 
@@ -121,12 +122,12 @@ public class Map{
         if ((monsters.get(i)).playTurn()){
           // monster initiaties battle
           System.out.println("The monster has initiated a battle with you!");
-          
+
           battlePhase = true;
           battle(monsters.get(i), mc);
-          //battlePhase = false;
-          
-          System.out.println("You defeated a monster!");
+          battlePhase = false;
+
+          System.out.println("You defeated a monster!\n");
           System.out.println("Current score: " + score);
         }
       }
@@ -148,29 +149,29 @@ public class Map{
 
       // play battle
       System.out.println("A battle has started!");
-      //while (first.isAlive() && second.isAlive()){
-      //  if (first.chooseMove(second)){ // if true, then hero has fleed
-      //    System.out.println("Your act of cowardice is sad. Your score has been reduced.");
-      //    score -= 200;
-      //    currentFrame.setPos(mc.getR(), mc.getC(), "X");
-      //    monsters.remove(second);
-      //    return;
-      //  }
-      //  if (second.isAlive()){
-      //    if (second.chooseMove(first)){ // if true, then hero has fleed
-      //      System.out.println("Your act of cowardice is sad. Your score has been reduced.");
-      //      score -= 200;
-      //      currentFrame.setPos(mc.getR(), mc.getC(), "X");
-      //      monsters.remove(first);
-      //      return;
-      //    }
-      //  }
-      //}
+      while (first.isAlive() && second.isAlive()){
+       if (first.chooseMove(second)){ // if true, then hero has fleed
+         System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+         score -= 200;
+         currentFrame.setPos(mc.getR(), mc.getC(), "X");
+         monsters.remove(second);
+         return;
+       }
+       if (second.isAlive()){
+         if (second.chooseMove(first)){ // if true, then hero has fleed
+           System.out.println("Your act of cowardice is sad. Your score has been reduced.");
+           score -= 200;
+           currentFrame.setPos(mc.getR(), mc.getC(), "X");
+           monsters.remove(first);
+           return;
+         }
+       }
+      }
 
       // check if character is dead
       if (!(mc.isAlive())){
-        System.out.println("Sorry, you have died.");
-        System.out.println("Score: " + score);
+        System.out.println("Sorry, you have died.\n");
+        System.out.println("Final Score: " + score);
         System.exit(0);
       }
 
@@ -236,11 +237,11 @@ public class Map{
         for (int i = 0; i < monsters.size(); i++){
           if (monsters.get(i).getR() == mc.getR() && monsters.get(i).getC() == mc.getC()){
             System.out.println("You initiated a battle with a monster!");
-            
+
             battlePhase = true;
             battle(mc, monsters.get(i));
-            //battlePhase = false;
-            
+            battlePhase = false;
+
             mc.lastTileToSpace();
             score += 50;
             System.out.println("You defeated a monster!");
@@ -288,8 +289,9 @@ public class Map{
         }
       }
 
-      // spawn 2 healing tiles
-      while (healTiles != 2){
+      // spawn 6 healing tiles
+      int healTiles = 0;
+      while (healTiles != 6){
         int healR = (int) (Math.random() * (rows - 1)) + 1;
         int healC = (int) (Math.random() * (cols - 1)) + 1;
         if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
@@ -299,12 +301,13 @@ public class Map{
       }
 
       // spawn one treasure chest
-      while (true){
+      int chestTiles = 0;
+      while (chestTiles != 4){
         int treasureR = (int) (Math.random() * (rows - 1)) + 1;
         int treasureC = (int) (Math.random() * (cols - 1)) + 1;
         if (isRoom(treasureR, treasureC) && Math.sqrt(Math.pow(treasureC - mc.getC(), 2) + Math.pow(treasureR - mc.getR(), 2)) > 50){
           currentFrame.setPos(treasureR, treasureC, "T");
-          break;
+          chestTiles++;
         }
       }
 
@@ -329,8 +332,22 @@ public class Map{
     }
 
     public String toString() {
-         clear();
-         return currentFrame.toString();
+         String[][] displayZone = displayZone();
+         String output = "";
+         for(String[] row : displayZone){
+           for(String col : row){
+             if(col.equals("#"))
+              output += "\033[0;37m"+ col;
+             else if(col.equals("M"))
+              output += "\033[0;31m"+ col;
+             else if(col.equals("H"))
+               output += "\036[0;33m"+ col;
+             else
+               output += col;
+           }
+           output += "\n";
+         }
+         return output;
      }
 
     // player movement
@@ -386,8 +403,8 @@ public class Map{
 
     // only shows the region surrounding the Hero
     public String[][] displayZone() {
-        int topLeftR = mc.getR() - 10;
-        int topLeftC = mc.getC() - 10;
+        int topLeftR = mc.getR() - 20;
+        int topLeftC = mc.getC() - 40;
 
         int currR = 0;
         int currC = 0;
@@ -395,12 +412,12 @@ public class Map{
         topLeftR = Math.max(0, topLeftR);
         topLeftC = Math.max(0, topLeftC);
 
-        topLeftR = Math.min(topLeftR, rows-21);
-        topLeftC = Math.min(topLeftC, cols-21);
+        topLeftR = Math.min(topLeftR, rows-41);
+        topLeftC = Math.min(topLeftC, cols-81);
 
-        String[][] output = new String[21][21];
-        for(int i = topLeftR; i < topLeftR + 21; i++){
-            for(int e = topLeftC; e < topLeftC + 21; e++){
+        String[][] output = new String[41][81];
+        for(int i = topLeftR; i < topLeftR + 41; i++){
+            for(int e = topLeftC; e < topLeftC + 81; e++){
                 output[currR][currC] = currentFrame.getPos(i,e);
                 //System.out.print(output[currX][currY]);
                 currC++;
