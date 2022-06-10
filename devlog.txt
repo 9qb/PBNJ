@@ -11,11 +11,11 @@ Dungeon Explorer
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We struggled with transferring our code into processing but then we realized we can call instances of our classes from Java and then we could manipulate those items in processing like we would in a standard driver file.
-The algorithm for Mr. K's class for maze generation didn't generate rooms. We had to go through a long, ardous process in order to get a maze that has rooms and less dead ends.
+The algorithm for Mr. K's class for maze generation didn't generate rooms. We had to go through a long, arduous process in order to get a maze that has rooms and less dead ends.
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-We need to figure out how to spawn monsters and how to let the user select between different heros.
+We need to figure out how to spawn monsters and how to let the user select between different heroes.
 We need to add RPG elements to our maze and finish battle mechanics
 
 COOL STUFF LEARNED
@@ -27,6 +27,7 @@ MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 We changed from a traditional maze generation algorithm (the most basic one that was taught in Mr K's class) into a more complex dungeon generation algorithm
 We believe that our dungeon generation algorithm gives off a better feel of an RPG
+We changed our platform from processing to terminal
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -112,5 +113,12 @@ Jefford Shau :: Worked on weapon system and weapon class.
 --------------------------------------------------------------
 Brian Li :: Finalized battle system and weapon system.
 Nakib Abedin :: Worked on Processing battle menus.
-Jefford Shau :: Finalized battle system and weapon system. Added method description comments above methods. 
+Jefford Shau :: Finalized battle system and weapon system. Added method description comments above methods.
+==============================================================
+
+2022-06-09
+--------------------------------------------------------------
+Brian Li :: Updated flowchart and README.md. Worked on beautification of terminal.
+Nakib Abedin :: Finalized code. Worked on beautification of terminal.
+Jefford Shau :: Updated UML Diagram. Worked on beautification of terminal.
 ==============================================================
