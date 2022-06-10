@@ -68,7 +68,7 @@ public class Map{
         while (healTiles != 6){
           int healR = (int) (Math.random() * (rows - 1)) + 1;
           int healC = (int) (Math.random() * (cols - 1)) + 1;
-          if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
+          if (isRoom(healR, healC)){
             currentFrame.setPos(healR, healC, "H");
             healTiles++;
           }
@@ -79,7 +79,7 @@ public class Map{
         while (chestCount != 4){
           int treasureR = (int) (Math.random() * (rows - 1)) + 1;
           int treasureC = (int) (Math.random() * (cols - 1)) + 1;
-          if (isRoom(treasureR, treasureC) && Math.sqrt(Math.pow(treasureC - mc.getC(), 2) + Math.pow(treasureR - mc.getR(), 2)) > 50){
+          if (isRoom(treasureR, treasureC)){
             currentFrame.setPos(treasureR, treasureC, "T");
             chestCount++;
           }
@@ -89,7 +89,7 @@ public class Map{
         while (true) {
           int exitR = (int) (Math.random() * (rows - 1)) + 1;
           int exitC = (int) (Math.random() * (cols - 1)) + 1;
-          if (isRoom(exitR, exitC) && Math.sqrt(Math.pow(exitC - mc.getC(), 2) + Math.pow(exitR - mc.getR(), 2)) > 50) {
+          if (isRoom(exitR, exitC)) {
             currentFrame.setPos(exitR, exitC, "E");
             break;
           }
@@ -294,7 +294,7 @@ public class Map{
       while (healTiles != 6){
         int healR = (int) (Math.random() * (rows - 1)) + 1;
         int healC = (int) (Math.random() * (cols - 1)) + 1;
-        if (isRoom(healR, healC) && Math.sqrt(Math.pow(healC - mc.getC(), 2) + Math.pow(healR - mc.getR(), 2)) > 50){
+        if (isRoom(healR, healC)){
           currentFrame.setPos(healR, healC, "H");
           healTiles++;
         }
@@ -305,7 +305,7 @@ public class Map{
       while (chestTiles != 4){
         int treasureR = (int) (Math.random() * (rows - 1)) + 1;
         int treasureC = (int) (Math.random() * (cols - 1)) + 1;
-        if (isRoom(treasureR, treasureC) && Math.sqrt(Math.pow(treasureC - mc.getC(), 2) + Math.pow(treasureR - mc.getR(), 2)) > 50){
+        if (isRoom(treasureR, treasureC)){
           currentFrame.setPos(treasureR, treasureC, "T");
           chestTiles++;
         }
@@ -315,7 +315,7 @@ public class Map{
       while (!exitPlaced) {
         int exitR = (int) (Math.random() * (rows - 1)) + 1;
         int exitC = (int) (Math.random() * (cols - 1)) + 1;
-        if (isRoom(exitR, exitC) && Math.sqrt(Math.pow(exitC - mc.getC(), 2) + Math.pow(exitR - mc.getR(), 2)) > 50) {
+        if (isRoom(exitR, exitC)) {
           currentFrame.setPos(exitR, exitC, "E");
           exitPlaced = true;
         }
@@ -345,7 +345,7 @@ public class Map{
              else if(col.equals("E"))
               output += "\036[0;35m"+ col;
              else if(col.equals("X"))
-               output += "\036[36m"+ col;
+               output += "\036[0;36m"+ col;
             else if(col.equals("T"))
               output += "\036[0;33m"+ col;
              else
