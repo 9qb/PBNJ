@@ -336,12 +336,18 @@ public class Map{
          String output = "";
          for(String[] row : displayZone){
            for(String col : row){
-             if(col.equals("#"))
-              output += "\033[0;37m"+ col;
+             if(col.equals("#") || col.equals("@"))
+              output += "\033[0;37m"+ "#";
              else if(col.equals("M"))
               output += "\033[0;31m"+ col;
              else if(col.equals("H"))
                output += "\036[0;33m"+ col;
+             else if(col.equals("E"))
+              output += "\036[0;35m"+ col;
+             else if(col.equals("X"))
+               output += "\036[36m"+ col;
+            else if(col.equals("T"))
+              output += "\036[0;33m"+ col;
              else
                output += col;
            }
